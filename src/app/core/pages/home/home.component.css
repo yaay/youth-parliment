@@ -1,0 +1,32 @@
+.conatainer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    direction: rtl;
+    margin: 0 1rem;
+    gap: 0.5rem;
+}
+
+.logo img {
+    height: 50px;
+    width: auto;
+}
+
+.logo p {
+    font-size: 30px;
+    font-weight: 600;
+    margin: 0.5rem 0;
+}
+
+nav {
+    width: 98%;
+    position: relative;
+    background-color: var(--accent-color);
+    margin: 1rem;
+    border-radius: 15px;
+}

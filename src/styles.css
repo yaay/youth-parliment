@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+
+:root {
+    --main-font: 'HelveticaNeueLT Arabic 55 Roman','IBM Plex Sans Arabic', sans-serif;
+    --accent-color: #f5a091;
+    --bg-color: #f8f7f4;
+}
+
+:host {
+    --tui-font-text: var(--main-font);
+}
+
+
+body {
+    font-family: var(--main-font);
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+}
