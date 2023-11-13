@@ -6,6 +6,10 @@
             <h3 class="">مرحباً بعودتك !</h3>
             <p class="">يمكنك تسجيل الدخول إلي حسابك</p>
         </div>
+        <form
+        (ngSubmit)="login(loginForm.value)"
+        #loginForm="ngForm"
+        >
           <div class="tui-col_md-6">
               <tui-input
               tuiHintDirection="bottom-right"
@@ -13,7 +17,11 @@
               class="input"
             >
               البريد الألكتروني
-              <input tuiTextfield />
+              <input 
+              tuiTextfield
+              name="email"
+              [(ngModel)]="loginData.email"
+              />
             </tui-input>
     
             <tui-input
@@ -22,7 +30,11 @@
               class="input"
             >
               كلمه المرور
-              <input tuiTextfield />
+              <input
+              tuiTextfield
+              name="password"
+              [(ngModel)]="loginData.password"
+               />
             </tui-input>
             <button class="btn">تسجيل الدخول</button>
             <div class="login-help">
@@ -30,6 +42,7 @@
                 <a>هل نسيت كلمة المرور؟</a>
             </div>
           </div>
+        </form>
 
       </tui-island>
     </div>

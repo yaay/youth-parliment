@@ -4,7 +4,8 @@ import { TuiIslandModule } from '@taiga-ui/kit';
 import { TuiInputModule } from '@taiga-ui/kit';
 import { TuiButtonModule } from '@taiga-ui/core';
 import { TuiSvgModule } from '@taiga-ui/core';
-
+import { TuiMarkerIconModule } from '@taiga-ui/kit';
+import { TuiStepperModule } from '@taiga-ui/kit'
 
 
 const TaigaUIComponents = [
@@ -12,7 +13,9 @@ const TaigaUIComponents = [
     TuiIslandModule,
     TuiInputModule,
     TuiButtonModule,
-    TuiSvgModule
+    TuiSvgModule,
+    TuiMarkerIconModule,
+    TuiStepperModule
 ]
 
 

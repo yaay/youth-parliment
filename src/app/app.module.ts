@@ -3,15 +3,17 @@ import { TuiRootModule, TuiDialogModule, TuiAlertModule, TUI_SANITIZER } from "@
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { LoginComponent } from './core/pages/login/login.component';
-import { TaigaUIModule } from "./core/shared/Taiga UI/taiga-ui.module";
+import { TaigaUIModule } from "./shared/Taiga UI/taiga-ui.module";
 import { FormsModule } from "@angular/forms";
-import { SignupComponent } from './core/pages/signup/signup.component';
-import { ResetPasswordComponent } from './core/pages/reset-password/reset-password.component';
-import { HomeComponent } from './core/pages/home/home.component';
+
+import { AppComponent } from './app.component';
+import { LoginComponent } from './auth/components/login/login.component';
+import { SignupComponent } from './auth/components/signup/signup.component';
+import { ResetPasswordComponent } from './auth/components/reset-password/reset-password.component';
+import { LoginInterceptor } from "./core/services/login.interceptor";
+import { HeaderComponent } from './core/layout/header/header.component';
 
 @NgModule({
   declarations: [
@@ -19,19 +21,27 @@ import { HomeComponent } from './core/pages/home/home.component';
     LoginComponent,
     SignupComponent,
     ResetPasswordComponent,
-    HomeComponent
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
       BrowserAnimationsModule,
       FormsModule,
+      HttpClientModule,
       TuiRootModule,
       TuiDialogModule,
       TuiAlertModule,
       TaigaUIModule
 ],
-  providers: [{provide: TUI_SANITIZER, useClass: NgDompurifySanitizer}],
+  providers: [
+    {provide: TUI_SANITIZER, useClass: NgDompurifySanitizer},
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoginInterceptor,
+      multi: true,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
