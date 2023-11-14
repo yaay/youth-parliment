@@ -1,0 +1,46 @@
+<div class="tui row">
+    <div class="tui-col_md-12">
+        <tui-island
+        textAlign="right"
+        >
+            <tui-stepper>
+                <a
+                  routerLink="main-data"
+                  routerLinkActive
+                  tuiStep
+                >
+                  البيانات الأساسية
+                </a>
+                <a
+                  routerLink="contact-data"
+                  routerLinkActive
+                  tuiStep
+                >
+                  طرق التواصل
+                </a>
+                <a
+                  routerLink="/step-3"
+                  routerLinkActive
+                  tuiStep
+                >
+                  المؤهل الدراسي
+                </a>
+                <a
+                  routerLink="/step-3"
+                  routerLinkActive
+                  tuiStep
+                >
+                  المرفقات 
+                </a>
+                <a
+                  routerLink="/step-3"
+                  routerLinkActive
+                  tuiStep
+                >
+                  تأكيد
+                </a>
+              </tui-stepper>
+            <router-outlet></router-outlet>
+        </tui-island>
+    </div>
+</div>

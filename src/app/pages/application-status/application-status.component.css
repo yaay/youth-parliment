@@ -1,0 +1,10 @@
+.container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+.card-img {
+    width: 20rem;
+    height: auto;
+    margin: 1rem;
+}

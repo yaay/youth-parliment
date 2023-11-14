@@ -13,7 +13,7 @@ import { LoginComponent } from './auth/components/login/login.component';
 import { SignupComponent } from './auth/components/signup/signup.component';
 import { ResetPasswordComponent } from './auth/components/reset-password/reset-password.component';
 import { LoginInterceptor } from "./core/services/login.interceptor";
-import { HeaderComponent } from './core/layout/header/header.component';
+import { PagesModule } from "./pages/pages.module";
 
 @NgModule({
   declarations: [
@@ -21,7 +21,6 @@ import { HeaderComponent } from './core/layout/header/header.component';
     LoginComponent,
     SignupComponent,
     ResetPasswordComponent,
-    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -29,6 +28,7 @@ import { HeaderComponent } from './core/layout/header/header.component';
       BrowserAnimationsModule,
       FormsModule,
       HttpClientModule,
+      PagesModule,
       TuiRootModule,
       TuiDialogModule,
       TuiAlertModule,

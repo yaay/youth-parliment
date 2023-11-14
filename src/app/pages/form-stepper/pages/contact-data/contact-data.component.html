@@ -1,0 +1,60 @@
+<form [formGroup]="basicInfoForm">
+  <div class="tui-form__row tui-form__row_multi-fields">
+    <div class="tui-form__multi-field">
+      <tui-input
+        tuiTextfieldCustomContent=""
+        formControlName="fullName"
+        class="input"
+      >
+        الأسم
+        <span class="tui-required"></span>
+      </tui-input>
+      <tui-error
+        formControlName="fullName"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </div>
+    <div class="tui-form__multi-field">
+      <tui-input formControlName="nationalId" class="input">
+        الرقم القومي
+        <span class="tui-required"></span>
+      </tui-input>
+      <tui-error
+        formControlName="nationalId"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </div>
+  </div>
+  <div class="tui-form__row tui-form__row_multi-fields">
+    <div class="tui-form__multi-field">
+      <tui-input formControlName="fullName">الأسم</tui-input>
+    </div>
+    <div class="tui-form__multi-field">
+      <label>
+        Type a name:
+        <tui-combo-box
+            formControlName="government"
+            [stringify]="stringify"
+        >
+            Account
+     
+            <tui-data-list-wrapper
+                *tuiDataList
+                [itemContent]="stringify | tuiStringifyContent"
+            ></tui-data-list-wrapper>
+        </tui-combo-box>
+    </label>
+      <!-- <tui-input formControlName="nationalId" class="input">
+       المحافظه 
+      </tui-input> -->
+    </div>
+  </div>
+  <div class="tui-form__row tui-form__row_multi-fields">
+    <div class="tui-form__multi-field">
+      <tui-input formControlName="fullName" class="input">الأسم</tui-input>
+    </div>
+    <div class="tui-form__multi-field">
+      <tui-input formControlName="nationalId"> الرقم القومي </tui-input>
+    </div>
+  </div>
+</form>

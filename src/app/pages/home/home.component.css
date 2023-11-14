@@ -9,9 +9,3 @@
     display: flex;
     justify-content: center;
 }
-
-.card-img {
-    width: 20rem;
-    height: auto;
-    margin: 1rem;
-}

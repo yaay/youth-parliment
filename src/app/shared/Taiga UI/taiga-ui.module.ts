@@ -6,6 +6,15 @@ import { TuiButtonModule } from '@taiga-ui/core';
 import { TuiSvgModule } from '@taiga-ui/core';
 import { TuiMarkerIconModule } from '@taiga-ui/kit';
 import { TuiStepperModule } from '@taiga-ui/kit'
+import {TuiErrorModule} from '@taiga-ui/core';
+import {TuiFieldErrorPipeModule} from '@taiga-ui/kit';
+import {TuiDataListModule} from '@taiga-ui/core';
+import {TuiDropdownModule} from '@taiga-ui/core';
+import {TuiHostedDropdownModule} from '@taiga-ui/core';
+import {TuiDataListWrapperModule, TuiComboBoxModule, TuiSelectModule} from '@taiga-ui/kit';
+import {TuiPortalModule} from '@taiga-ui/cdk';
+import {TuiStringifyContentPipeModule} from '@taiga-ui/kit';
+
 
 
 const TaigaUIComponents = [
@@ -15,7 +24,18 @@ const TaigaUIComponents = [
     TuiButtonModule,
     TuiSvgModule,
     TuiMarkerIconModule,
-    TuiStepperModule
+    TuiStepperModule,
+    TuiErrorModule,
+    TuiFieldErrorPipeModule,
+    TuiDataListModule,
+    TuiDropdownModule,
+    TuiHostedDropdownModule,
+    TuiDataListWrapperModule,
+    TuiSelectModule,
+    TuiPortalModule,
+    TuiComboBoxModule,
+    TuiStringifyContentPipeModule
+
 ]
 
 
