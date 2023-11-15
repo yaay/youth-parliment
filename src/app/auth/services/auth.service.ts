@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -19,5 +19,13 @@ export class AuthService {
   logOut() {
     localStorage.removeItem("tokenUser")
     this.router.navigateByUrl('/login')
+  }
+
+  checkUserStatus() {
+    if (this.getToken()) {
+      return true
+    } else {
+      return false
+    }
   }
 }

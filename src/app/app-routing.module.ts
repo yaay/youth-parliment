@@ -5,12 +5,18 @@ import { SignupComponent } from './auth/components/signup/signup.component';
 import { ResetPasswordComponent } from './auth/components/reset-password/reset-password.component';
 import { HomeComponent } from './pages/home/home.component';
 import { PagesModule } from './pages/pages.module';
+import { authGuard } from './auth/guards/auth.guard';
 
 const routes: Routes = [
-  {path: '', component: LoginComponent},
+  {path: '', redirectTo: 'home', pathMatch: 'full'},
+  {path: 'login', component: LoginComponent},
   {path: 'signup', component: SignupComponent},
   {path: 'reset-password', component: ResetPasswordComponent},
-  {path: 'home', loadChildren: () => PagesModule},
+  {
+  path: 'home',
+  loadChildren: () => PagesModule,
+  canActivate: [authGuard]
+},
 ];
 
 @NgModule({

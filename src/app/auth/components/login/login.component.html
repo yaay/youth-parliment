@@ -1,17 +1,18 @@
 <div class="container">
   <div class="right-side">
-    <div class="tui-col_md-4 tui-center login-box">
+    <div class="tui-col_md-12 tui-center login-box">
       <tui-island class="rtl card">
         <div class="welcome-text">
             <h3 class="">مرحباً بعودتك !</h3>
             <p class="">يمكنك تسجيل الدخول إلي حسابك</p>
         </div>
         <form
-        (ngSubmit)="login(loginForm.value)"
-        #loginForm="ngForm"
+        [formGroup]="loginForm"
+        (ngSubmit)="login()"
         >
-          <div class="tui-col_md-6">
+          <div class="tui-col_md-12">
               <tui-input
+              formControlName="email"
               tuiHintDirection="bottom-right"
               tuiTextfieldIconLeft="tuiIconSearchLarge"
               class="input"
@@ -19,26 +20,24 @@
               البريد الألكتروني
               <input 
               tuiTextfield
-              name="email"
-              [(ngModel)]="loginData.email"
               />
             </tui-input>
     
-            <tui-input
-              tuiHintDirection="bottom-right"
-              tuiTextfieldIconLeft="tuiIconSearchLarge"
+            <tui-input-password
+              formControlName="password"
               class="input"
             >
               كلمه المرور
               <input
-              tuiTextfield
-              name="password"
-              [(ngModel)]="loginData.password"
+              tuiTextfield             
                />
-            </tui-input>
-            <button class="btn">تسجيل الدخول</button>
+            </tui-input-password>
+            <button
+            tuiButton
+            class="tui-space_bottom-3 btn-width"
+            >تسجيل الدخول</button>
             <div class="login-help">
-                <a>إنشاء حساب جديد؟</a>
+                <a routerLink="/signup">إنشاء حساب جديد؟</a>
                 <a>هل نسيت كلمة المرور؟</a>
             </div>
           </div>
@@ -48,7 +47,7 @@
     </div>
   </div>
 
-  <div class="tui-col_md-4 left-side">
+  <div class="tui-col_md-12 left-side">
     <img class="logo" src="../../../../assets/images/logo.png" alt="mys-logo" />
   </div>
 </div>

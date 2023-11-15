@@ -6,7 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { TaigaUIModule } from "./shared/Taiga UI/taiga-ui.module";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/components/login/login.component';
@@ -32,7 +32,8 @@ import { PagesModule } from "./pages/pages.module";
       TuiRootModule,
       TuiDialogModule,
       TuiAlertModule,
-      TaigaUIModule
+      TaigaUIModule,
+      ReactiveFormsModule
 ],
   providers: [
     {provide: TUI_SANITIZER, useClass: NgDompurifySanitizer},

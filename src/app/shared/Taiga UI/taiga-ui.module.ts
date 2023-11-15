@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { TuiActionModule } from '@taiga-ui/kit';
 import { TuiIslandModule } from '@taiga-ui/kit';
 import { TuiInputModule } from '@taiga-ui/kit';
-import { TuiButtonModule } from '@taiga-ui/core';
+// import { TuiButtonModule } from '@taiga-ui/core';
+import { TuiButtonModule } from '@taiga-ui/experimental';
 import { TuiSvgModule } from '@taiga-ui/core';
 import { TuiMarkerIconModule } from '@taiga-ui/kit';
 import { TuiStepperModule } from '@taiga-ui/kit'
@@ -14,6 +15,8 @@ import {TuiHostedDropdownModule} from '@taiga-ui/core';
 import {TuiDataListWrapperModule, TuiComboBoxModule, TuiSelectModule} from '@taiga-ui/kit';
 import {TuiPortalModule} from '@taiga-ui/cdk';
 import {TuiStringifyContentPipeModule} from '@taiga-ui/kit';
+import {TuiInputPasswordModule} from '@taiga-ui/kit';
+
 
 
 
@@ -34,13 +37,13 @@ const TaigaUIComponents = [
     TuiSelectModule,
     TuiPortalModule,
     TuiComboBoxModule,
-    TuiStringifyContentPipeModule
-
+    TuiStringifyContentPipeModule,
+    TuiInputPasswordModule
 ]
 
 
 @NgModule({
-  imports: [TaigaUIComponents],
+  imports: [TaigaUIComponents] ,
   exports: [TaigaUIComponents],
 })
 

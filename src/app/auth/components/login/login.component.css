@@ -101,3 +101,41 @@ h3, p {
     flex-direction: column;
     margin: 1rem 0;
 }
+
+tui-input, tui-input-password {
+    max-width: 30rem;
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        flex-direction: column-reverse;
+        align-items: center;
+        justify-content: center;
+        height: auto;
+        padding-bottom: 1rem;
+    }
+    .right-side {
+        width: 100%;
+        margin: 0;
+    }
+
+    .left-side {
+        width: calc(100% - 2.5rem);
+        margin: 1rem;
+    }
+
+    .logo {
+        height: 12rem;
+    }
+
+    
+    @media screen and (max-width: 480px) {        
+        .login-help {
+            align-items: center;
+        }
+
+        .btn-width {
+            width: 100%;
+        }
+    }
+}
