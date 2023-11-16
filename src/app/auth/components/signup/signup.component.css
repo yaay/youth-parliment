@@ -98,4 +98,57 @@ h3, p {
     margin: 1rem 0;
 }
 
+tui-input, tui-input-password {
+    max-width: 30rem;
+}
 
+tui-error {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        flex-direction: column-reverse;
+        align-items: center;
+        justify-content: center;
+        height: auto;
+        padding-bottom: 1rem;
+    }
+    .right-side {
+        width: 100%;
+        margin: 0;
+    }
+
+    .left-side {
+        width: calc(100% - 2.5rem);
+        margin: 1rem;
+    }
+
+    .card {
+        align-items: center;
+    }
+
+    form {
+        width: 100%;
+    }
+
+    .logo {
+        height: 12rem;
+    }
+
+    tui-input, tui-input-password {
+        max-width: none;
+    }
+
+    .signup-help {
+        align-items: center;
+    }
+    
+    @media screen and (max-width: 480px) {        
+
+        .btn-width {
+            width: 100%;
+        }
+    }
+}

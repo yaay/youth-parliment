@@ -102,6 +102,10 @@ h3, p {
     margin: 1rem 0;
 }
 
+.login-help > a {
+    text-align: right
+}
+
 tui-input, tui-input-password {
     max-width: 30rem;
 }
@@ -128,14 +132,20 @@ tui-input, tui-input-password {
         height: 12rem;
     }
 
-    
-    @media screen and (max-width: 480px) {        
-        .login-help {
-            align-items: center;
-        }
-
-        .btn-width {
-            width: 100%;
-        }
+    tui-input, tui-input-password {
+        max-width: none;
     }
+
+    .welcome-text {
+        text-align: center;
+    }
+
+    .login-help {
+        align-items: center;
+    }
+    
+    .btn-width {
+        width: 100%;
+    }
+    
 }

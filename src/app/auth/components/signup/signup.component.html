@@ -4,11 +4,15 @@
       <tui-island class="rtl card">
         <div class="welcome-text">
           <h3 class="">أنشاء حساب جديد</h3>
-          <!-- <p class="">يمكنك تسجيل الدخول إلي حسابك</p> -->
         </div>
-        <form class="b-form">
-          <div class="tui-col_md-6">
-            <tui-input class="input">
+        <form
+        [formGroup]="signupForm"
+        (ngSubmit)="signup()" 
+        class="b-form"
+        >
+          <div class="tui-col_md-12">
+            <tui-input 
+            class="input">
               اسم المستخدم
               <span class="tui-required"></span>
               <input placeholder="محمد احمد" tuiTextfield type="text" />
@@ -16,6 +20,7 @@
 
             <tui-input 
             tuiHintDirection="bottom-right"
+            formControlName="email"
             class="input">
               البريد الألكتروني
               <span class="tui-required"></span>
@@ -26,36 +31,43 @@
                 type="email"
               />
             </tui-input>
+            <tui-error
+            formControlName="email"
+            [error]="[] | tuiFieldError | async"
+          ></tui-error>
 
-            <tui-input
+            <tui-input-password
+            formControlName="password"
             tuiHintDirection="bottom-right"
             class="input">
               كلمه المرور
               <span class="tui-required"></span>
               <input
-                placeholder="*********"
                 tuiTextfield
                 type="password"
               />
-            </tui-input>
+            </tui-input-password>
+            <tui-error
+            formControlName="password"
+            [error]="[] | tuiFieldError | async"
+          ></tui-error>
 
-            <tui-input class="input">
+            <tui-input-password
+            formControlName="confirmPassword"
+            class="input"
+            [pseudoInvalid]="signupForm.errors?.['passwordMatchError'] && signupForm.controls.password.touched"
+            >
               تأكيد كلمه المرور
               <span class="tui-required"></span>
               <input
-                placeholder="*********"
                 tuiTextfield
                 type="password"
               />
-            </tui-input>
-
-            <!-- <tui-input-password
-              formControlName="testValue"
-              class="tui-space_top-2"
-            >
-              Type a password
-              <input placeholder="Make it secure!" tuiTextfield />
-            </tui-input-password> -->
+            </tui-input-password>
+            <tui-error
+            formControlName="confirmPassword"
+            [error]="[] | tuiFieldError | async"
+          ></tui-error>
 
             <button class="btn">تسجيل الدخول</button>
 

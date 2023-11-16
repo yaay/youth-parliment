@@ -16,7 +16,7 @@ import {TuiDataListWrapperModule, TuiComboBoxModule, TuiSelectModule} from '@tai
 import {TuiPortalModule} from '@taiga-ui/cdk';
 import {TuiStringifyContentPipeModule} from '@taiga-ui/kit';
 import {TuiInputPasswordModule} from '@taiga-ui/kit';
-
+import {TuiLinkModule} from '@taiga-ui/core';
 
 
 
@@ -38,7 +38,8 @@ const TaigaUIComponents = [
     TuiPortalModule,
     TuiComboBoxModule,
     TuiStringifyContentPipeModule,
-    TuiInputPasswordModule
+    TuiInputPasswordModule,
+    TuiLinkModule
 ]
 
 

@@ -21,7 +21,7 @@ export class LoginComponent {
 
   // loginData: User = {
   //   email: '',
-  //   password: ''
+  //   password: '',
   // }
 
   login() {
