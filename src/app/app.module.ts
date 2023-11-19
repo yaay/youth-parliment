@@ -1,5 +1,5 @@
 import { NgDompurifySanitizer } from "@tinkoff/ng-dompurify";
-import { TuiRootModule, TuiDialogModule, TuiAlertModule, TUI_SANITIZER } from "@taiga-ui/core";
+import { TUI_SANITIZER } from "@taiga-ui/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -14,6 +14,7 @@ import { SignupComponent } from './auth/components/signup/signup.component';
 import { ResetPasswordComponent } from './auth/components/reset-password/reset-password.component';
 import { LoginInterceptor } from "./core/services/login.interceptor";
 import { PagesModule } from "./pages/pages.module";
+import { DropdownMenuComponent } from './shared/components/dropdown-menu/dropdown-menu.component';
 
 @NgModule({
   declarations: [
@@ -21,22 +22,20 @@ import { PagesModule } from "./pages/pages.module";
     LoginComponent,
     SignupComponent,
     ResetPasswordComponent,
+    DropdownMenuComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-      BrowserAnimationsModule,
-      FormsModule,
-      HttpClientModule,
-      PagesModule,
-      TuiRootModule,
-      TuiDialogModule,
-      TuiAlertModule,
-      TaigaUIModule,
-      ReactiveFormsModule
-],
+    BrowserAnimationsModule,
+    FormsModule,
+    HttpClientModule,
+    PagesModule,
+    TaigaUIModule,
+    ReactiveFormsModule
+  ],
   providers: [
-    {provide: TUI_SANITIZER, useClass: NgDompurifySanitizer},
+    { provide: TUI_SANITIZER, useClass: NgDompurifySanitizer },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoginInterceptor,

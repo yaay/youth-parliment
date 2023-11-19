@@ -17,8 +17,8 @@ export abstract class ResourceService {
 
   add(resource: any): Observable<any> {
     return this.http
-    // .post(this.APIUrl, resource, { observe: 'response', withCredentials: true })
-    .post(this.APIUrl, resource)
+    .post(this.APIUrl, resource, { observe: 'response' })
+    // .post(this.APIUrl, resource)
     .pipe(catchError((err) => {
       throw new Error('Error',err.message);
     }))

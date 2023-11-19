@@ -1,11 +1,31 @@
 <nav>
-    <div class="logo">
-      <img src="../../../../assets/images/logo.png" alt="logo" />
-      <p>المنصة الأنتخابية</p>
-    </div>
+  <div class="logo">
+    <img src="../../../../assets/images/logo.png" alt="logo" />
+    <p>المنصة الأنتخابية</p>
+  </div>
 
+  <tui-hosted-dropdown [content]="content">
     <div class="user">
       <tui-marker-icon size="s" src="tuiIconUser"></tui-marker-icon>
       <p>معلوماتي</p>
     </div>
-  </nav>
+  </tui-hosted-dropdown>
+  <ng-template #content>
+    <tui-data-list role="menu">
+        <a
+          tuiOption
+          role="menuitem"
+        >
+          تغير كلمه المرور
+        </a>
+        <a
+          tuiOption
+          role="menuitem"
+        >
+          تسجيل الخروج
+        </a>
+    </tui-data-list>
+  
+  </ng-template>
+</nav>
+<tui-root></tui-root>

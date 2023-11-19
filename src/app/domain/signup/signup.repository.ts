@@ -5,7 +5,7 @@ import { ResourceService } from "src/app/core/services/resource.service";
     providedIn: 'root'
 })
 
-export class LoginRepository extends ResourceService {
+export class SignupRepository extends ResourceService {
     getResourceUrl(): string {
         return 'user'
     }

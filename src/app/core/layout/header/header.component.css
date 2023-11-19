@@ -1,3 +1,7 @@
+:root {
+    --tui-font-text: 'HelveticaNeueLT Arabic 55 Roman', sans-serif;
+}
+
 .logo, .user {
     display: flex;
     align-items: center;

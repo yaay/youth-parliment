@@ -14,7 +14,6 @@
             <tui-input 
             class="input">
               اسم المستخدم
-              <span class="tui-required"></span>
               <input placeholder="محمد احمد" tuiTextfield type="text" />
             </tui-input>
 
@@ -65,14 +64,14 @@
               />
             </tui-input-password>
             <tui-error
-            formControlName="confirmPassword"
+            formControlName="SignupComponent"
             [error]="[] | tuiFieldError | async"
           ></tui-error>
 
             <button class="btn">تسجيل الدخول</button>
 
             <div class="signup-help">
-                <p>هل لديك حساب بالفعل ؟ تسجيل الدخول</p>
+                <p>هل لديك حساب بالفعل؟ <a tuiLink routerLink="/login">تسجيل الدخول</a></p>
             </div>
           </div>
         </form>
@@ -84,3 +83,5 @@
     <img class="logo" src="../../../../assets/images/logo.png" alt="mys-logo" />
   </div>
 </div>
+
+<tui-root></tui-root>

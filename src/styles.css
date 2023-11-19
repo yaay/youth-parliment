@@ -4,6 +4,7 @@
     --main-font: 'HelveticaNeueLT Arabic 55 Roman','IBM Plex Sans Arabic', sans-serif;
     --accent-color: #f5a091;
     --bg-color: #f8f7f4;
+    --tui-font-text: 'HelveticaNeueLT Arabic 55 Roman', sans-serif;
 }
 
 :host {
@@ -12,8 +13,8 @@
 
 
 body {
-    font-family: var(--main-font);
-    margin: 0;
-    padding: 0;
-    background-color: var(--bg-color);
+    font-family: var(--main-font) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: var(--bg-color) !important;
 }
