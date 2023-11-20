@@ -26,7 +26,8 @@ const stepperRoutes: Routes = [
 @NgModule({
   declarations: [
     FormStepperComponent,
-    ContactDataComponent
+    ContactDataComponent,
+    MainDataComponent
   ],
   imports: [
     CommonModule,

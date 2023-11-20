@@ -24,4 +24,13 @@ export abstract class ResourceService {
     }))
   };
 
+  get(): Observable<any> {
+    return this.http
+    .get(this.APIUrl)
+    .pipe(catchError((err) => {
+      throw new Error('Error', err.message)
+    }))
+
+  }
+
 }

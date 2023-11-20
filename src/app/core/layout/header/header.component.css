@@ -21,6 +21,10 @@
     margin: 0.5rem 0;
 }
 
+.user {
+    cursor: pointer;
+}
+
 .user p {
     /* font-size: 15px; */
     font-weight: 600;

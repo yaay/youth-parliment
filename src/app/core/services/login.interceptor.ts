@@ -6,16 +6,28 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Injectable()
 export class LoginInterceptor implements HttpInterceptor {
 
-  constructor() {}
+  constructor(private authService: AuthService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
-    console.log('Intercepted request2', request) 
+    const token = this.authService.getToken()
 
-    return next.handle(request);
+    const modifiedRequest = request.clone({
+      withCredentials: true,
+      setHeaders: {
+        Cookie: `accessToken=${token}`
+      }
+    });
+
+    console.log('Intercepted request2', modifiedRequest) 
+
+    return next.handle(modifiedRequest);
   }
 }
+
+

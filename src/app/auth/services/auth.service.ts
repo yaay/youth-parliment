@@ -10,6 +10,7 @@ export class AuthService {
 
   setToken(token:string){
     localStorage.setItem("tokenUser", token);
+    document.cookie = `accessValue=${token}`
   }
 
   getToken() {

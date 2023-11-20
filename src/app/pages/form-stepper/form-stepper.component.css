@@ -16,6 +16,14 @@ tui-stepper {
     justify-content: space-between;
 }
 
-/* a {
-    margin: 0 2rem;
+/* Taiga UI */
+
+/* tui-stepper div {
+    margin-right: 0 !important;
+    margin-left: 0.75rem !important;
 } */
+
+tui-stepper a {
+    margin-right: 0;
+    gap: 0.75rem;
+}

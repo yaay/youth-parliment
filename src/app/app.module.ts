@@ -15,6 +15,7 @@ import { ResetPasswordComponent } from './auth/components/reset-password/reset-p
 import { LoginInterceptor } from "./core/services/login.interceptor";
 import { PagesModule } from "./pages/pages.module";
 import { DropdownMenuComponent } from './shared/components/dropdown-menu/dropdown-menu.component';
+import { CookieService } from "ngx-cookie-service";
 
 @NgModule({
   declarations: [
@@ -40,7 +41,7 @@ import { DropdownMenuComponent } from './shared/components/dropdown-menu/dropdow
       provide: HTTP_INTERCEPTORS,
       useClass: LoginInterceptor,
       multi: true,
-    }
+    },[CookieService]
   ],
   bootstrap: [AppComponent]
 })
