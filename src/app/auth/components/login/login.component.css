@@ -106,6 +106,12 @@ h3, p {
     text-align: right
 }
 
+/* .loader {
+    display: flex;
+    width: fit-content;
+    margin: 1rem 0;
+} */
+
 tui-input, tui-input-password {
     max-width: 30rem;
 }

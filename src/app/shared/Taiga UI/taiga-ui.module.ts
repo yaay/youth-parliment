@@ -18,7 +18,7 @@ import {TuiInputPasswordModule} from '@taiga-ui/kit';
 import {TuiLinkModule} from '@taiga-ui/core';
 import {TuiAlertModule, TuiRootModule} from '@taiga-ui/core';
 import {TuiNotificationModule} from '@taiga-ui/core';
-
+import {TuiLoaderModule} from '@taiga-ui/core';
 
 
 
@@ -47,6 +47,7 @@ const TaigaUIComponents = [
     TuiAlertModule,
     TuiNotificationModule,
     TuiDialogModule,
+    TuiLoaderModule
   ]
 
 

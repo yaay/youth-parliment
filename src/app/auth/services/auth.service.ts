@@ -1,16 +1,21 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor( private router:Router ) { }
+  constructor( private router:Router, private cookieService: CookieService ) { }
 
   setToken(token:string){
     localStorage.setItem("tokenUser", token);
-    document.cookie = `accessValue=${token}`
+    this.cookieService.set('accessValue', token)
+  }
+
+  getCookie() {
+    this.cookieService.get('accessValue')
   }
 
   getToken() {

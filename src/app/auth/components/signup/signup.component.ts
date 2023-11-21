@@ -50,33 +50,26 @@ export class SignupComponent {
     .open('البريد الألكتروني موجود بالفعل', {status: 'error', autoClose: 5000})
     .subscribe()
   }
-
   
 
 
   signup() {
+    console.log(this.signupForm)
 
-    let user = {
-      email: this.signupForm.value.email,
-      password: this.signupForm.value.password
-    }
-    this.signupRepository.add(user)
-    .subscribe({
-      error: () => this.signupError(),
-      next: () => {
-        this.router.navigate(['/login'], {queryParams: { signupSuccess: 'true' }})
-      }
-    })
-    // .subscribe(
-    //   (response) => {
-    //   console.log(response.status)
-    //  },
-    //  (error) => {
-    //   console.log(error)
-    //   this.signupError()
-    //  }
-    //  )
-   
+    if(this.signupForm.status==='VALID') {
+          let user = {
+            email: this.signupForm.value.email,
+            password: this.signupForm.value.password
+          }
+          this.signupRepository.add(user)
+          .subscribe({
+            error: () => this.signupError(),
+            next: () => {
+              this.router.navigate(['/login'], {queryParams: { signupSuccess: 'true' }
+            })
+            }
+          })
+    }   
   }
 
 }

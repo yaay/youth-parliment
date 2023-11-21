@@ -36,7 +36,6 @@ import { CookieService } from "ngx-cookie-service";
     ReactiveFormsModule
   ],
   providers: [
-    { provide: TUI_SANITIZER, useClass: NgDompurifySanitizer },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoginInterceptor,

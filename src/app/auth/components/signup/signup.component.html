@@ -5,22 +5,18 @@
         <div class="welcome-text">
           <h3 class="">أنشاء حساب جديد</h3>
         </div>
-        <form
-        [formGroup]="signupForm"
-        (ngSubmit)="signup()" 
-        class="b-form"
-        >
+        <form [formGroup]="signupForm" (ngSubmit)="signup()" class="b-form">
           <div class="tui-col_md-12">
-            <tui-input 
-            class="input">
+            <tui-input class="input">
               اسم المستخدم
               <input placeholder="محمد احمد" tuiTextfield type="text" />
             </tui-input>
 
-            <tui-input 
-            tuiHintDirection="bottom-right"
-            formControlName="email"
-            class="input">
+            <tui-input
+              tuiHintDirection="bottom-right"
+              formControlName="email"
+              class="input"
+            >
               البريد الألكتروني
               <span class="tui-required"></span>
               <input
@@ -31,47 +27,51 @@
               />
             </tui-input>
             <tui-error
-            formControlName="email"
-            [error]="[] | tuiFieldError | async"
-          ></tui-error>
+              formControlName="email"
+              [error]="[] | tuiFieldError | async"
+            ></tui-error>
 
             <tui-input-password
-            formControlName="password"
-            tuiHintDirection="bottom-right"
-            class="input">
+              formControlName="password"
+              tuiHintDirection="bottom-right"
+              class="input"
+            >
               كلمه المرور
               <span class="tui-required"></span>
-              <input
-                tuiTextfield
-                type="password"
-              />
+              <input tuiTextfield type="password" />
             </tui-input-password>
             <tui-error
-            formControlName="password"
-            [error]="[] | tuiFieldError | async"
-          ></tui-error>
+              formControlName="password"
+              [error]="[] | tuiFieldError | async"
+            ></tui-error>
 
             <tui-input-password
-            formControlName="confirmPassword"
-            class="input"
-            [pseudoInvalid]="signupForm.errors?.['passwordMatchError'] && signupForm.controls.password.touched"
+              formControlName="confirmPassword"
+              class="input"
+              [pseudoInvalid]="signupForm.errors?.['passwordMatchError'] && signupForm.controls.password.touched"
             >
               تأكيد كلمه المرور
               <span class="tui-required"></span>
-              <input
-                tuiTextfield
-                type="password"
-              />
+              <input tuiTextfield type="password" />
             </tui-input-password>
             <tui-error
-            formControlName="SignupComponent"
-            [error]="[] | tuiFieldError | async"
-          ></tui-error>
+              formControlName="SignupComponent"
+              [error]="[] | tuiFieldError | async"
+            ></tui-error>
 
-            <button class="btn">تسجيل الدخول</button>
+            <button
+              tuiButton
+              class="tui-space_bottom-3 btn-width"
+              [disabled]="signupForm.invalid"
+            >
+              أنشاء حساب
+            </button>
 
             <div class="signup-help">
-                <p>هل لديك حساب بالفعل؟ <a tuiLink routerLink="/login">تسجيل الدخول</a></p>
+              <p>
+                هل لديك حساب بالفعل؟
+                <a tuiLink routerLink="/login">تسجيل الدخول</a>
+              </p>
             </div>
           </div>
         </form>
@@ -80,7 +80,13 @@
   </div>
 
   <div class="tui-col_md-4 left-side">
-    <img class="logo" src="../../../../assets/images/logo.png" alt="mys-logo" />
+    <img
+      class="logo"
+      src="../../../../assets/images/logo.png"
+      alt="mys-logo"
+      routerLink="/"
+      style="cursor: pointer"
+    />
   </div>
 </div>
 

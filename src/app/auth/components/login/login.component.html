@@ -23,6 +23,7 @@
               />
             </tui-input>
     
+
             <tui-input-password
               formControlName="password"
               class="input"
@@ -34,7 +35,7 @@
             </tui-input-password>
             <button
             tuiButton
-            class="tui-space_bottom-3 btn-width"
+            [showLoader]="loader"
             >تسجيل الدخول</button>
             <div class="login-help">
                 <a
@@ -55,7 +56,13 @@
   </div>
 
   <div class="tui-col_md-12 left-side">
-    <img class="logo" src="../../../../assets/images/logo.png" alt="mys-logo" />
+    <img
+    class="logo" 
+    src="../../../../assets/images/logo.png"
+    alt="mys-logo"
+    routerLink="/"
+    style="cursor: pointer;"
+    />
   </div>
 </div>
 <tui-root></tui-root>
