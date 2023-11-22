@@ -15,20 +15,14 @@ export class LoginInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
-    const token = this.cookieService.get('accessValue')
-    console.log('the token', token)
+    console.log('the token', request)
  
-    const modifiedRequest = request.clone({
-      withCredentials: true,
-      setHeaders: {
-        Cookie:`accessToken=${token}`
-      }
-    });
+
 
 
     // console.log('Intercepted request2', modifiedRequest) 
 
-    return next.handle(modifiedRequest);
+    return next.handle(request);
   }
 }
 

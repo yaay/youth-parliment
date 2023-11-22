@@ -19,7 +19,8 @@ import {TuiLinkModule} from '@taiga-ui/core';
 import {TuiAlertModule, TuiRootModule} from '@taiga-ui/core';
 import {TuiNotificationModule} from '@taiga-ui/core';
 import {TuiLoaderModule} from '@taiga-ui/core';
-
+import { TuiRippleModule, TuiSidebarModule } from '@taiga-ui/addon-mobile';
+import { TuiActiveZoneModule } from '@taiga-ui/cdk/directives';
 
 
 
@@ -47,7 +48,10 @@ const TaigaUIComponents = [
     TuiAlertModule,
     TuiNotificationModule,
     TuiDialogModule,
-    TuiLoaderModule
+    TuiLoaderModule,
+    TuiSidebarModule,
+    TuiActiveZoneModule,
+    TuiRippleModule
   ]
 
 

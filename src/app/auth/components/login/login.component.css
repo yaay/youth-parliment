@@ -116,7 +116,13 @@ tui-input, tui-input-password {
     max-width: 30rem;
 }
 
-@media screen and (max-width: 768px) {
+@media not (max-width: 845px) {
+    .padding-fix {
+        padding-left: 0;
+    }
+}
+
+@media screen and (max-width: 845px) {
     .container {
         flex-direction: column-reverse;
         align-items: center;
@@ -125,12 +131,12 @@ tui-input, tui-input-password {
         padding-bottom: 1rem;
     }
     .right-side {
-        width: 100%;
+        width: 90%;
         margin: 0;
     }
 
     .left-side {
-        width: calc(100% - 2.5rem);
+        width: calc(90% - 2.5rem);
         margin: 1rem;
     }
 
@@ -154,4 +160,16 @@ tui-input, tui-input-password {
         width: 100%;
     }
     
+}
+
+@media screen and (max-width: 560px) {
+    .right-side {
+        width: 100%;
+        margin: 0;
+    }
+
+    .left-side {
+        width: calc(100% - 2.5rem);
+        margin: 1rem;
+    }
 }

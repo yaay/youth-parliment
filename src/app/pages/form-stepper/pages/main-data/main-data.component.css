@@ -11,12 +11,3 @@ form {
     direction: rtl;
     text-align: right;
 }
-
-.error-hint {
-    position: absolute;
-    color: red;
-    font-size: 13px;
-    font-family: var(--main-font);
-    font-weight: 600;
-    margin-right: 6px;
-}

@@ -1,38 +1,84 @@
 <form (ngSubmit)="sumbit()" [formGroup]="basicInfoForm">
-    <div class="tui-form__row tui-form__row_multi-fields">
-        <div class="tui-form__multi-field">
-            <tui-input tuiTextfieldCustomContent="" formControlName="fullName" class="input">
-                الأسم
-                <span class="tui-required"></span>
-            </tui-input>
-            <tui-error formControlName="fullName" [error]="[] | tuiFieldError | async"></tui-error>
-        </div>
-        <div class="tui-form__multi-field">
-            <tui-input formControlName="nationalId" class="input">
-                الرقم القومي
-                <span class="tui-required"></span>
-            </tui-input>
-            <tui-error formControlName="nationalId" [error]="[] | tuiFieldError | async"></tui-error>
-        </div>
+  <div class="tui-form__row tui-form__row_multi-fields">
+    <div class="tui-form__multi-field">
+      <tui-input
+        tuiTextfieldCustomContent=""
+        formControlName="fullName"
+        class="input"
+      >
+        الأسم
+        <span class="tui-required"></span>
+      </tui-input>
+      <tui-error
+        formControlName="fullName"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
     </div>
-
-    <div class="tui-form__row tui-form__row_multi-fields">
-        <div class="tui-form__multi-field">
-            <tui-input tuiTextfieldCustomContent="" formControlName="government" class="input">
-                المحافظه
-                <span class="tui-required"></span>
-            </tui-input>
-            <tui-error formControlName="government" [error]="[] | tuiFieldError | async"></tui-error>
-        </div>
-        <div class="tui-form__multi-field">
-            <tui-input formControlName="nationalId" class="input">
-                الرقم القومي
-                <span class="tui-required"></span>
-            </tui-input>
-            <tui-error formControlName="nationalId" [error]="[] | tuiFieldError | async"></tui-error>
-        </div>
+    <div class="tui-form__multi-field">
+      <tui-input formControlName="nationalId" class="input">
+        الرقم القومي
+        <span class="tui-required"></span>
+      </tui-input>
+      <tui-error
+        formControlName="nationalId"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
     </div>
+  </div>
 
-    <button>hellos</button>
+  <div class="tui-form__row tui-form__row_multi-fields">
+    <div class="tui-form__multi-field">
+      <tui-input
+        tuiTextfieldCustomContent=""
+        formControlName="government"
+        class="input"
+      >
+        المحافظه
+        <span class="tui-required"></span>
+      </tui-input>
+      <tui-error
+        formControlName="government"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </div>
+    <div class="tui-form__multi-field">
+      <tui-input formControlName="district" class="input">
+        القسم الأداري
+        <span class="tui-required"></span>
+      </tui-input>
+      <tui-error
+        formControlName="district"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </div>
+  </div>
 
+  <div class="tui-form__row tui-form__row_multi-fields">
+    <div class="tui-form__multi-field">
+      <tui-input
+        tuiTextfieldCustomContent=""
+        formControlName="adminstration"
+        class="input"
+      >
+        الجهة التابعه
+        <span class="tui-required"></span>
+      </tui-input>
+      <tui-error
+        formControlName="adminstration"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </div>
+    <div class="tui-form__multi-field">
+      <tui-input formControlName="subAdmin" class="input">
+        القسم الأداري
+        <span class="tui-required"></span>
+      </tui-input>
+      <tui-error
+        formControlName="subAdmin"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </div>
+  </div>
+
+  <button>hellos</button>
 </form>

@@ -26,7 +26,7 @@ export abstract class ResourceService {
 
   get(): Observable<any> {
     return this.http
-    .get(this.APIUrl)
+    .get(this.APIUrl, { withCredentials: true })
     .pipe(catchError((err) => {
       throw new Error('Error', err.message)
     }))

@@ -1,37 +1,60 @@
-<nav>
-  <div class="logo">
-    <img 
-    src="../../../../assets/images/logo.png"
-    alt="logo"
-    routerLink="[/home]"
-    style="cursor: pointer;"
-    />
-    <p>المنصة الأنتخابية</p>
-  </div>
-
-  <tui-hosted-dropdown [content]="content">
-    <div class="user">
-      <tui-marker-icon size="s" src="tuiIconUser"></tui-marker-icon>
-      <p>معلوماتي</p>
+<div class="container">
+  <nav class="shadow">
+    <div
+    routerLink="/home"
+    class="logo"
+    style="cursor: pointer"
+    >
+      <img
+        src="../../../../assets/images/logo.png"
+        alt="logo"
+      />
+      <p>المنصة الأنتخابية</p>
     </div>
-  </tui-hosted-dropdown>
-  <ng-template #content>
-    <tui-data-list role="menu">
-        <a
-          tuiOption
-          role="menuitem"
-          class="rtl"
-        >
-          تغير كلمه المرور
-        </a>
-        <a
-          tuiOption
-          role="menuitem"
-          class="rtl"
-        >
-          تسجيل الخروج
-        </a>
-    </tui-data-list>
   
-  </ng-template>
-</nav>
+    <tui-hosted-dropdown [content]="content">
+      <div class="user">
+        <tui-marker-icon size="s" src="tuiIconUser"></tui-marker-icon>
+        <p>معلوماتي</p>
+      </div>
+    </tui-hosted-dropdown>
+    <ng-template #content>
+      <tui-data-list role="menu">
+        <a tuiOption role="menuitem" routerLink="change-password" class="rtl"> تغير كلمه المرور </a>
+        <a tuiOption role="menuitem" class="rtl"> تسجيل الخروج </a>
+      </tui-data-list>
+    </ng-template>
+    <div 
+    class="sidemenu-icon"
+    (click)="toggle(true)"
+    (tuiActiveZoneChange)="toggle($event)"
+    >
+      <tui-svg src="tuiIconMenuLarge"></tui-svg>
+      <div *tuiSidebar="open" class="sidebar">
+        <div class="sidebar-user">
+          <tui-marker-icon size="m" src="tuiIconUser"></tui-marker-icon>
+          <p>محمد احمد</p>
+        </div>
+        <div 
+        tuiRipple 
+        routerLink="change-password"
+        (click)="toggle(false)"
+        (tuiActiveZoneChange)="toggle($event)"
+        class="sidebar-row">
+          <tui-marker-icon 
+          [mode]="'success'"
+          size="xs" 
+          src="tuiIconSettings"></tui-marker-icon>
+          <p>تغير كلمه المرور</p>
+        </div>
+        <div tuiRipple class="sidebar-row">
+          <tui-marker-icon
+          [mode]="'error'"
+          size="xs" 
+          src="tuiIconPower"></tui-marker-icon>
+          <p>تسجيل الخروج</p>
+        </div>
+      </div>
+    </div>
+  </nav>
+</div>

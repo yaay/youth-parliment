@@ -72,9 +72,7 @@ export class LoginComponent {
           error: () => this.executeOnFailedLogin(),
           next: (response) => {
             if (response.status === 200) {
-              console.log('login!')
-              this.authService.setToken('eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5ZWhuQG91dGxvb2suY29tIiwiaWF0IjoxNzAwNDc3MDQwLCJleHAiOjE3MDA1NjM0NDB9.oUY4Du77nBUTXCZNpSfqwtZe8VpZBkA1RFmjfsVtrxI')
-
+              this.authService.setToken()
               this.router.navigate(['/home'])
 
             }

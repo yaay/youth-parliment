@@ -1,27 +1,14 @@
-/* .container {
-    position: relative;
-    width: 96.7vw;
-    display: flex;
-} */
 
 tui-island {
     padding: 2rem;
-    position: relative;
-    width: 100%;
+
 }
 
 tui-stepper {
     margin-bottom: 2rem;
-    /* display: flex; */
     justify-content: space-between;
 }
 
-/* Taiga UI */
-
-/* tui-stepper div {
-    margin-right: 0 !important;
-    margin-left: 0.75rem !important;
-} */
 
 tui-stepper a {
     margin-right: 0;

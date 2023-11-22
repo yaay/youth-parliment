@@ -6,6 +6,8 @@ import { HeaderComponent } from 'src/app/core/layout/header/header.component';
 import { RouterModule, Routes } from '@angular/router';
 import { ApplicationStatusComponent } from './application-status/application-status.component';
 import { FormStepperModule } from './form-stepper/form-stepper.module';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 const pagesRoutes: Routes = [
@@ -14,6 +16,7 @@ const pagesRoutes: Routes = [
     component: HomeComponent,
     children: [
       {path: '', component: ApplicationStatusComponent},
+      {path: 'change-password', component: ChangePasswordComponent},
       {path: 'voter-data', loadChildren: () => FormStepperModule }
     ]
   }
@@ -25,11 +28,12 @@ const pagesRoutes: Routes = [
     HomeComponent,
     HeaderComponent,
     ApplicationStatusComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     CommonModule,
     TaigaUIModule,
-    // FormStepperModule,
+    ReactiveFormsModule,
     RouterModule.forChild(pagesRoutes)
   ],
   exports: [RouterModule]
