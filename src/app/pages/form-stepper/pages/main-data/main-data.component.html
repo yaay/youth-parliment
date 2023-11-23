@@ -15,10 +15,10 @@
       ></tui-error>
     </div>
     <div class="tui-form__multi-field">
-      <tui-input formControlName="nationalId" class="input">
+      <tui-input-number formControlName="nationalId" class="input">
         الرقم القومي
         <span class="tui-required"></span>
-      </tui-input>
+      </tui-input-number>
       <tui-error
         formControlName="nationalId"
         [error]="[] | tuiFieldError | async"

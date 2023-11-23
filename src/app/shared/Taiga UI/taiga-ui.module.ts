@@ -22,6 +22,7 @@ import {TuiLoaderModule} from '@taiga-ui/core';
 import { TuiRippleModule, TuiSidebarModule } from '@taiga-ui/addon-mobile';
 import { TuiActiveZoneModule } from '@taiga-ui/cdk/directives';
 import {TuiRadioLabeledModule} from '@taiga-ui/kit';
+import {TuiInputNumberModule} from '@taiga-ui/kit';
 
 
 
@@ -58,7 +59,8 @@ const TaigaUIComponents = [
     TuiGroupModule,
     TuiRadioBlockModule,
     TuiTextareaModule,
-    TuiFilterByInputPipeModule
+    TuiFilterByInputPipeModule,
+    TuiInputNumberModule
   ]
 
 

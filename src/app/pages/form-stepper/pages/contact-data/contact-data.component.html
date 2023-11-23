@@ -1,28 +1,28 @@
 <form [formGroup]="contactDataForm">
   <div class="tui-form__row tui-form__row_multi-fields">
     <div class="tui-form__multi-field">
-      <tui-input
+      <tui-input-number
         tuiTextfieldCustomContent=""
         formControlName="secondNumber"
         class="input"
       >
         رقم الهاتف الثاني
         <span class="tui-required"></span>
-      </tui-input>
+      </tui-input-number>
       <tui-error
         formControlName="secondNumber"
         [error]="[] | tuiFieldError | async"
       ></tui-error>
     </div>
     <div class="tui-form__multi-field">
-      <tui-input
+      <tui-input-number
         tuiTextfieldCustomContent=""
         formControlName="phoneNumber"
         class="input"
       >
         رقم الهاتف الأول
         <span class="tui-required"></span>
-      </tui-input>
+      </tui-input-number>
       <tui-error
         formControlName="phoneNumber"
         [error]="[] | tuiFieldError | async"
