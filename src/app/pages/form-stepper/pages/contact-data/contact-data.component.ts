@@ -9,14 +9,9 @@ import { TUI_VALIDATION_ERRORS } from '@taiga-ui/kit';
 
 })
 export class ContactDataComponent {
-
-
-
-
-
-
-
-  
-
-
+  contactDataForm = new FormGroup({
+    phoneNumber: new FormControl(''),
+    secondNumber: new FormControl(''),
+    address: new FormControl('')
+  })
 }

@@ -11,3 +11,16 @@ form {
     direction: rtl;
     text-align: right;
 }
+
+.tui-form__row {
+    display: flex;
+    align-items: center;
+}
+
+.radio-block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    font-family: var(--main-font);
+}

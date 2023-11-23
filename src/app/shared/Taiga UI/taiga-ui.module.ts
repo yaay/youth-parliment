@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { TuiActionModule } from '@taiga-ui/kit';
+import { TuiActionModule, TuiRadioBlockModule } from '@taiga-ui/kit';
 import { TuiIslandModule } from '@taiga-ui/kit';
 import { TuiInputModule } from '@taiga-ui/kit';
-import { TuiButtonModule, TuiDialogModule } from '@taiga-ui/core';
+import { TuiButtonModule, TuiDialogModule, TuiGroupModule } from '@taiga-ui/core';
 import { TuiSvgModule } from '@taiga-ui/core';
 import { TuiMarkerIconModule } from '@taiga-ui/kit';
 import { TuiStepperModule } from '@taiga-ui/kit'
@@ -21,6 +21,8 @@ import {TuiNotificationModule} from '@taiga-ui/core';
 import {TuiLoaderModule} from '@taiga-ui/core';
 import { TuiRippleModule, TuiSidebarModule } from '@taiga-ui/addon-mobile';
 import { TuiActiveZoneModule } from '@taiga-ui/cdk/directives';
+import {TuiRadioLabeledModule} from '@taiga-ui/kit';
+
 
 
 
@@ -51,7 +53,10 @@ const TaigaUIComponents = [
     TuiLoaderModule,
     TuiSidebarModule,
     TuiActiveZoneModule,
-    TuiRippleModule
+    TuiRippleModule,
+    TuiRadioLabeledModule,
+    TuiGroupModule,
+    TuiRadioBlockModule
   ]
 
 

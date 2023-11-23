@@ -70,7 +70,7 @@
     </div>
     <div class="tui-form__multi-field">
       <tui-input formControlName="subAdmin" class="input">
-        القسم الأداري
+        الأدارة التعليميه
         <span class="tui-required"></span>
       </tui-input>
       <tui-error
@@ -80,5 +80,37 @@
     </div>
   </div>
 
-  <button>hellos</button>
+  <div class="tui-form__row tui-form__row_multi-fields">
+    <div class="something">
+      <div class="tui-form__multi-field radio-block">
+        <p>النوع:</p>
+        <input type="radio" id="gender" name="age" value="30" />
+        <label for="gender">ذكر</label><br />
+        <input type="radio" id="gender" name="age" value="20" />
+        <label for="gender">انثي</label><br />
+      </div>
+
+      <div class="tui-form__multi-field radio-block">
+        <p>الديانه:</p>
+        <input type="radio" id="gender" name="age" value="30" />
+        <label for="gender">مسلم</label><br />
+        <input type="radio" id="gender" name="age" value="20" />
+        <label for="gender">مسيحي</label><br />
+      </div>
+
+      <div class="tui-form__multi-field radio-block">
+        <p>هل لديك اعاقه:</p>
+        <input type="radio" id="gender" name="age" value="30" />
+        <label for="gender">نعم</label><br />
+        <input type="radio" id="gender" name="age" value="20" />
+        <label for="gender">لا</label><br />
+      </div>
+    </div>
+  </div>
+  <div class="tui-form__row" style="justify-content: flex-end;">
+    <button 
+    routerLink="../contact-data"
+    tuiButton 
+    appearance="secondary">التالي</button>
+  </div>
 </form>

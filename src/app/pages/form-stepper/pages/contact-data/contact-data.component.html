@@ -1,1 +1,32 @@
-<p>contact-data works!</p>
+<form action="">
+    <div class="tui-form__row">
+        <div class="tui-form__multi-field">
+            <tui-input
+              tuiTextfieldCustomContent=""
+              formControlName="phoneNumber"
+              class="input"
+            >
+              رقم الهاتف الأول
+              <span class="tui-required"></span>
+            </tui-input>
+            <tui-error
+              formControlName="phoneNumber"
+              [error]="[] | tuiFieldError | async"
+            ></tui-error>
+          </div>
+        <div class="tui-form__multi-field">
+            <tui-input
+              tuiTextfieldCustomContent=""
+              formControlName="secondNumber"
+              class="input"
+            >
+              رقم الهاتف الثاني
+              <span class="tui-required"></span>
+            </tui-input>
+            <tui-error
+              formControlName="secondNumber"
+              [error]="[] | tuiFieldError | async"
+            ></tui-error>
+          </div>
+    </div>
+</form>

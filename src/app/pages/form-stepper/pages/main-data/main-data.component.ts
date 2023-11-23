@@ -24,6 +24,9 @@ export class MainDataComponent {
 
   constructor(private govermentRepository: GovernmentRepository) {}
 
+  genders = [{gender: 'male'}, {gender: 'female'}];
+
+
   basicInfoForm = new FormGroup({
     fullName: new FormControl(null, [Validators.required, minWordsValidator(4)]),
     nationalId: new FormControl(null, [Validators.required, Validators.pattern(/^([1-9]{1})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})[0-9]{3}([0-9]{1})[0-9]{1}$/)]),
@@ -32,7 +35,7 @@ export class MainDataComponent {
     adminstration: new FormControl(''),
     subAdmin: new FormControl(''),
     dob: new FormControl(''),
-    gender: new FormControl(''),
+    gender: new FormControl(null, [Validators.required]),
     religion: new FormControl(''),
     disability: new FormControl(''),
   })
