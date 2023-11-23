@@ -1,0 +1,39 @@
+<form [formGroup]="eduQualsForm">
+    <div class="tui-form__row tui-form__row_multi-fields">
+        <div class="tui-form__multi-field">
+            <label>
+                <tui-combo-box
+                    formControlName="educationalLevel"
+                    tuiTextfieldLabelOutside="true"
+                >
+                    المرحله الدراسية
+            
+                    <tui-data-list-wrapper
+                        *tuiDataList
+                        [itemContent]="stringify | tuiStringifyContent"
+                        [items]="items | tuiFilterByInputWith: stringify"
+                    ></tui-data-list-wrapper>
+                </tui-combo-box>
+            </label>
+            
+          <tui-error
+            formControlName="secondNumber"
+            [error]="[] | tuiFieldError | async"
+          ></tui-error>
+        </div>
+        <div class="tui-form__multi-field">
+          <tui-input
+            tuiTextfieldCustomContent=""
+            formControlName="phoneNumber"
+            class="input"
+          >
+            رقم الهاتف الأول
+            <span class="tui-required"></span>
+          </tui-input>
+          <tui-error
+            formControlName="phoneNumber"
+            [error]="[] | tuiFieldError | async"
+          ></tui-error>
+        </div>
+      </div>
+</form>

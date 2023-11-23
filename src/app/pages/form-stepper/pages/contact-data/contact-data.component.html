@@ -1,32 +1,60 @@
-<form action="">
-    <div class="tui-form__row">
-        <div class="tui-form__multi-field">
-            <tui-input
-              tuiTextfieldCustomContent=""
-              formControlName="phoneNumber"
-              class="input"
-            >
-              رقم الهاتف الأول
-              <span class="tui-required"></span>
-            </tui-input>
-            <tui-error
-              formControlName="phoneNumber"
-              [error]="[] | tuiFieldError | async"
-            ></tui-error>
-          </div>
-        <div class="tui-form__multi-field">
-            <tui-input
-              tuiTextfieldCustomContent=""
-              formControlName="secondNumber"
-              class="input"
-            >
-              رقم الهاتف الثاني
-              <span class="tui-required"></span>
-            </tui-input>
-            <tui-error
-              formControlName="secondNumber"
-              [error]="[] | tuiFieldError | async"
-            ></tui-error>
-          </div>
+<form [formGroup]="contactDataForm">
+  <div class="tui-form__row tui-form__row_multi-fields">
+    <div class="tui-form__multi-field">
+      <tui-input
+        tuiTextfieldCustomContent=""
+        formControlName="secondNumber"
+        class="input"
+      >
+        رقم الهاتف الثاني
+        <span class="tui-required"></span>
+      </tui-input>
+      <tui-error
+        formControlName="secondNumber"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
     </div>
+    <div class="tui-form__multi-field">
+      <tui-input
+        tuiTextfieldCustomContent=""
+        formControlName="phoneNumber"
+        class="input"
+      >
+        رقم الهاتف الأول
+        <span class="tui-required"></span>
+      </tui-input>
+      <tui-error
+        formControlName="phoneNumber"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </div>
+  </div>
+  <div class="tui-form__row">
+    <tui-textarea
+      tuiHintContent="معلومات شخصيه"
+      tuiHintDirection="bottom-right"
+      class="input"
+      formControlName="address"
+      [maxLength]="100"
+      tuiTextfieldCleaner="true"
+    >
+      عنوان السكن بالتفصيل (مدينة - شارع - رقم منزل)
+      <textarea tuiTextfield></textarea>
+    </tui-textarea>
+    <tui-error
+      formControlName="address"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </div>
+  <div
+    class="tui-form__row"
+    style="display: flex; justify-content: flex-start; gap: 0.5rem;"
+  >
+    <button routerLink="../edu-qualifications" tuiButton appearance="secondary">
+      التالي
+    </button>
+    <button routerLink="../main-data" tuiButton appearance="secondary">
+      السابق
+    </button>
+  </div>
 </form>

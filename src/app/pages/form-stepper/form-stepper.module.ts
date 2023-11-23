@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainDataComponent } from './pages/main-data/main-data.component';
 import { ContactDataComponent } from './pages/contact-data/contact-data.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { EducationalQualificationsComponent } from './pages/educational-qualifications/educational-qualifications.component';
 
 
 const stepperRoutes: Routes = [
@@ -15,7 +16,8 @@ const stepperRoutes: Routes = [
     children: [
       {path: '', redirectTo: 'main-data', pathMatch: 'full'},
       {path: 'main-data', component: MainDataComponent},
-      {path: 'contact-data', component: ContactDataComponent}
+      {path: 'contact-data', component: ContactDataComponent},
+      {path: 'edu-qualifications', component: EducationalQualificationsComponent}
 
     ]
   }
@@ -27,7 +29,8 @@ const stepperRoutes: Routes = [
   declarations: [
     FormStepperComponent,
     ContactDataComponent,
-    MainDataComponent
+    MainDataComponent,
+    EducationalQualificationsComponent
   ],
   imports: [
     CommonModule,
