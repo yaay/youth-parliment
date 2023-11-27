@@ -16,6 +16,7 @@ import { LoginInterceptor } from "./core/services/login.interceptor";
 import { PagesModule } from "./pages/pages.module";
 import { DropdownMenuComponent } from './shared/components/dropdown-menu/dropdown-menu.component';
 import { CookieService } from "ngx-cookie-service";
+import { BirthDateFromNationalIdPipe } from './shared/pipes/birth-date-from-national-id.pipe';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { CookieService } from "ngx-cookie-service";
     SignupComponent,
     ResetPasswordComponent,
     DropdownMenuComponent,
+    BirthDateFromNationalIdPipe,
   ],
   imports: [
     BrowserModule,

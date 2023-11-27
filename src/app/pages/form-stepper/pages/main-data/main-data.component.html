@@ -1,4 +1,4 @@
-<form (ngSubmit)="sumbit()" [formGroup]="basicInfoForm">
+<form [formGroup]="basicInfoForm" (ngSubmit)="submit()">
   <div class="tui-form__row tui-form__row_multi-fields">
     <div class="tui-form__multi-field">
       <tui-input
@@ -15,10 +15,10 @@
       ></tui-error>
     </div>
     <div class="tui-form__multi-field">
-      <tui-input-number formControlName="nationalId" class="input">
+      <tui-input formControlName="nationalId" class="input">
         الرقم القومي
         <span class="tui-required"></span>
-      </tui-input-number>
+      </tui-input>
       <tui-error
         formControlName="nationalId"
         [error]="[] | tuiFieldError | async"
@@ -81,14 +81,45 @@
   </div>
 
   <div class="tui-form__row tui-form__row_multi-fields">
+    <div class="tui-form__multi-field">
+      <tui-input-date
+        formControlName="dob"
+        tuiUnfinishedValidator="Finish filling the field"
+        tuiDropdownAlign="right"
+        style="text-align: right"
+        [readOnly]="true"
+      >
+        تاريخ الميلاد
+      </tui-input-date>
+    </div>
+  </div>
+
+  <div class="tui-form__row tui-form__row_multi-fields">
     <div class="something">
-      <div class="tui-form__multi-field radio-block">
+      <div class="radioContainer">
+        <p>النوع:</p>
+          <tui-radio
+            formControlName="gender"
+            item="male"
+            size="l"
+          ></tui-radio>
+          <p>ذكر</p>
+
+          <tui-radio
+          formControlName="gender"
+          item="female"
+          size="l"
+        ></tui-radio>
+        <p>انثي</p>
+      </div>
+
+      <!-- <div class="tui-form__multi-field radio-block">
         <p>النوع:</p>
         <input type="radio" id="gender" name="age" value="30" />
         <label for="gender">ذكر</label><br />
         <input type="radio" id="gender" name="age" value="20" />
         <label for="gender">انثي</label><br />
-      </div>
+      </div> -->
 
       <div class="tui-form__multi-field radio-block">
         <p>الديانه:</p>
@@ -107,10 +138,10 @@
       </div>
     </div>
   </div>
-  <div class="tui-form__row" style="justify-content: flex-end;">
-    <button 
-    routerLink="../contact-data"
-    tuiButton 
-    appearance="secondary">التالي</button>
+
+  <div class="tui-form__row" style="justify-content: flex-end">
+    <button type="submit" tuiButton appearance="secondary">التالي</button>
   </div>
 </form>
+
+<!-- <button (click)="doIt()" type="button">id test</button> -->

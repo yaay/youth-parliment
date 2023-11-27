@@ -1,4 +1,4 @@
-<form [formGroup]="contactDataForm">
+<form [formGroup]="contactDataForm" (ngSubmit)="next()">
   <div class="tui-form__row tui-form__row_multi-fields">
     <div class="tui-form__multi-field">
       <tui-input-number
@@ -50,10 +50,17 @@
     class="tui-form__row"
     style="display: flex; justify-content: flex-start; gap: 0.5rem;"
   >
-    <button routerLink="../edu-qualifications" tuiButton appearance="secondary">
+    <button 
+    tuiButton
+    appearance="secondary"
+    type="submit"
+    >
       التالي
     </button>
-    <button routerLink="../main-data" tuiButton appearance="secondary">
+    <button type="button"
+            routerLink="../main-data" 
+            tuiButton 
+            appearance="secondary" >
       السابق
     </button>
   </div>

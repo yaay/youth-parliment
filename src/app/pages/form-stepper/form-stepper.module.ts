@@ -5,8 +5,9 @@ import { TaigaUIModule } from 'src/app/shared/Taiga UI/taiga-ui.module';
 import { RouterModule, Routes } from '@angular/router';
 import { MainDataComponent } from './pages/main-data/main-data.component';
 import { ContactDataComponent } from './pages/contact-data/contact-data.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EducationalQualificationsComponent } from './pages/educational-qualifications/educational-qualifications.component';
+import { AttachmentsComponent } from './pages/attachments/attachments.component';
 
 
 const stepperRoutes: Routes = [
@@ -30,12 +31,14 @@ const stepperRoutes: Routes = [
     FormStepperComponent,
     ContactDataComponent,
     MainDataComponent,
-    EducationalQualificationsComponent
+    EducationalQualificationsComponent,
+    AttachmentsComponent
   ],
   imports: [
     CommonModule,
     TaigaUIModule,
     ReactiveFormsModule,
+    FormsModule,
     RouterModule.forChild(stepperRoutes)
   ],
   exports: [RouterModule]

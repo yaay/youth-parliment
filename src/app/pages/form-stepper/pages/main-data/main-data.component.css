@@ -17,10 +17,22 @@ form {
     align-items: center;
 }
 
-.radio-block {
+
+.radioContainer {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 2px;
+    border: 1px solid black
+}
+.radioContainer > p:first-child {
+    font-weight: 600;
+}
+
+.radioContainer > p {
     font-family: var(--main-font);
+    margin-left: 10px;
+    font-size: 1.2rem;
+}
+
+.radioContainer > tui-radio {
+    margin-left: 5px;
 }
