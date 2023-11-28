@@ -8,6 +8,7 @@ import { ContactDataComponent } from './pages/contact-data/contact-data.componen
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EducationalQualificationsComponent } from './pages/educational-qualifications/educational-qualifications.component';
 import { AttachmentsComponent } from './pages/attachments/attachments.component';
+import { NumbersOnlyDirective } from 'src/app/shared/directives/numbers-only.directive';
 
 
 const stepperRoutes: Routes = [
@@ -32,6 +33,7 @@ const stepperRoutes: Routes = [
     ContactDataComponent,
     MainDataComponent,
     EducationalQualificationsComponent,
+    NumbersOnlyDirective,
     AttachmentsComponent
   ],
   imports: [

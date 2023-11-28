@@ -17,6 +17,7 @@ import { PagesModule } from "./pages/pages.module";
 import { DropdownMenuComponent } from './shared/components/dropdown-menu/dropdown-menu.component';
 import { CookieService } from "ngx-cookie-service";
 import { BirthDateFromNationalIdPipe } from './shared/pipes/birth-date-from-national-id.pipe';
+import { GenderFromNationalIdPipe } from './shared/pipes/gender-from-national-id.pipe';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { BirthDateFromNationalIdPipe } from './shared/pipes/birth-date-from-nati
     ResetPasswordComponent,
     DropdownMenuComponent,
     BirthDateFromNationalIdPipe,
+    GenderFromNationalIdPipe,
   ],
   imports: [
     BrowserModule,
@@ -38,11 +40,7 @@ import { BirthDateFromNationalIdPipe } from './shared/pipes/birth-date-from-nati
     ReactiveFormsModule
   ],
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: LoginInterceptor,
-      multi: true,
-    },[CookieService]
+    [CookieService]
   ],
   bootstrap: [AppComponent]
 })

@@ -24,6 +24,7 @@ import { of } from 'rxjs';
 export class ContactDataComponent {
   constructor(private router: Router) {}
 
+
   contactDataForm = new FormGroup({
     phoneNumber: new FormControl(null, [Validators.required, Validators.pattern(/^(010|011|012|015)\d{8}$/)]),
     secondNumber: new FormControl(null, [Validators.pattern(/^(010|011|012|015)\d{8}$/)]),

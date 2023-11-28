@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { TuiAlertService } from '@taiga-ui/core';
 import { CookieService } from 'ngx-cookie-service';
+import { UserInfoRepository } from 'src/app/domain/user-info/user-infp.repository';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ export class LoginComponent {
 
   constructor(
     private loginRepository: LoginRepository,
+    private userInfoRepository: UserInfoRepository,
     private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
@@ -72,7 +74,8 @@ export class LoginComponent {
           error: () => this.executeOnFailedLogin(),
           next: (response) => {
             if (response.status === 200) {
-              this.authService.setToken()
+              this.authService.setAuth()
+              this.userInfoRepository.get().subscribe();
               this.router.navigate(['/home'])
 
             }

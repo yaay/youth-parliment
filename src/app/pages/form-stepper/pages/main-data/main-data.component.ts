@@ -7,6 +7,7 @@ import { minWordsValidator } from 'src/app/shared/Validators/minWords.validator'
 import { TuiDay } from '@taiga-ui/cdk';
 import { Router } from '@angular/router';
 import { BirthDateFromNationalIdPipe } from 'src/app/shared/pipes/birth-date-from-national-id.pipe';
+import { GenderFromNationalIdPipe } from 'src/app/shared/pipes/gender-from-national-id.pipe';
 
 @Component({
   selector: 'app-main-data',
@@ -31,7 +32,6 @@ export class MainDataComponent {
 
   genders = [{ gender: 'male' }, { gender: 'female' }];
 
-
   basicInfoForm = new FormGroup({
     fullName: new FormControl(null, [Validators.required, minWordsValidator(4)]),
     nationalId: new FormControl(null, [Validators.required, Validators.pattern(/^([1-9]{1})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})[0-9]{3}([0-9]{1})[0-9]{1}$/)]),
@@ -40,13 +40,16 @@ export class MainDataComponent {
     adminstration: new FormControl(''),
     subAdmin: new FormControl(''),
     dob: new FormControl(new TuiDay(2007, 0, 1)),
-    gender: new FormControl(null, [Validators.required]),
-    religion: new FormControl(''),
-    disability: new FormControl(''),
+    gender: new FormControl('', [Validators.required]),
+    religion: new FormControl('muslim'),
+    disability: new FormControl('no'),
   })
 
   ngOnInit() {
-    this.applyBirthdatefromNationalId()
+    this.applyBirthdatefromNationalId();
+    this.govermentRepository.get().subscribe(
+      (response) => console.log(response)
+    )
   }
 
   applyBirthdatefromNationalId() {
@@ -54,13 +57,15 @@ export class MainDataComponent {
       .subscribe((id: any) => {
         const idString = id.toString();
         if (idString.length == 14) {
-          console.log('done', idString)
           const formatedDOB = new BirthDateFromNationalIdPipe().transform(idString)
-          console.log(formatedDOB)
           this.basicInfoForm.get('dob')?.patchValue(new TuiDay(formatedDOB[0], formatedDOB[1], formatedDOB[2]))
+          const gender = new GenderFromNationalIdPipe().transform(idString)
+          this.basicInfoForm.get('gender')?.patchValue(gender)
         }
       })
   }
+
+
 
   submit() {
     console.log(this.basicInfoForm)

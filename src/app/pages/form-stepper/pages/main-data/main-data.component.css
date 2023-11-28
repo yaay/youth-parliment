@@ -18,13 +18,8 @@ form {
 }
 
 
-.radioContainer {
-    display: flex;
-    align-items: center;
-    border: 1px solid black
-}
 .radioContainer > p:first-child {
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .radioContainer > p {
@@ -33,6 +28,38 @@ form {
     font-size: 1.2rem;
 }
 
-.radioContainer > tui-radio {
+tui-radio {
     margin-left: 5px;
 }
+
+.label-container {
+    display: flex;
+    gap: 0.8rem
+}
+
+.label {
+    display: flex;
+    align-items: center;
+    border: 2px solid hsl(220, 17%, 93%);
+    padding: 8px 12px;
+    border-radius: 8px;
+}
+
+.label > p {
+    margin: 0;
+    font-weight: 600;
+    font-family: var(--main-font);
+}
+
+
+@media (min-width: 768px) {
+    .tui-form__row .tui-form__multi-field:first-child {
+        margin-right: 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .tui-form__row .tui-form__multi-field {
+        margin-right: 0;
+    }
+  }

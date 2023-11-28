@@ -7,7 +7,7 @@
           tuiTextfieldLabelOutside="true"
           class="input"
         >
-          السنه الدراسية
+          المرحله الدراسية
 
           <tui-data-list-wrapper
             *tuiDataList
@@ -28,7 +28,7 @@
           tuiTextfieldLabelOutside="true"
           class="input"
         >
-          المرحله الدراسية
+          السنه الدراسية
 
           <tui-data-list-wrapper
             *tuiDataList
@@ -72,26 +72,6 @@
     <div class="tui-form__multi-field">
       <label>
         <tui-combo-box
-          formControlName="languageLevel"
-          tuiTextfieldLabelOutside="true"
-          class="input"
-        >
-          مستوي اللغة
-
-          <tui-data-list-wrapper
-            *tuiDataList
-            [items]="items2"
-          ></tui-data-list-wrapper>
-        </tui-combo-box>
-      </label>
-      <tui-error
-        formControlName="languageLevel"
-        [error]="[] | tuiFieldError | async"
-      ></tui-error>
-    </div>
-    <div class="tui-form__multi-field">
-      <label>
-        <tui-combo-box
           formControlName="language"
           tuiTextfieldLabelOutside="true"
           class="input"
@@ -100,7 +80,7 @@
 
           <tui-data-list-wrapper
             *tuiDataList
-            [items]="items2"
+            [items]="langs"
           ></tui-data-list-wrapper>
         </tui-combo-box>
       </label>
@@ -110,10 +90,40 @@
       ></tui-error>
     </div>
     <div class="tui-form__multi-field">
-        <button tuiButton (click)="addLanguage()">Add</button>
+      <label>
+        <tui-combo-box
+          formControlName="languageLevel"
+          tuiTextfieldLabelOutside="true"
+          class="input"
+        >
+          مستوي اللغة
+
+          <tui-data-list-wrapper
+            *tuiDataList
+            [items]="langsLevel"
+          ></tui-data-list-wrapper>
+        </tui-combo-box>
+      </label>
+      <tui-error
+        formControlName="languageLevel"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </div>
+    <div class="tui-form__multi-field">
+        <button tuiButton (click)="addLanguage()">أضافة</button>
     </div>
   </div>
-  <tui-tag>{{eduQualsForm.value.languageLevel}}</tui-tag>
+  <tui-tag
+  status="primary"
+  [hoverable]="true"
+  size="l"
+  class="tui-space_left-2 tui-space_top-5"
+  *ngFor="let lang of languages; let index = index" 
+  [removable]="true"
+  [value]="lang.name"
+  (edited) = "handleTagDeleted($event, index)"
+  ></tui-tag>
+  
   <button>ndxt</button>
 
 </form>

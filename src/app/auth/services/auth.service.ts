@@ -9,12 +9,10 @@ export class AuthService {
 
   constructor( private router:Router, private cookieService: CookieService ) { }
 
-  date = new Date()
-  nextDate = new Date()
-  nextDay = this.date.setDate(this.nextDate.getDate() + 1);
+  auth = false
 
-  setToken(){
-    this.cookieService.set('accessToken', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5ZWhuQG91dGxvb2suY29tIiwiaWF0IjoxNzAwNjU3MzI0LCJleHAiOjE3MDA3NDM3MjR9.rGRe5221dPp3_NRfu36D6jloXyR4AHpS7eT5KIxETwc', this.nextDay)
+  setAuth(){
+    this.auth = true
   }
 
   getCookie() {
@@ -26,11 +24,13 @@ export class AuthService {
   }
 
   checkCookie() {
-    return this.cookieService.check('accessToken')
+    // return this.cookieService.check('accessToken')
+    return this.auth
   }
 
   logOut() {
-    localStorage.removeItem("tokenUser")
+    // localStorage.removeItem("tokenUser")
+    this.auth = false
     this.router.navigateByUrl('/login')
   }
 
