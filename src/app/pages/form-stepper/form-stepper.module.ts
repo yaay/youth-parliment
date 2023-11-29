@@ -19,7 +19,8 @@ const stepperRoutes: Routes = [
       {path: '', redirectTo: 'main-data', pathMatch: 'full'},
       {path: 'main-data', component: MainDataComponent},
       {path: 'contact-data', component: ContactDataComponent},
-      {path: 'edu-qualifications', component: EducationalQualificationsComponent}
+      {path: 'edu-qualifications', component: EducationalQualificationsComponent},
+      {path: 'attachments', component: AttachmentsComponent},
 
     ]
   }

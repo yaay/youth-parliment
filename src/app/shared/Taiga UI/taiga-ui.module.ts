@@ -26,6 +26,7 @@ import {TuiInputNumberModule} from '@taiga-ui/kit';
 import {TuiTagModule} from '@taiga-ui/kit';
 import {TuiInputDateModule} from '@taiga-ui/kit';
 import {TuiRadioModule} from '@taiga-ui/kit';
+import {TuiInputFilesModule} from '@taiga-ui/kit';
 
 
 
@@ -68,7 +69,8 @@ const TaigaUIComponents = [
     TuiInputNumberModule,
     TuiTagModule,
     TuiInputDateModule,
-    TuiRadioModule
+    TuiRadioModule,
+    TuiInputFilesModule,
   ]
 
 

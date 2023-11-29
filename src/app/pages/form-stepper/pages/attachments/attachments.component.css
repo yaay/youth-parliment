@@ -1,0 +1,94 @@
+.upload-box {
+  border: 2px dotted var(--tui-primary);
+  padding: 5px;
+  width: 17rem;
+  height: 17rem;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--tui-text-02);
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.upload-box div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.upload-box:hover {
+  background-color: #ebefff;
+}
+
+.upload-box img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.close-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 100;
+    background-color: #db3434;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    margin: 10px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+}
+
+img:hover {
+  box-shadow: rgba(149, 157, 165, 0.1) 0px 8px 24px;
+}
+
+form {
+  direction: rtl;
+}
+
+.tui-form__multi-field {
+  margin-left: 0;
+  margin-right: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .tui-form__row .tui-form__multi-field:first-child {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .tui-form__row .tui-form__multi-field {
+    margin-right: 0;
+  }
+}
+
+.control {
+  height: 10rem;
+  margin-bottom: 1rem;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.tui-form__multi-field {
+  display: flex;
+  justify-content: center;
+}

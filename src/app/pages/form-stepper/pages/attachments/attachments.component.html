@@ -1,1 +1,80 @@
-<p>attachments works!</p>
+<form>
+  <h3 class="tui-form__header tui-form__header_margin-top_none">المرفقات الاجبارية الاساسية</h3>
+  <div class="tui-form__row tui-form__row_multi-fields">
+    <div class="tui-form__multi-field">
+      <div class="upload-box" (click)="openFileInput()">
+        <button *ngIf="image" class="close-btn">
+          <tui-svg src="tuiIconCloseLarge"></tui-svg>
+        </button>
+        <div *ngIf="!image">
+          <tui-marker-icon
+            mode="link"
+            src="tuiIconUploadCloudLarge"
+          ></tui-marker-icon>
+          <p>صورة شخصية</p>
+        </div>
+        <div *ngIf="image">
+          <img [src]="image.base64" alt="صورة شخصية" />
+        </div>
+        <input
+          type="file"
+          #fileInput
+          style="display: none"
+          (change)="onFileSelected($event)"
+        />
+      </div>
+    </div>
+    <div class="tui-form__multi-field">
+      <div class="upload-box" (click)="openFileInput()">
+        <button *ngIf="image" class="close-btn">
+          <tui-svg src="tuiIconCloseLarge"></tui-svg>
+        </button>
+        <div *ngIf="!image">
+          <tui-marker-icon
+            mode="link"
+            src="tuiIconUploadCloudLarge"
+          ></tui-marker-icon>
+          <p>صورة شخصية</p>
+        </div>
+        <div *ngIf="image">
+          <img [src]="image.base64" alt="صورة شخصية" />
+        </div>
+        <input
+          type="file"
+          #fileInput
+          style="display: none"
+          (change)="onFileSelected($event)"
+        />
+      </div>
+    </div>
+  </div>
+  <h3 class="tui-form__header tui-form__header_margin-top_none">المرفقات الاختيارية في المرحلة الحالية</h3>
+  <div class="tui-form__row">
+    <div class="tui-form__multi-field">
+      <div class="upload-box" (click)="openFileInput()">
+        <button *ngIf="image" class="close-btn">
+          <tui-svg src="tuiIconCloseLarge"></tui-svg>
+        </button>
+        <div *ngIf="!image">
+          <tui-marker-icon
+            mode="link"
+            src="tuiIconUploadCloudLarge"
+          ></tui-marker-icon>
+          <p>صورة شخصية</p>
+        </div>
+        <div *ngIf="image">
+          <img [src]="image.base64" alt="صورة شخصية" />
+        </div>
+        <input
+          type="file"
+          #fileInput
+          style="display: none"
+          (change)="onFileSelected($event)"
+        />
+      </div>
+    </div>
+  </div>
+</form>
+
+
+<button (click)="next()">next</button>
