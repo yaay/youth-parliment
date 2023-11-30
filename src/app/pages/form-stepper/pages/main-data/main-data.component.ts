@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TUI_VALIDATION_ERRORS } from '@taiga-ui/kit';
-import { ResourceService } from 'src/app/core/services/resource.service';
 import { GovernmentRepository } from 'src/app/domain/government/government.repository';
 import { minWordsValidator } from 'src/app/shared/Validators/minWords.validator';
 import { TuiDay } from '@taiga-ui/cdk';
@@ -46,13 +45,13 @@ export class MainDataComponent {
   })
 
   ngOnInit() {
-    this.applyBirthdatefromNationalId();
+    this.getBirthAndGenderfromId();
     this.govermentRepository.get().subscribe(
       (response) => console.log(response)
     )
   }
 
-  applyBirthdatefromNationalId() {
+  getBirthAndGenderfromId() {
     this.basicInfoForm.get('nationalId')?.valueChanges
       .subscribe((id: any) => {
         const idString = id.toString();

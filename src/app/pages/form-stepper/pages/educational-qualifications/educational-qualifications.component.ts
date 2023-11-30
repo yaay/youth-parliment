@@ -24,7 +24,6 @@ export class EducationalQualificationsComponent {
       level: this.eduQualsForm.value.languageLevel
     }
     this.languages.push(lang)
-    console.log(this.languages, lang)
   }
 
   items = [

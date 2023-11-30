@@ -36,14 +36,12 @@ export class AttachmentsComponent {
         name: selectedFile.name,
         base64: fileReader.result
       };
-      // this.image = imageFile;
       if (!this.hasImage(value)) {
         this.images.push(imageFile);
       } else {
         const index = this.images.findIndex(img => img.value === value);
         this.images[index] = imageFile;
       }
-      console.log(this.images);
     }
     fileReader.readAsDataURL(selectedFile);
   }
