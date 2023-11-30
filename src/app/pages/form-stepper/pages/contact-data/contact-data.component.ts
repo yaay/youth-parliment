@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TUI_VALIDATION_ERRORS } from '@taiga-ui/kit';
 import { of } from 'rxjs';
+import { StepperStateService } from 'src/app/core/services/stepper-state.service';
 
 @Component({
   selector: 'app-contact-data',
@@ -14,15 +15,18 @@ import { of } from 'rxjs';
       useValue: {
         required: `هذه الخانة مطلوبه`,
         pattern: 'أدخل رقم تليفون صحيح',
-        minlength: ({requiredLength}: {requiredLength: string}) =>
-              of(`يرجي إدخال علي الأقل ${requiredLength} حرف`)
+        minlength: ({ requiredLength }: { requiredLength: string }) =>
+          of(`يرجي إدخال علي الأقل ${requiredLength} حرف`)
       }
     }
   ]
 
 })
 export class ContactDataComponent {
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private stepperStateService: StepperStateService
+  ) { }
 
 
   contactDataForm = new FormGroup({
@@ -32,8 +36,13 @@ export class ContactDataComponent {
   })
 
   next() {
-    console.log(this.contactDataForm.value)
-    this.router.navigate(['/voter-data/edu-qualifications'])
+    if (this.contactDataForm.valid) {
+      console.log(this.contactDataForm.value)
+      this.stepperStateService.contactState.set('pass');
+      this.router.navigate(['/voter-data/edu-qualifications'])
+    } else {
+      this.stepperStateService.contactState.set('fail');
+    }
 
   }
 }

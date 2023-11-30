@@ -1,4 +1,4 @@
-<form [formGroup]="basicInfoForm" (ngSubmit)="submit()">
+<form [formGroup]="basicInfoForm" (ngSubmit)="next()">
   <div class="tui-form__row tui-form__row_multi-fields">
     <div class="tui-form__multi-field">
       <tui-input
@@ -178,7 +178,11 @@
   </div>
 
   <div class="tui-form__row" style="justify-content: flex-end">
-    <button type="submit" tuiButton appearance="secondary">التالي</button>
+    <button 
+    type="submit" 
+    tuiButton
+    [disabled]="basicInfoForm.invalid" 
+    appearance="secondary">التالي</button>
   </div>
 </form>
 

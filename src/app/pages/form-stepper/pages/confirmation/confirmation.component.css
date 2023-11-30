@@ -5,16 +5,34 @@
 }
 
 .logo {
-    width: 25rem;
+    max-width: 25rem;
     height: auto;
 }
 
 .text {
-    width: 30rem;
+    max-width: 30rem;
     direction: rtl;
-    /* font-family: var(--main-font); */
 }
 
 .text p {
     font-weight: 500;
+    font-family: var(--main-font);
+}
+
+@media (max-width: 868px) {
+    .container {
+        flex-wrap: wrap;
+        justify-content: center;
+        flex-direction: column-reverse
+    }
+
+    .logo {
+        max-width: 20rem;
+    }
+}
+
+@media (max-width: 425px) {
+    .logo {
+        max-width: 15rem;
+    }   
 }

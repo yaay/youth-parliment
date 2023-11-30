@@ -8,3 +8,10 @@
     height: auto;
     margin: 1rem;
 }
+
+@media (max-width: 625px) {
+    .container {
+        width: 93vw;
+    }
+    
+}

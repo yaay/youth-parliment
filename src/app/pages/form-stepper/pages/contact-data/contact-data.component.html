@@ -1,14 +1,14 @@
 <form [formGroup]="contactDataForm" (ngSubmit)="next()">
   <div class="tui-form__row tui-form__row_multi-fields">
     <div class="tui-form__multi-field">
-      <tui-input-number
+      <tui-input
         tuiTextfieldCustomContent=""
         formControlName="phoneNumber"
         class="input"
       >
         رقم الهاتف الأول
         <span class="tui-required"></span>
-      </tui-input-number>
+      </tui-input>
       <tui-error
         formControlName="phoneNumber"
         [error]="[] | tuiFieldError | async"
@@ -48,20 +48,16 @@
   </div>
   <div
     class="tui-form__row"
-    style="display: flex; justify-content: flex-end; gap: 0.5rem;"
+    style="display: flex; justify-content: flex-end; gap: 0.5rem"
   >
-    <button 
-    tuiButton
-    appearance="secondary"
-    type="submit"
+    <button
+      type="button"
+      routerLink="../main-data"
+      tuiButton
+      appearance="secondary"
     >
-      التالي
-    </button>
-    <button type="button"
-            routerLink="../main-data" 
-            tuiButton 
-            appearance="secondary" >
       السابق
     </button>
+    <button tuiButton appearance="secondary" type="submit">التالي</button>
   </div>
 </form>

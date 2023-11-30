@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TUI_VALIDATION_ERRORS } from '@taiga-ui/kit';
 import { GovernmentRepository } from 'src/app/domain/government/government.repository';
@@ -7,6 +7,7 @@ import { TuiDay } from '@taiga-ui/cdk';
 import { Router } from '@angular/router';
 import { BirthDateFromNationalIdPipe } from 'src/app/shared/pipes/birth-date-from-national-id.pipe';
 import { GenderFromNationalIdPipe } from 'src/app/shared/pipes/gender-from-national-id.pipe';
+import { StepperStateService } from 'src/app/core/services/stepper-state.service';
 
 @Component({
   selector: 'app-main-data',
@@ -27,7 +28,10 @@ export class MainDataComponent {
 
   constructor(
     private govermentRepository: GovernmentRepository,
-    private router: Router) { }
+    private router: Router,
+    private stepperStateService: StepperStateService
+  ) { }
+
 
   genders = [{ gender: 'male' }, { gender: 'female' }];
 
@@ -46,9 +50,9 @@ export class MainDataComponent {
 
   ngOnInit() {
     this.getBirthAndGenderfromId();
-    this.govermentRepository.get().subscribe(
-      (response) => console.log(response)
-    )
+    // this.govermentRepository.get().subscribe(
+    //   (response) => console.log(response)
+    // )
   }
 
   getBirthAndGenderfromId() {
@@ -66,9 +70,14 @@ export class MainDataComponent {
 
 
 
-  submit() {
-    console.log(this.basicInfoForm)
-    this.router.navigate(['/voter-data/contact-data'])
+  next() {
+    if (this.basicInfoForm.valid) {
+      console.log(this.basicInfoForm)
+      this.stepperStateService.mainDataState.set('pass')
+      this.router.navigate(['/voter-data/contact-data'])
+    } else {
+      this.stepperStateService.mainDataState.set('error')
+    }
     // this.govermentRepository.get().subscribe((response) => console.log(response))
   }
 

@@ -14,3 +14,14 @@ tui-stepper a {
     margin-right: 0;
     gap: 0.75rem;
 }
+
+body {
+    width: 100%;
+}
+
+@media (max-width: 625px) {
+    .container {
+        width: 93vw;
+    }
+    
+}
