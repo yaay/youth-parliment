@@ -1,8 +1,8 @@
 .upload-box {
   border: 2px dotted var(--tui-primary);
   padding: 5px;
-  width: 17rem;
-  height: 17rem;
+  width: 20rem;
+  height: 20rem;
   border-radius: 15px;
   display: flex;
   flex-direction: column;
@@ -47,7 +47,7 @@
     border: none;
     display: flex;
     justify-content: center;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
 
 img:hover {
@@ -63,18 +63,6 @@ form {
   margin-right: 1.25rem;
 }
 
-@media (min-width: 768px) {
-  .tui-form__row .tui-form__multi-field:first-child {
-    margin-right: 0;
-  }
-}
-
-@media (max-width: 768px) {
-  .tui-form__row .tui-form__multi-field {
-    margin-right: 0;
-  }
-}
-
 .control {
   height: 10rem;
   margin-bottom: 1rem;
@@ -88,7 +76,36 @@ form {
   gap: 1rem;
 }
 
-.tui-form__multi-field {
+.img-caption {
+  position: absolute;
+    background-color: white;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    z-index: 100;
+    bottom: 0;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+/* .tui-form__multi-field {
   display: flex;
   justify-content: center;
+} */
+
+
+@media (min-width: 768px) {
+  .tui-form__row .tui-form__multi-field:first-child {
+    margin-right: 0;
+  }
+
+
+}
+
+@media (max-width: 768px) {
+  .tui-form__row .tui-form__multi-field {
+    margin-right: 0;
+  }
+
+  .tui-form__multi-field {
+  display: flex;
+  justify-content: center;
+}
 }

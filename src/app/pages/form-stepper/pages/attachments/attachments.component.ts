@@ -9,30 +9,46 @@ import { FormControl } from '@angular/forms';
 })
 
 export class AttachmentsComponent {
-  @ViewChild('fileInput') fileInput!: ElementRef;
+  @ViewChild('personalImgFileInput') fileInput!: ElementRef;
+  @ViewChild('idFileInput') idFileInput!: ElementRef;
+  @ViewChild('studyProofFileInput') studyProofFileInput!: ElementRef;
+  currentInput!: ElementRef;
 
-  image: any = null
+  image!: { name: string, base64: string };
+  images: { value: string, name: string, base64: string | ArrayBuffer | null }[] = [];
 
-  openFileInput() {
-    console.log('opening file input');
-    this.fileInput.nativeElement.click();
+  openFileInput(elmRef: string) {
+    
+    switch(elmRef) {
+      case 'personalImgFileInput': this.currentInput = this.fileInput; break;
+      case 'idFileInput': this.currentInput = this.idFileInput; break;
+      case 'studyProofFileInput': this.currentInput = this.studyProofFileInput; break;
+    }
+    this.currentInput.nativeElement.click();
   }
 
-  onFileSelected(event: any) {
+  onFileSelected(event: any, value: string) {
     const selectedFile = event.target.files[0];
     const fileReader = new FileReader();
     fileReader.onload = () => {
       const imageFile = {
+        value: value,
         name: selectedFile.name,
         base64: fileReader.result
       };
-      this.image = imageFile;
-      console.log(imageFile);
+      // this.image = imageFile;
+      if (!this.hasImage(value)) {
+        this.images.push(imageFile);
+      } else {
+        const index = this.images.findIndex(img => img.value === value);
+        this.images[index] = imageFile;
+      }
+      console.log(this.images);
     }
     fileReader.readAsDataURL(selectedFile);
   }
 
-  
+
 
   control = new FormControl();
 
@@ -40,8 +56,20 @@ export class AttachmentsComponent {
     name: 'custom.txt',
   };
 
-  onFileChange(event: any) {
-    console.log(event)
+  hasImage(value: string) {
+    return this.images.find(img => img.value === value);
+  }
+  returnImage(value: string) {
+    const image = this.images.find(img => img.value === value);
+    return image?.base64;
+  }
+
+  deleteImage(event: Event, value: string) {
+    event.stopPropagation();
+    const index = this.images.findIndex(img => img.value === value);
+    if(index !== -1) {
+      this.images.splice(index, 1);
+    }
   }
 
   next() {

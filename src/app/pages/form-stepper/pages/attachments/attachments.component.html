@@ -1,80 +1,96 @@
 <form>
-  <h3 class="tui-form__header tui-form__header_margin-top_none">المرفقات الاجبارية الاساسية</h3>
+  <h3 class="tui-form__header tui-form__header_margin">
+    المرفقات الاجبارية الاساسية
+  </h3>
   <div class="tui-form__row tui-form__row_multi-fields">
     <div class="tui-form__multi-field">
-      <div class="upload-box" (click)="openFileInput()">
-        <button *ngIf="image" class="close-btn">
+      <div class="upload-box" (click)="openFileInput('personalImgFileInput')">
+        <button
+          *ngIf="hasImage('personalImg')"
+          (click)="deleteImage($event, 'personalImg')"
+          class="close-btn"
+        >
           <tui-svg src="tuiIconCloseLarge"></tui-svg>
         </button>
-        <div *ngIf="!image">
+        <p *ngIf="hasImage('personalImg')" class="img-caption">صورة شخصية</p>
+        <div *ngIf="!hasImage('personalImg')">
           <tui-marker-icon
             mode="link"
             src="tuiIconUploadCloudLarge"
           ></tui-marker-icon>
           <p>صورة شخصية</p>
         </div>
-        <div *ngIf="image">
-          <img [src]="image.base64" alt="صورة شخصية" />
+        <div *ngIf="hasImage('personalImg')">
+          <img [src]="returnImage('personalImg')" alt="صورة شخصية" />
         </div>
         <input
           type="file"
-          #fileInput
+          #personalImgFileInput
           style="display: none"
-          (change)="onFileSelected($event)"
+          (change)="onFileSelected($event, 'personalImg')"
         />
       </div>
     </div>
     <div class="tui-form__multi-field">
-      <div class="upload-box" (click)="openFileInput()">
-        <button *ngIf="image" class="close-btn">
+      <div class="upload-box" (click)="openFileInput('idFileInput')">
+        <button
+          *ngIf="hasImage('idCardImg')"
+          (click)="deleteImage($event, 'idCardImg')"
+          class="close-btn"
+        >
           <tui-svg src="tuiIconCloseLarge"></tui-svg>
         </button>
-        <div *ngIf="!image">
+        <p *ngIf="hasImage('personalImg')" class="img-caption">صورة البطاقة او شهادة الميلاد</p>
+        <div *ngIf="!hasImage('idCardImg')">
           <tui-marker-icon
             mode="link"
             src="tuiIconUploadCloudLarge"
           ></tui-marker-icon>
-          <p>صورة شخصية</p>
+          <p>صورة البطاقة او شهادة الميلاد</p>
         </div>
-        <div *ngIf="image">
-          <img [src]="image.base64" alt="صورة شخصية" />
+        <div *ngIf="hasImage('idCardImg')">
+          <img [src]="returnImage('idCardImg')" alt="صورة البطاقة" />
         </div>
         <input
           type="file"
-          #fileInput
+          #idFileInput
           style="display: none"
-          (change)="onFileSelected($event)"
+          (change)="onFileSelected($event, 'idCardImg')"
         />
       </div>
     </div>
   </div>
-  <h3 class="tui-form__header tui-form__header_margin-top_none">المرفقات الاختيارية في المرحلة الحالية</h3>
+  <h3 class="tui-form__header">المرفقات الاختيارية في المرحلة الحالية</h3>
   <div class="tui-form__row">
     <div class="tui-form__multi-field">
-      <div class="upload-box" (click)="openFileInput()">
-        <button *ngIf="image" class="close-btn">
+      <div class="upload-box" (click)="openFileInput('studyProofFileInput')">
+        <button
+          *ngIf="hasImage('studyProofImg')"
+          (click)="deleteImage($event, 'studyProofImg')"
+          class="close-btn"
+        >
           <tui-svg src="tuiIconCloseLarge"></tui-svg>
         </button>
-        <div *ngIf="!image">
+        <p *ngIf="hasImage('personalImg')" class="img-caption">أثبات قيد أو كارنية دراسي</p>
+        <div *ngIf="!hasImage('studyProofImg')">
           <tui-marker-icon
             mode="link"
             src="tuiIconUploadCloudLarge"
           ></tui-marker-icon>
-          <p>صورة شخصية</p>
+          <p>أثبات قيد أو كارنية دراسي</p>
         </div>
-        <div *ngIf="image">
-          <img [src]="image.base64" alt="صورة شخصية" />
+        <div *ngIf="hasImage('studyProofImg')">
+          <img [src]="returnImage('studyProofImg')" alt="كارنية" />
         </div>
         <input
           type="file"
-          #fileInput
+          #studyProofFileInput
           style="display: none"
-          (change)="onFileSelected($event)"
+          (change)="onFileSelected($event, 'studyProofImg')"
         />
       </div>
     </div>
   </div>
 </form>
-
 
 <button (click)="next()">next</button>
