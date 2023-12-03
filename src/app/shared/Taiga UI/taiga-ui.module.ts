@@ -27,6 +27,7 @@ import {TuiTagModule} from '@taiga-ui/kit';
 import {TuiInputDateModule} from '@taiga-ui/kit';
 import {TuiRadioModule} from '@taiga-ui/kit';
 import {TuiInputFilesModule} from '@taiga-ui/kit';
+import { TuiScrollbarModule } from '@taiga-ui/core';
 
 
 
@@ -71,6 +72,7 @@ const TaigaUIComponents = [
     TuiInputDateModule,
     TuiRadioModule,
     TuiInputFilesModule,
+    TuiScrollbarModule,
   ]
 
 

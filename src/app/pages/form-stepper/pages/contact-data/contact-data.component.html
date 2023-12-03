@@ -58,6 +58,10 @@
     >
       السابق
     </button>
-    <button tuiButton appearance="secondary" type="submit">التالي</button>
+    <button 
+    tuiButton
+    [disabled]="contactDataForm.invalid"
+    appearance="secondary"
+    type="submit">التالي</button>
   </div>
 </form>

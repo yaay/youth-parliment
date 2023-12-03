@@ -10,9 +10,8 @@
           المرحله الدراسية
 
           <tui-data-list-wrapper
+            [items]="[1, 2, 3]"
             *tuiDataList
-            [itemContent]="stringify | tuiStringifyContent"
-            [items]="items | tuiFilterByInputWith : stringify"
           ></tui-data-list-wrapper>
         </tui-combo-box>
       </label>
@@ -24,21 +23,20 @@
     <div class="tui-form__multi-field">
       <label>
         <tui-combo-box
-          formControlName="educationalLevel"
+          formControlName="academicYear"
           tuiTextfieldLabelOutside="true"
           class="input"
         >
           السنه الدراسية
 
           <tui-data-list-wrapper
+            [items]="[1, 2, 3]"
             *tuiDataList
-            [itemContent]="stringify | tuiStringifyContent"
-            [items]="items | tuiFilterByInputWith : stringify"
           ></tui-data-list-wrapper>
         </tui-combo-box>
       </label>
       <tui-error
-        formControlName="educationalLevel"
+        formControlName="academicYear"
         [error]="[] | tuiFieldError | async"
       ></tui-error>
     </div>
@@ -110,20 +108,39 @@
       ></tui-error>
     </div>
     <div class="tui-form__multi-field">
-        <button tuiButton (click)="addLanguage()">أضافة</button>
+      <button tuiButton (click)="addLanguage()">أضافة</button>
     </div>
   </div>
   <tui-tag
-  status="primary"
-  [hoverable]="true"
-  size="l"
-  class="tui-space_left-2 tui-space_top-5"
-  *ngFor="let lang of languages; let index = index" 
-  [removable]="true"
-  [value]="lang.name"
-  (edited) = "handleTagDeleted($event, index)"
+    status="primary"
+    [hoverable]="true"
+    size="l"
+    class="tui-space_left-2 tui-space_top-5"
+    *ngFor="let lang of languages; let index = index"
+    [removable]="true"
+    [value]="lang.name"
+    (edited)="handleTagDeleted($event, index)"
   ></tui-tag>
-  
-  <button>ndxt</button>
 
+  <div
+    class="tui-form__row"
+    style="display: flex; justify-content: flex-end; gap: 0.5rem"
+  >
+    <button
+      type="button"
+      routerLink="../contact-data"
+      tuiButton
+      appearance="secondary"
+    >
+      السابق
+    </button>
+    <button
+      tuiButton
+      [disabled]="eduQualsForm.invalid"
+      appearance="secondary"
+      type="submit"
+    >
+      التالي
+    </button>
+  </div>
 </form>

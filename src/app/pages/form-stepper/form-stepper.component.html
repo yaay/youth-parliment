@@ -1,54 +1,52 @@
 <div class="container">
   <div class="tui row">
-          <tui-island
-          textAlign="right"
-          >
-              <tui-stepper class="rtl">
-                  <button
-                    routerLink="main-data"
-                    routerLinkActive
-                    tuiStep
-                    [stepState]="getMainDataState()"
-                  >
-                    البيانات الأساسية
-                  </button>
-                  <button
-                    routerLink="contact-data"
-                    routerLinkActive
-                    [stepState]="getContactState()"
-                    [disabled]="!(getMainDataState()=='pass')"
-                    tuiStep
-                  >
-                    طرق التواصل
-                  </button>
-                  <button
-                    routerLink="edu-qualifications"
-                    [disabled]="!(getContactState()=='pass')"
-                    [stepState]="getEduQualsState()"
-                    routerLinkActive
-                    tuiStep
-                  >
-                    المؤهل الدراسي
-                </button>
-                  <button
-                    routerLink="attachments"
-                    [stepState]="getAttachmentsState()"
-                    [disabled]="!(getEduQualsState()=='pass')"
-                    routerLinkActive
-                    tuiStep
-                  >
-                    المرفقات 
-                  </button>
-                  <button
-                    routerLink="confirmation"
-                    routerLinkActive
-                    [disabled]="!(getAttachmentsState()=='pass')"
-                    tuiStep
-                  >
-                    تأكيد
-                </button>
-                </tui-stepper>
-              <router-outlet></router-outlet>
-          </tui-island>
+    <tui-island textAlign="right">
+      <tui-stepper class="rtl">
+        <button
+          routerLink="main-data"
+          routerLinkActive
+          tuiStep
+          [stepState]="getMainDataState()"
+        >
+          البيانات الأساسية
+        </button>
+        <button
+          routerLink="contact-data"
+          routerLinkActive
+          [stepState]="getContactState()"
+          [disabled]="!(getMainDataState() == 'pass')"
+          tuiStep
+        >
+          طرق التواصل
+        </button>
+        <button
+          routerLink="edu-qualifications"
+          [disabled]="!(getContactState() == 'pass')"
+          [stepState]="getEduQualsState()"
+          routerLinkActive
+          tuiStep
+        >
+          المؤهل الدراسي
+        </button>
+        <button
+          routerLink="attachments"
+          [stepState]="getAttachmentsState()"
+          [disabled]="!(getEduQualsState() == 'pass')"
+          routerLinkActive
+          tuiStep
+        >
+          المرفقات
+        </button>
+        <button
+          routerLink="confirmation"
+          routerLinkActive
+          [disabled]="!(getAttachmentsState() == 'pass')"
+          tuiStep
+        >
+          تأكيد
+        </button>
+      </tui-stepper>
+      <router-outlet></router-outlet>
+    </tui-island>
   </div>
 </div>

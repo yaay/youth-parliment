@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { TuiFileLike } from '@taiga-ui/kit';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-attachments',
@@ -13,6 +14,14 @@ export class AttachmentsComponent {
   @ViewChild('idFileInput') idFileInput!: ElementRef;
   @ViewChild('studyProofFileInput') studyProofFileInput!: ElementRef;
   currentInput!: ElementRef;
+
+  constructor(private router: Router) {}
+
+  attachmentsForm = new FormGroup({
+    personalImg: new FormControl(''),
+    idFile: new FormControl(''),
+    studyProofFile: new FormControl('')
+  })
 
   image!: { name: string, base64: string };
   images: { value: string, name: string, base64: string | ArrayBuffer | null }[] = [];
@@ -72,6 +81,7 @@ export class AttachmentsComponent {
 
   next() {
     console.log(this.control)
+    this.router.navigate(['voter-data/confirmation'])
   }
 
 }

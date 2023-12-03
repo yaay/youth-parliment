@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-educational-qualifications',
@@ -7,6 +8,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./educational-qualifications.component.css']
 })
 export class EducationalQualificationsComponent {
+  constructor(private router: Router) {}
   languages: {'name': any, 'level': any}[] = []
 
   eduQualsForm = new FormGroup({
@@ -14,8 +16,8 @@ export class EducationalQualificationsComponent {
     academicYear: new FormControl(null, [Validators.required]),
     schoolName: new FormControl(null, [Validators.required]),
     coursesName: new FormControl(null),
-    language: new FormControl(null, [Validators.required]),
-    languageLevel: new FormControl(null, [Validators.required]),
+    language: new FormControl(null),
+    languageLevel: new FormControl(null),
   })
 
   addLanguage() {
@@ -23,17 +25,14 @@ export class EducationalQualificationsComponent {
       name: this.eduQualsForm.value.language,
       level: this.eduQualsForm.value.languageLevel
     }
-    this.languages.push(lang)
+    // if statement to check if lang.name isnt inside languages array
+    if (lang.name && lang.level) {
+      if (!this.languages.find(l => l.name === lang.name)) {
+        this.languages.push(lang)
+      } else console.log('language already exists')
+    }
   }
 
-  items = [
-    { name: 'John', surname: 'Cleese' },
-    { name: 'Eric', surname: 'Idle' },
-    { name: 'Graham', surname: 'Chapman' },
-    { name: 'Michael', surname: 'Palin' },
-    { name: 'Terry', surname: 'Gilliam' },
-    { name: 'Terry', surname: 'Jones' },
-  ];
 
   items2 = [
     'Graham',
@@ -66,6 +65,7 @@ export class EducationalQualificationsComponent {
 
     next() {
       console.log('hello', this.eduQualsForm.value)
+      this.router.navigate(['voter-data/attachments'])
     }
 
 }
