@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { BirthDateFromNationalIdPipe } from 'src/app/shared/pipes/birth-date-from-national-id.pipe';
 import { GenderFromNationalIdPipe } from 'src/app/shared/pipes/gender-from-national-id.pipe';
 import { StepperStateService } from 'src/app/core/services/stepper-state.service';
+import { Government } from 'src/app/domain/government/models/government';
 
 @Component({
   selector: 'app-main-data',
@@ -34,10 +35,11 @@ export class MainDataComponent {
 
 
   genders = [{ gender: 'male' }, { gender: 'female' }];
+  govs: Government[] = [];
 
   basicInfoForm = new FormGroup({
     fullName: new FormControl(null, [Validators.required, minWordsValidator(4)]),
-    nationalId: new FormControl(null, [Validators.required, Validators.pattern(/^([1-9]{1})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})[0-9]{3}([0-9]{1})[0-9]{1}$/)]),
+    nationalId: new FormControl(null, [Validators.required, Validators.pattern(/(2|3)[0-9][1-9][0-1][1-9][0-3][1-9](01|02|03|04|11|12|13|14|15|16|17|18|19|21|22|23|24|25|26|27|28|29|31|32|33|34|35|88)\d\d\d\d\d/)]),
     government: new FormControl(null, [Validators.required]),
     district: new FormControl(''),
     adminstration: new FormControl(''),
@@ -49,10 +51,14 @@ export class MainDataComponent {
   })
 
   ngOnInit() {
+    this.govermentRepository.get().subscribe(
+      (response) => {
+        this.govs = response.data;
+        console.log(this.govs)
+      }
+    );
     this.getBirthAndGenderfromId();
-    // this.govermentRepository.get().subscribe(
-    //   (response) => console.log(response)
-    // )
+    this.applyGovId()
   }
 
   getBirthAndGenderfromId() {
@@ -68,6 +74,18 @@ export class MainDataComponent {
       })
   }
 
+  applyGovId() {
+    this.basicInfoForm.get('government')?.valueChanges.subscribe(
+      (gov: any) => {
+        console.log(gov, gov.id)
+        this.basicInfoForm.get('government')?.patchValue(gov.id);
+      }
+    );
+  }
+
+  govStringify = (gov: { arabicName: string }): string =>
+    `${gov.arabicName}`;
+
 
 
   next() {
@@ -78,7 +96,6 @@ export class MainDataComponent {
     } else {
       this.stepperStateService.mainDataState.set('error')
     }
-    // this.govermentRepository.get().subscribe((response) => console.log(response))
   }
 
 

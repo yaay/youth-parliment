@@ -40,7 +40,9 @@ import { GenderFromNationalIdPipe } from './shared/pipes/gender-from-national-id
     ReactiveFormsModule
   ],
   providers: [
-    [CookieService]
+    [
+      { provide: HTTP_INTERCEPTORS, useClass: LoginInterceptor, multi: true }
+    ]
   ],
   bootstrap: [AppComponent]
 })

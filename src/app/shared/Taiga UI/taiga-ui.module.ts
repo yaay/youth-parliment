@@ -32,8 +32,6 @@ import { TuiScrollbarModule } from '@taiga-ui/core';
 
 
 
-
-
 const TaigaUIComponents = [
     TuiActionModule,
     TuiIslandModule,

@@ -51,6 +51,9 @@ tui-radio {
     font-family: var(--main-font);
 }
 
+tui-combo-box {
+    text-align: right;
+}
 
 @media (min-width: 768px) {
     .tui-form__row .tui-form__multi-field:first-child {

@@ -13,25 +13,24 @@ export abstract class ResourceService {
 
   abstract getResourceUrl(): string;
 
-  options = { withCredentials: true };
+  // options = { withCredentials: true };
 
-  constructor( private http: HttpClient ) { }
+  constructor(private http: HttpClient) { }
 
   add(resource: any): Observable<any> {
- return this.http
- .post(this.APIUrl, resource, { observe: 'response' })
- // .post(this.APIUrl, resource)
- .pipe(catchError((err) => {
-   throw new Error('Error', err.message);
- }))
+    return this.http
+      .post(this.APIUrl, resource, { observe: 'response' })
+      .pipe(catchError((err) => {
+        throw new Error('Error', err.message);
+      }))
   };
 
   get(): Observable<any> {
     return this.http
-    .get(this.APIUrl, this.options)
-    .pipe(catchError((err) => {
-      throw new Error('Error', err.message)
-    }))
+      .get(this.APIUrl)
+      .pipe(catchError((err) => {
+        throw new Error('Error', err.message)
+      }))
 
   }
 

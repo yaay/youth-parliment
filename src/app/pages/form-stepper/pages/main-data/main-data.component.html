@@ -15,10 +15,14 @@
       ></tui-error>
     </div>
     <div class="tui-form__multi-field">
-      <tui-input formControlName="nationalId" NumbersOnly class="input">
+      <tui-input-number 
+        formControlName="nationalId" 
+        class="input"
+        [max]=99999999999999
+       >
         الرقم القومي
         <span class="tui-required"></span>
-      </tui-input>
+      </tui-input-number>
       <tui-error
         formControlName="nationalId"
         [error]="[] | tuiFieldError | async"
@@ -28,7 +32,7 @@
 
   <div class="tui-form__row tui-form__row_multi-fields">
     <div class="tui-form__multi-field">
-      <tui-input
+      <!-- <tui-input
         tuiTextfieldCustomContent=""
         formControlName="government"
         class="input"
@@ -36,6 +40,21 @@
         المحافظه
         <span class="tui-required"></span>
       </tui-input>
+     -->
+      <label>
+        <tui-combo-box
+            formControlName="government"
+            [stringify]="govStringify"
+        >
+        المحافظه
+        <tui-data-list-wrapper
+            *tuiDataList
+            [itemContent]="govStringify | tuiStringifyContent"
+            [items] = "govs | tuiFilterByInputWith: govStringify"
+        >
+        </tui-data-list-wrapper>
+      </tui-combo-box>
+      </label>
       <tui-error
         formControlName="government"
         [error]="[] | tuiFieldError | async"
