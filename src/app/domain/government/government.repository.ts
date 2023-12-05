@@ -9,4 +9,6 @@ export class GovernmentRepository extends ResourceService {
     getResourceUrl(): string {
         return 'governorate?size=28'
     }
+
+    
 }
