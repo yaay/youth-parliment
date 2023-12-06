@@ -21,7 +21,7 @@
     <ng-template #content>
       <tui-data-list role="menu">
         <a tuiOption role="menuitem" routerLink="change-password" class="rtl"> تغير كلمه المرور </a>
-        <a tuiOption role="menuitem" class="rtl"> تسجيل الخروج </a>
+        <a tuiOption role="menuitem" (click)="logout()" class="rtl"> تسجيل الخروج </a>
       </tui-data-list>
     </ng-template>
     <div 
@@ -47,7 +47,11 @@
           src="tuiIconSettings"></tui-marker-icon>
           <p>تغير كلمه المرور</p>
         </div>
-        <div tuiRipple class="sidebar-row">
+        <div 
+        tuiRipple 
+        class="sidebar-row"
+        (click)="logout()"
+        >
           <tui-marker-icon
           [mode]="'error'"
           size="xs" 

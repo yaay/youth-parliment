@@ -1,5 +1,5 @@
 {
-    "/api":{
+    "/api/*":{
         "target": "http://41.65.11.55:8023/",
         "secure": false,
         "pathRewrite": {

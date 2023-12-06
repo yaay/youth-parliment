@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { LogoutRepository } from 'src/app/domain/logout/logout.repository';
 
 @Component({
   selector: 'app-header',
@@ -8,12 +9,20 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
   
-  constructor(private router: Router) {}
+  constructor(
+    private logoutRepository: LogoutRepository,
+    private router: Router
+    ) {}
 
   open = false;
  
   toggle(open: boolean) {
     this.open = open;
-  }
+  };
+
+  logout() {
+    this.logoutRepository.add('').subscribe();
+    this.router.navigate(['/login'])
+  };
 
 }
