@@ -8,6 +8,7 @@ import { ApplicationStatusComponent } from './application-status/application-sta
 import { FormStepperModule } from './form-stepper/form-stepper.module';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { authGuard } from '../auth/guards/auth.guard';
 
 
 const pagesRoutes: Routes = [
@@ -16,8 +17,8 @@ const pagesRoutes: Routes = [
     component: HomeComponent,
     children: [
       {path: '', component: ApplicationStatusComponent},
-      {path: 'change-password', component: ChangePasswordComponent},
-      {path: 'voter-data', loadChildren: () => FormStepperModule }
+      {path: 'change-password', component: ChangePasswordComponent, canActivate: [authGuard]},
+      {path: 'voter-data', loadChildren: () => FormStepperModule, canActivate: [authGuard] }
     ]
   }
 ]
