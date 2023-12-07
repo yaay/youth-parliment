@@ -23,7 +23,7 @@ export class LoginComponent {
     private alerts: TuiAlertService,
   ) { }
 
-  loader:boolean = false;
+  loader: boolean = false;
 
   ngOnInit(): void {
     this.noticationService()
@@ -83,4 +83,5 @@ export class LoginComponent {
   toggleLoader() {
     this.loader = !this.loader
   }
+  
 }

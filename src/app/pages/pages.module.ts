@@ -17,7 +17,7 @@ const pagesRoutes: Routes = [
     component: HomeComponent,
     children: [
       {path: '', component: ApplicationStatusComponent},
-      {path: 'change-password', component: ChangePasswordComponent, canActivate: [authGuard]},
+      {path: 'change-password', component: ChangePasswordComponent, canActivate: [authGuard] },
       {path: 'voter-data', loadChildren: () => FormStepperModule, canActivate: [authGuard] }
     ]
   }
