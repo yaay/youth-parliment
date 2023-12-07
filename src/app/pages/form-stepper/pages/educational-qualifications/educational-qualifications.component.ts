@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { StepperStateService } from 'src/app/core/services/stepper-state.service';
 
 @Component({
   selector: 'app-educational-qualifications',
@@ -8,8 +9,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./educational-qualifications.component.css']
 })
 export class EducationalQualificationsComponent {
-  constructor(private router: Router) {}
-  languages: {'name': any, 'level': any}[] = []
+  constructor(
+    private router: Router,
+    private stepperStateService: StepperStateService
+  ) { }
+  languages: { 'name': any, 'level': any }[] = []
 
   eduQualsForm = new FormGroup({
     educationalLevel: new FormControl(null, [Validators.required]),
@@ -37,15 +41,15 @@ export class EducationalQualificationsComponent {
   items2 = [
     'Graham',
     'Michael',
-    'Terry' ,
+    'Terry',
   ]
 
   langs = [
     'ألانجلبزية',
     'الفرنسية',
-    'الألمانية' ,
+    'الألمانية',
   ]
-  
+
   langsLevel = [
     'متوسط',
     'مبتدئ',
@@ -56,16 +60,21 @@ export class EducationalQualificationsComponent {
 
   handleTagDeleted(emptyTag: any, currentIndex: number): void {
     this.languages = this.languages
-        .map((language, index) => (index === currentIndex ? emptyTag : language ))
-        .filter(Boolean);
-}
+      .map((language, index) => (index === currentIndex ? emptyTag : language))
+      .filter(Boolean);
+  }
 
   stringify = (item: { name: string; surname: string }): string =>
     `${item.name} ${item.surname}`;
 
-    next() {
-      console.log('hello', this.eduQualsForm.value)
+  next() {
+    if (this.eduQualsForm.valid) {
+      console.log(this.eduQualsForm.value)
+      this.stepperStateService.eduQualState.set('pass')
       this.router.navigate(['voter-data/attachments'])
+    } else {
+      this.stepperStateService.eduQualState.set('fail')
     }
+  }
 
 }

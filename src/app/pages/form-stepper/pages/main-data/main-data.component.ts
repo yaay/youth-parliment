@@ -54,11 +54,9 @@ export class MainDataComponent {
     this.govermentRepository.get().subscribe(
       (response) => {
         this.govs = response.data;
-        console.log(this.govs)
       }
     );
     this.getBirthAndGenderfromId();
-    this.applyGovId()
   }
 
   getBirthAndGenderfromId() {
@@ -72,16 +70,6 @@ export class MainDataComponent {
           this.basicInfoForm.get('gender')?.patchValue(gender)
         }
       })
-  }
-
-  applyGovId() {
-    this.basicInfoForm.get('government')?.valueChanges.subscribe(
-      (gov: any) => {
-        if (gov !== null) {
-          this.basicInfoForm.get('government')?.patchValue(gov.id);
-        }
-      }
-    );
   }
 
   govStringify = (gov: { arabicName: string }): string =>
