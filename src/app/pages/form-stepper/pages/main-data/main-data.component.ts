@@ -77,8 +77,9 @@ export class MainDataComponent {
   applyGovId() {
     this.basicInfoForm.get('government')?.valueChanges.subscribe(
       (gov: any) => {
-        console.log(gov, gov.id)
-        this.basicInfoForm.get('government')?.patchValue(gov.id);
+        if (gov !== null) {
+          this.basicInfoForm.get('government')?.patchValue(gov.id);
+        }
       }
     );
   }

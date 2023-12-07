@@ -15,7 +15,7 @@ export abstract class ResourceService {
 
   // options = { withCredentials: true };
 
-  constructor(private http: HttpClient) { }
+  protected constructor(protected http: HttpClient) { }
 
   add(resource: any): Observable<any> {
     return this.http
