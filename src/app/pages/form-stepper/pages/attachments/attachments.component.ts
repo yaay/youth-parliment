@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { TuiFileLike } from '@taiga-ui/kit';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { StepperStateService } from 'src/app/core/services/stepper-state.service';
 
 @Component({
   selector: 'app-attachments',
@@ -15,7 +16,10 @@ export class AttachmentsComponent {
   @ViewChild('studyProofFileInput') studyProofFileInput!: ElementRef;
   currentInput!: ElementRef;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private stepperStateService: StepperStateService
+  ) { }
 
   attachmentsForm = new FormGroup({
     personalImg: new FormControl(''),
@@ -27,8 +31,8 @@ export class AttachmentsComponent {
   images: { value: string, name: string, base64: string | ArrayBuffer | null }[] = [];
 
   openFileInput(elmRef: string) {
-    
-    switch(elmRef) {
+
+    switch (elmRef) {
       case 'personalImgFileInput': this.currentInput = this.fileInput; break;
       case 'idFileInput': this.currentInput = this.idFileInput; break;
       case 'studyProofFileInput': this.currentInput = this.studyProofFileInput; break;
@@ -74,14 +78,16 @@ export class AttachmentsComponent {
   deleteImage(event: Event, value: string) {
     event.stopPropagation();
     const index = this.images.findIndex(img => img.value === value);
-    if(index !== -1) {
+    if (index !== -1) {
       this.images.splice(index, 1);
     }
   }
 
   next() {
-    console.log(this.control)
-    this.router.navigate(['voter-data/confirmation'])
+    if (this.attachmentsForm.valid) {
+      this.stepperStateService.attachmentsState.set('pass');
+      this.router.navigate(['voter-data/confirmation']);
+    } this.stepperStateService.attachmentsState.set('fail')
   }
 
 }

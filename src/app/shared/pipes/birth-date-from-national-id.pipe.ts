@@ -14,8 +14,6 @@ export class BirthDateFromNationalIdPipe implements PipeTransform {
     const month = value[3] === '0' ? value[4] : `${value[3]}${value[4]}`;
     const day = value[5] === '0' ? value[6] : `${value[5]}${value[6]}`;
 
-    console.log(value)
-
     return [parseInt(year, 10), (parseInt(month, 10)-1), parseInt(day, 10)]
 
   }

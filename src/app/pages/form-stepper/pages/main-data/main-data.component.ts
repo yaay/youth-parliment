@@ -54,11 +54,9 @@ export class MainDataComponent {
     this.govermentRepository.get().subscribe(
       (response) => {
         this.govs = response.data;
-        console.log(this.govs)
       }
     );
     this.getBirthAndGenderfromId();
-    this.applyGovId()
   }
 
   getBirthAndGenderfromId() {
@@ -73,17 +71,7 @@ export class MainDataComponent {
         }
       })
   }
-
-  applyGovId() {
-    this.basicInfoForm.get('government')?.valueChanges.subscribe(
-      (gov: any) => {
-        if (gov !== null) {
-          this.basicInfoForm.get('government')?.patchValue(gov.id);
-        }
-      }
-    );
-  }
-
+  
   govStringify = (gov: { arabicName: string }): string =>
     `${gov.arabicName}`;
 
@@ -91,7 +79,6 @@ export class MainDataComponent {
 
   next() {
     if (this.basicInfoForm.valid) {
-      console.log(this.basicInfoForm)
       this.stepperStateService.mainDataState.set('pass')
       this.router.navigate(['/voter-data/contact-data'])
     } else {

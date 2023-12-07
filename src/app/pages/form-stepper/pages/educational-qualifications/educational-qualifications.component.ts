@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { StepperStateService } from 'src/app/core/services/stepper-state.service';
 
 @Component({
   selector: 'app-educational-qualifications',
@@ -8,7 +9,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./educational-qualifications.component.css']
 })
 export class EducationalQualificationsComponent {
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private stepperStateService: StepperStateService
+    ) {}
   languages: {'name': any, 'level': any}[] = []
 
   eduQualsForm = new FormGroup({
@@ -25,11 +29,10 @@ export class EducationalQualificationsComponent {
       name: this.eduQualsForm.value.language,
       level: this.eduQualsForm.value.languageLevel
     }
-    // if statement to check if lang.name isnt inside languages array
     if (lang.name && lang.level) {
       if (!this.languages.find(l => l.name === lang.name)) {
         this.languages.push(lang)
-      } else console.log('language already exists')
+      }
     }
   }
 
@@ -63,9 +66,13 @@ export class EducationalQualificationsComponent {
   stringify = (item: { name: string; surname: string }): string =>
     `${item.name} ${item.surname}`;
 
-    next() {
-      console.log('hello', this.eduQualsForm.value)
+  next() {
+    if (this.eduQualsForm.valid) {
+      this.stepperStateService.eduQualState.set('pass')
       this.router.navigate(['voter-data/attachments'])
+    } else {
+      this.stepperStateService.eduQualState.set('fail')
     }
+  }  
 
 }
