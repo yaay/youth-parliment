@@ -79,7 +79,6 @@ export class MainDataComponent {
 
   next() {
     if (this.basicInfoForm.valid) {
-      console.log(this.basicInfoForm)
       this.stepperStateService.mainDataState.set('pass')
       this.router.navigate(['/voter-data/contact-data'])
     } else {
