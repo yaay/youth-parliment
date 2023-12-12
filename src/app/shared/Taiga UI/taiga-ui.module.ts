@@ -28,7 +28,6 @@ import {TuiInputDateModule} from '@taiga-ui/kit';
 import {TuiRadioModule} from '@taiga-ui/kit';
 import {TuiInputFilesModule} from '@taiga-ui/kit';
 import { TuiScrollbarModule } from '@taiga-ui/core';
-import { NgxMaskModule } from 'ngx-mask';
 import {MaskitoModule} from '@maskito/angular';
 
 
