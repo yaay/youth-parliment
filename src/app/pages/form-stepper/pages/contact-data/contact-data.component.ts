@@ -28,10 +28,9 @@ export class ContactDataComponent {
     private stepperStateService: StepperStateService
   ) { }
 
-
   contactDataForm = new FormGroup({
-    phoneNumber: new FormControl(null, [Validators.required, Validators.pattern(/^(010|011|012|015)\d{8}$/)]),
-    secondNumber: new FormControl(null, [Validators.pattern(/^(010|011|012|015)\d{8}$/)]),
+    phoneNumber: new FormControl(null, [Validators.required,Validators.pattern(/^(010|011|012|015)\d{8}$/),Validators.minLength(11),Validators.maxLength(11)]),
+    secondNumber: new FormControl(null, [Validators.pattern(/^(010|011|012|015)\d{8}$/),Validators.minLength(11),Validators.maxLength(11)]),
     address: new FormControl(null, [Validators.required, Validators.minLength(15)])
   })
 
