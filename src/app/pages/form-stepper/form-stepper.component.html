@@ -3,7 +3,7 @@
     <tui-island textAlign="right">
       <tui-stepper class="rtl">
         <button
-          routerLink="main-data"
+          (click)="navigator('main-data')"
           routerLinkActive
           tuiStep
           [stepState]="getMainDataState()"
@@ -11,7 +11,7 @@
           البيانات الأساسية
         </button>
         <button
-          routerLink="contact-data"
+          (click)="navigator('contact-data')"
           routerLinkActive
           [stepState]="getContactState()"
           [disabled]="!(getMainDataState() == 'pass')"
@@ -20,7 +20,7 @@
           طرق التواصل
         </button>
         <button
-          routerLink="edu-qualifications"
+          (click)="navigator('edu-qualifications')"
           [disabled]="!(getContactState() == 'pass')"
           [stepState]="getEduQualsState()"
           routerLinkActive
@@ -29,7 +29,7 @@
           المؤهل الدراسي
         </button>
         <button
-          routerLink="attachments"
+          (click)="navigator('attachments')"
           [stepState]="getAttachmentsState()"
           [disabled]="!(getEduQualsState() == 'pass')"
           routerLinkActive
@@ -38,7 +38,7 @@
           المرفقات
         </button>
         <button
-          routerLink="confirmation"
+          (click)="navigator('confirmation')"
           routerLinkActive
           [disabled]="!(getAttachmentsState() == 'pass')"
           tuiStep
