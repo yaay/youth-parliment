@@ -83,10 +83,14 @@ export class AttachmentsComponent {
     }
   }
 
+  back() {
+    this.router.navigate(['voter-data/edu-qualifications'], { skipLocationChange: true })
+  }
+
   next() {
     if (this.attachmentsForm.valid) {
       this.stepperStateService.attachmentsState.set('pass')
-      this.router.navigate(['voter-data/confirmation'])
+      this.router.navigate(['voter-data/confirmation'], { skipLocationChange: true })
     } else {
       this.stepperStateService.attachmentsState.set('fail')
     }

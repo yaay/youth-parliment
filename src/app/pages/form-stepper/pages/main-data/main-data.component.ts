@@ -80,7 +80,7 @@ export class MainDataComponent {
   next() {
     if (this.basicInfoForm.valid) {
       this.stepperStateService.mainDataState.set('pass')
-      this.router.navigate(['/voter-data/contact-data'])
+      this.router.navigate(['/voter-data/contact-data'], { skipLocationChange: true })
     } else {
       this.stepperStateService.mainDataState.set('error')
     }

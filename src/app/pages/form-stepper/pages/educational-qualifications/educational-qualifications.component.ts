@@ -66,14 +66,19 @@ export class EducationalQualificationsComponent {
 
   stringify = (item: { name: string; surname: string }): string =>
     `${item.name} ${item.surname}`;
-
+    
+    back() {
+      this.router.navigate(['voter-data/contact-data'], { skipLocationChange: true })
+    }
+    
   next() {
     if (this.eduQualsForm.valid) {
       this.stepperStateService.eduQualState.set('pass')
-      this.router.navigate(['voter-data/attachments'])
+      this.router.navigate(['voter-data/attachments'], { skipLocationChange: true })
     } else {
       this.stepperStateService.eduQualState.set('fail')
     }
   }
+
 
 }
