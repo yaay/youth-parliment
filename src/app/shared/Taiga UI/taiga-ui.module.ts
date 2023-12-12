@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { TuiActionModule, TuiFilterByInputPipeModule, TuiRadioBlockModule, TuiTextareaModule } from '@taiga-ui/kit';
+import { TuiActionModule, TuiFilterByInputPipeModule, TuiRadioBlockModule, TuiTextareaModule, TuiUnmaskHandlerModule } from '@taiga-ui/kit';
 import { TuiIslandModule } from '@taiga-ui/kit';
 import { TuiInputModule } from '@taiga-ui/kit';
 import { TuiButtonModule, TuiDialogModule, TuiGroupModule } from '@taiga-ui/core';
@@ -28,8 +28,8 @@ import {TuiInputDateModule} from '@taiga-ui/kit';
 import {TuiRadioModule} from '@taiga-ui/kit';
 import {TuiInputFilesModule} from '@taiga-ui/kit';
 import { TuiScrollbarModule } from '@taiga-ui/core';
-
-
+import { NgxMaskModule } from 'ngx-mask';
+import {MaskitoModule} from '@maskito/angular';
 
 
 const TaigaUIComponents = [
@@ -71,6 +71,8 @@ const TaigaUIComponents = [
     TuiRadioModule,
     TuiInputFilesModule,
     TuiScrollbarModule,
+    TuiUnmaskHandlerModule,
+    MaskitoModule
   ]
 
 
