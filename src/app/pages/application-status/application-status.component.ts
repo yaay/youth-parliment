@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { RequestStatusRepository } from 'src/app/domain/request-status/request-status.repository';
+import { RequestRepository } from 'src/app/domain/request-status/request.repository';
+import { SignupRepository } from 'src/app/domain/signup/signup.repository';
 
 @Component({
   selector: 'app-application-status',
@@ -8,10 +11,14 @@ import { Router } from '@angular/router';
 })
 export class ApplicationStatusComponent {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,private requestRepository:RequestStatusRepository,
+    private userRepository:RequestRepository) {}
 
   startApplication() {
-    this.router.navigate(['/voter-data'])
+    this.userRepository.add({}).subscribe(_=>
+      {
+      this.router.navigate(['/voter-data'])
+    });
   }
 
 }
