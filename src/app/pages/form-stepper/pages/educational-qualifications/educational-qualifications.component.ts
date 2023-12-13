@@ -2,6 +2,14 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { StepperStateService } from 'src/app/core/services/stepper-state.service';
+import { AcademicYearRepository } from 'src/app/domain/academic-year/academic-year.repository';
+import { AcademicYear } from 'src/app/domain/academic-year/models/academic-year';
+import { LanguageRepository } from 'src/app/domain/edu-language/language.repository';
+import { Language } from 'src/app/domain/edu-language/models/language';
+import { EducationalLevelRepository } from 'src/app/domain/educational-level/educational-level.repository';
+import { EducationalLevel } from 'src/app/domain/educational-level/models/educational-level';
+import { LanguageLevelRepository } from 'src/app/domain/language-level/language-level.repository';
+import { LanguageLevel } from 'src/app/domain/language-level/models/language-level';
 
 @Component({
   selector: 'app-educational-qualifications',
@@ -9,9 +17,17 @@ import { StepperStateService } from 'src/app/core/services/stepper-state.service
   styleUrls: ['./educational-qualifications.component.css']
 })
 export class EducationalQualificationsComponent {
+  educationalLevel:EducationalLevel[] = [];
+  academicYear:AcademicYear[]=[];
+  languageLvl:LanguageLevel[]=[];
+  language:Language[]=[];
   constructor(
     private router: Router,
-    private stepperStateService: StepperStateService
+    private stepperStateService: StepperStateService,
+    private educationalLevelRepository: EducationalLevelRepository,
+    private academicYearRepository:AcademicYearRepository,
+    private languageLvlRepository:LanguageLevelRepository,
+    private LangRepository:LanguageRepository
   ) { }
   languages: { 'name': any, 'level': any }[] = []
 
@@ -76,5 +92,46 @@ export class EducationalQualificationsComponent {
       this.stepperStateService.eduQualState.set('fail')
     }
   }
+
+  ngOnInit(){
+    this.getAllLevels();
+    this.getLanguageLevel();
+    this.getLanguages();
+  }
+  getAllLevels() {
+    this.educationalLevelRepository.getList().subscribe((result) => {
+      this.educationalLevel=result.data;
+    });
+  }
+
+  getAcademicYear(){
+    this.eduQualsForm.get('academicYear')?.reset();
+    const id = this.eduQualsForm.value.educationalLevel?.['id'];
+    this.academicYearRepository.getAcademicYear(id).subscribe((result) => {
+      this.academicYear=result.data;
+    });
+
+  }
+  getLanguageLevel(){
+    this.languageLvlRepository.getList().subscribe((result) => {
+      this.languageLvl=result.data;
+    });
+  }
+  getLanguages(){
+    this.LangRepository.getList().subscribe((result) => {
+      this.language=result.data;
+  });
+}
+  languageStringify = (language: { arabicName: string }): string =>
+  `${language.arabicName}`;
+
+  languageLvlStringify = (languageLvl: { arabicName: string }): string =>
+  `${languageLvl.arabicName}`;
+
+  eduStringify = (educationalLevel: { arabicName: string }): string =>
+    `${educationalLevel.arabicName}`;
+
+  academicStringify = (academicYear: { arabicName: string }): string =>
+    `${academicYear.arabicName}`;
 
 }
