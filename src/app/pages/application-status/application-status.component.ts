@@ -11,16 +11,16 @@ import { RequestRepository } from 'src/app/domain/request-status/request.reposit
 export class ApplicationStatusComponent {
   statusValue:string="";
   requestValue:string = "";
-  showBtn:boolean=true;
+  showBtn:boolean=false;
 
-  constructor(private router: Router,private reqStatusRepository:RequestStatusRepository,
-    private ReqRepository:RequestRepository) {}
+  constructor(private router: Router,private requestStatusRepository:RequestStatusRepository,
+    private requestRepository:RequestRepository) {}
 
   startApplication() {
-    this.reqStatusRepository.get().subscribe({
+    this.requestStatusRepository.get().subscribe({
     error: () =>
       {
-        this.ReqRepository.add({}).subscribe(_=>{
+        this.requestRepository.add({}).subscribe(_=>{
         this.router.navigate(['/voter-data'])
       });
       },
@@ -34,7 +34,7 @@ export class ApplicationStatusComponent {
     this.startbtn();
   }
   startbtn(){
-    this.reqStatusRepository.get().subscribe({
+    this.requestStatusRepository.get().subscribe({
       error: () =>
       {
         this.requestValue = "بدأ الطلب",
@@ -48,7 +48,8 @@ export class ApplicationStatusComponent {
       }
         else if(res.requestStatus.code == "NEW_REQUEST")
         {
-          this.showBtn=false;
+          this.showBtn=true;
+          this.statusValue="تقديم الطلب"
           this.requestValue = "تم تقديم الطلب"
         }
             }
