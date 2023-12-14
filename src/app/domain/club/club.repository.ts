@@ -16,7 +16,7 @@ export class ClubRepository extends ResourceService {
         return 'governorate'
     }
 
-    getClubs(governorateId: any): Observable<any> {
+    getClubs(governorateId: number): Observable<any> {
         return this.http
             .get(this.APIUrl + `/${governorateId}` + '/club?page=0&size=200')
             .pipe(catchError((err) => {

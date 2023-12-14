@@ -1,3 +1,5 @@
+import { Government } from "../../government/models/government";
+
 export interface Club {
     "id": number,
     "version": number,
@@ -5,12 +7,5 @@ export interface Club {
     "englishName": string,
     "code": string,
     "enabled": boolean,
-    "governorate": {
-        "id": number,
-        "version": number,
-        "arabicName": string,
-        "englishName": string,
-        "code": string,
-        "enabled": boolean
-    }
+    "governorate": Government
 }

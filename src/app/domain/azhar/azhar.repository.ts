@@ -17,7 +17,7 @@ export class AzharRepository extends ResourceService {
     }
 
 
-    getAzhar(governorateId: any): Observable<any> {
+    getAzhar(governorateId: number): Observable<any> {
         return this.http
             .get(this.APIUrl + `/${governorateId}` + '/azhar?page=0&size=200')
             .pipe(catchError((err) => {

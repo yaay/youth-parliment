@@ -1,3 +1,5 @@
+import { Government } from 'src/app/domain/government/models/government';
+
 export interface Azhar {
     "id": number,
     "version": number,
@@ -9,12 +11,5 @@ export interface Azhar {
     "englishName": string,
     "code": string,
     "enabled": boolean,
-    "governorate": {
-        "id": number,
-        "version": number,
-        "arabicName": string,
-        "englishName": string,
-        "code": string,
-        "enabled": boolean
-    }
+    "governorate": Government
 }
