@@ -6,7 +6,7 @@
           <div class="some-figure"></div>
         </figure>
         <div>
-          <h3 class="tui-island__title">حاله الطلب: غير مكتمل</h3>
+          <h3 class="tui-island__title" >حاله الطلب: {{requestValue}} </h3>
           <button
             appearance="flat"
             size="m"
@@ -14,9 +14,10 @@
             type="button"
             class="tui-island__footer-button"
             (click)="startApplication()"
+            [value]="statusValue"
           >
-            أستكمال الطلب
-          </button>
+          {{statusValue}}
+        </button>
         </div>
       </div>
     </tui-island>
