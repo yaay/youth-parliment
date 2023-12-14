@@ -2,67 +2,56 @@
   <div class="right-side">
     <div class="tui-col_md-12 tui-center login-box padding-fix">
       <tui-island class="rtl card">
-        <div class="welcome-text">
+        <tui-loader 
+        [showLoader]="loader"
+        [overlay]="loader"
+        >
+          <div class="welcome-text">
             <h3 class="">مرحباً بعودتك !</h3>
             <p class="">يمكنك تسجيل الدخول إلي حسابك</p>
-        </div>
-        <form
-        [formGroup]="loginForm"
-        (ngSubmit)="login()"
-        >
-          <div class="tui-col_md-12">
-              <tui-input
-              formControlName="email"
-              tuiHintDirection="bottom-right"
-              tuiTextfieldIconLeft="tuiIconSearchLarge"
-              class="input"
-            >
-              البريد الألكتروني
-              <input 
-              tuiTextfield
-              />
-            </tui-input>
-    
-
-            <tui-input-password
-              formControlName="password"
-              class="input"
-            >
-              كلمه المرور
-              <input
-              tuiTextfield             
-               /> 
-            </tui-input-password>
-            <button
-            class="btn-width"
-            tuiButton
-            [showLoader]="loader"
-            >تسجيل الدخول</button>
-            <div class="login-help">
-                <a
-                tuiLink 
-                routerLink="/signup"
-                >إنشاء حساب جديد؟</a>
-                <a
-                tuiLink
-                routerLink="/reset-password"
-                style="text-align: right;"
-                >هل نسيت كلمة المرور؟</a>
-            </div>
           </div>
-        </form>
+          <form [formGroup]="loginForm" (ngSubmit)="login()">
+            <div class="tui-col_md-12">
+              <tui-input
+                formControlName="email"
+                tuiHintDirection="bottom-right"
+                tuiTextfieldIconLeft="tuiIconSearchLarge"
+                class="input"
+              >
+                البريد الألكتروني
+                <input tuiTextfield />
+              </tui-input>
 
+              <tui-input-password formControlName="password" class="input">
+                كلمه المرور
+                <input tuiTextfield />
+              </tui-input-password>
+              <button class="btn-width" tuiButton>
+                تسجيل الدخول
+              </button>
+              <div class="login-help">
+                <a tuiLink routerLink="/signup">إنشاء حساب جديد؟</a>
+                <a
+                  tuiLink
+                  routerLink="/reset-password"
+                  style="text-align: right"
+                  >هل نسيت كلمة المرور؟</a
+                >
+              </div>
+            </div>
+          </form>
+        </tui-loader>
       </tui-island>
     </div>
   </div>
 
   <div class="tui-col_md-12 left-side">
     <img
-    class="logo" 
-    src="../../../../assets/images/logo.png"
-    alt="mys-logo"
-    routerLink="/"
-    style="cursor: pointer;"
+      class="logo"
+      src="../../../../assets/images/logo.png"
+      alt="mys-logo"
+      routerLink="/"
+      style="cursor: pointer"
     />
   </div>
 </div>

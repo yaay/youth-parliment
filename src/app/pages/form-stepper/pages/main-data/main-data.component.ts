@@ -124,7 +124,7 @@ export class MainDataComponent {
   }
 
   getAzharAdmin() {
-    const govId = this.basicInfoForm.value.government?.['id'];
+    const govId: number = this.basicInfoForm.value.government?.['id']!;
     this.azharRepository.getAzhar(govId).subscribe((response: any) => {
       this.azharAdmins = response.data;
     })
@@ -144,7 +144,7 @@ export class MainDataComponent {
   }
 
   getClubs() {
-    const govId = this.basicInfoForm.value.government?.['id'];
+    const govId: number = this.basicInfoForm.value.government?.['id']!;
     this.clubRepository.getClubs(govId).subscribe((response: any) => {
       this.clubs = response.data;
     })
