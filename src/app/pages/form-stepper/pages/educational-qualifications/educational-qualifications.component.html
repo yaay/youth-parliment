@@ -16,10 +16,9 @@
           ></tui-data-list-wrapper>
         </tui-combo-box>
       </label>
-
-      <tui-error
-        formControlName="educationalLevel"
-        [error]="[] | tuiFieldError | async"
+      <tui-error [error]="error"
+      *ngIf="eduQualsForm.controls['educationalLevel'].touched
+      && eduQualsForm.controls['educationalLevel'].invalid "
       ></tui-error>
     </div>
     <div class="tui-form__multi-field">
@@ -39,25 +38,28 @@
           ></tui-data-list-wrapper>
         </tui-combo-box>
       </label>
-      <tui-error
-        formControlName="academicYear"
-        [error]="[] | tuiFieldError | async"
+      <tui-error [error]="error"
+      *ngIf="eduQualsForm.controls['academicYear'].touched
+      && eduQualsForm.controls['academicYear'].invalid "
       ></tui-error>
     </div>
   </div>
   <div class="tui-form__row">
     <tui-input
-      tuiTextfieldCustomContent=""
       formControlName="schoolName"
       class="input"
-    >
+      >
       اسم المدرسة
       <span class="tui-required"></span>
     </tui-input>
     <tui-error
-      formControlName="schoolName"
-      [error]="[] | tuiFieldError | async"
-    ></tui-error>
+
+    [error]="error"
+    *ngIf="eduQualsForm.controls['schoolName'].touched
+    && eduQualsForm.controls['schoolName'].invalid"
+    >
+    </tui-error>
+
   </div>
   <div class="tui-form__row">
     <tui-textarea
@@ -124,7 +126,7 @@
     class="tui-space_left-2 tui-space_top-5"
     *ngFor="let lang of languages; let index = index"
     [removable]="true"
-    [value]="lang.name"
+    [value]="lang.name.arabicName + '  -  '+ lang.level.arabicName "
     (edited)="handleTagDeleted($event, index)"
   ></tui-tag>
 

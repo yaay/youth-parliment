@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TuiValidationError } from '@taiga-ui/cdk';
 import { StepperStateService } from 'src/app/core/services/stepper-state.service';
 import { AcademicYearRepository } from 'src/app/domain/academic-year/academic-year.repository';
 import { AcademicYear } from 'src/app/domain/academic-year/models/academic-year';
@@ -21,6 +22,9 @@ export class EducationalQualificationsComponent {
   academicYear:AcademicYear[]=[];
   languageLvl:LanguageLevel[]=[];
   language:Language[]=[];
+  requiredError = new TuiValidationError('هذه الخانة مطلوبة');
+  lengthOfMin = new TuiValidationError(' يرجي ادخال ٧ حروف علي الاقل');
+
   constructor(
     private router: Router,
     private stepperStateService: StepperStateService,
@@ -34,7 +38,7 @@ export class EducationalQualificationsComponent {
   eduQualsForm = new FormGroup({
     educationalLevel: new FormControl(null, [Validators.required]),
     academicYear: new FormControl(null, [Validators.required]),
-    schoolName: new FormControl(null, [Validators.required]),
+    schoolName: new FormControl(null, [Validators.required,Validators.minLength(7)]),
     coursesName: new FormControl(null),
     language: new FormControl(null),
     languageLevel: new FormControl(null),
@@ -45,14 +49,14 @@ export class EducationalQualificationsComponent {
       name: this.eduQualsForm.value.language,
       level: this.eduQualsForm.value.languageLevel
     }
-    // if statement to check if lang.name isnt inside languages array
     if (lang.name && lang.level) {
       if (!this.languages.find(l => l.name === lang.name)) {
+        console.log(lang);
         this.languages.push(lang)
-      } else console.log('language already exists')
+      } else
+      alert ('language already exists');
     }
   }
-
 
   items2 = [
     'Graham',
@@ -134,4 +138,13 @@ export class EducationalQualificationsComponent {
   academicStringify = (academicYear: { arabicName: string }): string =>
     `${academicYear.arabicName}`;
 
+  get error(): TuiValidationError | null {
+    return this.eduQualsForm.controls['academicYear'].hasError('required') ? this.requiredError : null &&
+    this.eduQualsForm.controls['educationalLevel'].hasError('required') ? this.requiredError : null &&
+    this.eduQualsForm.controls['schoolName'].hasError('required') ? this.requiredError : null;
+  }
+  get minLengthError(): TuiValidationError | null {
+    return this.eduQualsForm.controls['schoolName'].hasError('minLength') ?
+        this.lengthOfMin : null;
+  }
 }
