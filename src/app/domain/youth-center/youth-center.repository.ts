@@ -7,19 +7,19 @@ import { ResourceService } from "src/app/core/services/resource.service";
     providedIn: 'root'
 })
 
-export class DistrictRepository extends ResourceService {
+export class YouthCenterRepository extends ResourceService {
     constructor(http: HttpClient) {
         super(http)
     }
 
     getResourceUrl(): string {
-        return `governorate`
+        return 'district'
     }
 
-    getDistricts(governorateId: any): Observable<any> {
+    getYouthCenter(districtId: any): Observable<any> {
         return this.http
-           .get(this.APIUrl + `/${governorateId}` + '/district/?page=0&size=200')
-           .pipe(catchError((err) => {
+            .get(this.APIUrl + `/${districtId}` + '/youth-centre?page=0&size=200')
+            .pipe(catchError((err) => {
                 throw new Error('Error', err.message)
             }))
     }
