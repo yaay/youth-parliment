@@ -15,6 +15,7 @@
             class="tui-island__footer-button"
             (click)="startApplication()"
             [value]="statusValue"
+            *ngIf="showBtn"
           >
           {{statusValue}}
         </button>

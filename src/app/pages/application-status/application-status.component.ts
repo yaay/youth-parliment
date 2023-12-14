@@ -11,6 +11,7 @@ import { RequestRepository } from 'src/app/domain/request-status/request.reposit
 export class ApplicationStatusComponent {
   statusValue:string="";
   requestValue:string = "";
+  showBtn:boolean=true;
 
   constructor(private router: Router,private reqStatusRepository:RequestStatusRepository,
     private ReqRepository:RequestRepository) {}
@@ -47,6 +48,7 @@ export class ApplicationStatusComponent {
       }
         else if(res.requestStatus.code == "NEW_REQUEST")
         {
+          this.showBtn=false;
           this.requestValue = "تم تقديم الطلب"
         }
             }
