@@ -85,7 +85,6 @@ export class AttachmentsComponent {
 
   next() {
     if (this.attachmentsForm.valid) {
-      console.log(this.control)
       this.stepperStateService.attachmentsState.set('pass')
       this.router.navigate(['voter-data/confirmation'])
     } else {

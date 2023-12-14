@@ -29,11 +29,11 @@ export class EducationalQualificationsComponent {
       name: this.eduQualsForm.value.language,
       level: this.eduQualsForm.value.languageLevel
     }
-    // if statement to check if lang.name isnt inside languages array
+    
     if (lang.name && lang.level) {
       if (!this.languages.find(l => l.name === lang.name)) {
         this.languages.push(lang)
-      } else console.log('language already exists')
+      }
     }
   }
 
@@ -69,7 +69,6 @@ export class EducationalQualificationsComponent {
 
   next() {
     if (this.eduQualsForm.valid) {
-      console.log(this.eduQualsForm.value)
       this.stepperStateService.eduQualState.set('pass')
       this.router.navigate(['voter-data/attachments'])
     } else {
