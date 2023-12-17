@@ -9,20 +9,22 @@
         الأسم
         <span class="tui-required"></span>
       </tui-input>
+      <tui-error [error]="arabicOnlyError"></tui-error>
       <tui-error
         formControlName="fullName"
         [error]="[] | tuiFieldError | async"
       ></tui-error>
     </div>
     <div class="tui-form__multi-field">
-      <tui-input-number 
-        formControlName="nationalId" 
+      <tui-input-number
+        formControlName="nationalId"
         class="input"
         [max]=99999999999999
-       >
+      >
         الرقم القومي
         <span class="tui-required"></span>
       </tui-input-number>
+      <tui-error [error]="nationalIDError"></tui-error>
       <tui-error
         formControlName="nationalId"
         [error]="[] | tuiFieldError | async"
@@ -139,7 +141,7 @@
           </div>
         </div>
       </div>
-  
+
     </div>
 
     <div class="tui-form__multi-field">
@@ -164,10 +166,10 @@
           </div>
         </div>
       </div>
-  
+
     </div>
 
-    
+
 
   </div>
 
@@ -194,15 +196,15 @@
           </div>
         </div>
       </div>
-  
+
     </div>
   </div>
 
   <div class="tui-form__row" style="justify-content: flex-end">
-    <button 
-    type="submit" 
+    <button
+    type="submit"
     tuiButton
-    [disabled]="basicInfoForm.invalid" 
+    [disabled]="basicInfoForm.invalid"
     appearance="secondary">التالي</button>
   </div>
 </form>

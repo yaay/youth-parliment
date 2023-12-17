@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TUI_VALIDATION_ERRORS } from '@taiga-ui/kit';
 import { GovernmentRepository } from 'src/app/domain/government/government.repository';
 import { minWordsValidator } from 'src/app/shared/Validators/minWords.validator';
-import { TuiDay } from '@taiga-ui/cdk';
+import { TuiDay, TuiValidationError } from '@taiga-ui/cdk';
 import { Router } from '@angular/router';
 import { BirthDateFromNationalIdPipe } from 'src/app/shared/pipes/birth-date-from-national-id.pipe';
 import { GenderFromNationalIdPipe } from 'src/app/shared/pipes/gender-from-national-id.pipe';
@@ -19,13 +19,14 @@ import { Government } from 'src/app/domain/government/models/government';
       provide: TUI_VALIDATION_ERRORS,
       useValue: {
         required: `هذه الخانة مطلوبه`,
-        pattern: 'أدخل رقم قومي صحيح',
         minWords: 'يرجي أدخال الاسم رباعي'
       }
     }
   ]
 })
 export class MainDataComponent {
+  arabicError = new TuiValidationError('يرجي ادخال الاسم باللغة العربية');
+  nationalIdError = new TuiValidationError('أدخل رقم قومي صحيح');
 
   constructor(
     private govermentRepository: GovernmentRepository,
@@ -33,13 +34,12 @@ export class MainDataComponent {
     private stepperStateService: StepperStateService
   ) { }
 
-
   genders = [{ gender: 'male' }, { gender: 'female' }];
   govs: Government[] = [];
 
   basicInfoForm = new FormGroup({
-    fullName: new FormControl(null, [Validators.required, minWordsValidator(4)]),
-    nationalId: new FormControl(null, [Validators.required, Validators.pattern(/(2|3)[0-9][1-9][0-1][1-9][0-3][1-9](01|02|03|04|11|12|13|14|15|16|17|18|19|21|22|23|24|25|26|27|28|29|31|32|33|34|35|88)\d\d\d\d\d/)]),
+    fullName: new FormControl(null, [Validators.required, minWordsValidator(4),Validators.pattern(/^[\u0621-\u064A\040]+$/)]),
+    nationalId: new FormControl(null, [Validators.required, Validators.pattern(/([2-3]{1})([0-9]{2})(0[1-9]|1[012])(0[1-9]|[1-2][0-9]|3[0-1])(0[1-4]|[1-2][1-9]|3[1-5]|88)[0-9]{3}([0-9]{1})[0-9]{1}/)]),
     government: new FormControl(null, [Validators.required]),
     district: new FormControl(''),
     adminstration: new FormControl(''),
@@ -49,6 +49,14 @@ export class MainDataComponent {
     religion: new FormControl('muslim'),
     disability: new FormControl('no'),
   })
+
+
+  get arabicOnlyError(): TuiValidationError | null {
+      return this.basicInfoForm.controls['fullName'].hasError('pattern') ? this.arabicError : null;
+  }
+  get nationalIDError() : TuiValidationError | null {
+    return this.basicInfoForm.controls['nationalId'].hasError('pattern') ? this.nationalIdError : null;
+}
 
   ngOnInit() {
     this.govermentRepository.get().subscribe(
