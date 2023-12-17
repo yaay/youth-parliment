@@ -9,19 +9,19 @@ import { apiConfig } from "src/apiConfig";
     providedIn: 'root'
 })
 
-export class DistrictRepository extends ResourceService {
+export class ClubRepository extends ResourceService {
     constructor(http: HttpClient) {
         super(http)
     }
 
     getResourceUrl(): string {
-        return `governorate`
+        return 'governorate'
     }
 
-    getDistricts(governorateId: any): Observable<any> {
+    getClubs(governorateId: number): Observable<any> {
         return this.http
-           .get(this.APIUrl + `/${governorateId}` + '/district/', { params: apiConfig.queryParams })
-           .pipe(catchError((err) => {
+            .get(this.APIUrl + `/${governorateId}/club`, { params: apiConfig.queryParams })
+            .pipe(catchError((err) => {
                 throw new Error('Error', err.message)
             }))
     }

@@ -6,11 +6,9 @@ import { ResourceService } from "src/app/core/services/resource.service";
     providedIn: 'root'
 })
 
-export class GovernmentRepository extends ResourceService {
+export class AffiliatePartyRepository extends ResourceService {
     getResourceUrl(): string {
-        const { size } = apiConfig.queryParams;
-        return `governorate?size=${size}`;
-    }
-
-    
+        const { page, size } = apiConfig.queryParams;
+        return `affiliate-party?page=${page}&size=${size}`;
+    }   
 }

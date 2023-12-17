@@ -32,23 +32,16 @@
 
   <div class="tui-form__row tui-form__row_multi-fields">
     <div class="tui-form__multi-field">
-      <!-- <tui-input
-        tuiTextfieldCustomContent=""
-        formControlName="government"
-        class="input"
-      >
-        المحافظه
-        <span class="tui-required"></span>
-      </tui-input>
-     -->
       <label>
         <tui-combo-box
             formControlName="government"
+            (ngModelChange)="getDistricts()"
             [stringify]="govStringify"
         >
         المحافظه
         <tui-data-list-wrapper
             *tuiDataList
+            emptyContent="جاري تحميل المحافظات"
             [itemContent]="govStringify | tuiStringifyContent"
             [items] = "govs | tuiFilterByInputWith: govStringify"
         >
@@ -61,10 +54,21 @@
       ></tui-error>
     </div>
     <div class="tui-form__multi-field">
-      <tui-input formControlName="district" class="input">
-        القسم الأداري
-        <span class="tui-required"></span>
-      </tui-input>
+      <label>
+        <tui-select
+            formControlName="district"
+            [stringify]="districtStringify"
+            >
+            الحي
+            <tui-data-list-wrapper
+            emptyContent="أختر المحافظه"
+            *tuiDataList
+            [itemContent]="districtStringify | tuiStringifyContent"
+            [items] = "districts"
+        >
+        </tui-data-list-wrapper>
+        </tui-select>
+      </label>
       <tui-error
         formControlName="district"
         [error]="[] | tuiFieldError | async"
@@ -74,32 +78,137 @@
 
   <div class="tui-form__row tui-form__row_multi-fields">
     <div class="tui-form__multi-field">
-      <tui-input
-        tuiTextfieldCustomContent=""
-        formControlName="adminstration"
-        class="input"
-      >
-        الجهة التابعه
-        <span class="tui-required"></span>
-      </tui-input>
+      <label>
+        <tui-select
+            formControlName="affiliateParty"
+            (ngModelChange)="setPartyDropdown()"
+            [stringify]="affiliatePartyStringify"
+            >
+            الجهة التابعه
+            <tui-data-list-wrapper
+            emptyContent="أختر المحافظه"
+            *tuiDataList
+            [itemContent]="affiliatePartyStringify | tuiStringifyContent"
+            [items] = "affiliateParties"
+        >
+        </tui-data-list-wrapper>
+        </tui-select>
+      </label>
       <tui-error
-        formControlName="adminstration"
+        formControlName="affiliateParty"
         [error]="[] | tuiFieldError | async"
       ></tui-error>
     </div>
-    <div class="tui-form__multi-field">
-      <tui-input formControlName="subAdmin" class="input">
-        الأدارة التعليميه
-        <span class="tui-required"></span>
-      </tui-input>
+    <div class="tui-form__multi-field" *ngIf="selectedParty == 1">
+      <label>
+        <tui-select
+            formControlName="educationsAdministration"
+            [stringify]="eduAdminStringify"
+            >
+            الأدارة التعليميه
+            <tui-data-list-wrapper
+            emptyContent="أختر الجهة التابعه"
+            *tuiDataList
+            [itemContent]="eduAdminStringify | tuiStringifyContent"
+            [items] = "eduAdmins"
+        >
+        </tui-data-list-wrapper>
+        </tui-select>
+      </label>
       <tui-error
-        formControlName="subAdmin"
+        formControlName="educationsAdministration"
         [error]="[] | tuiFieldError | async"
       ></tui-error>
     </div>
-  </div>
+    <div class="tui-form__multi-field" *ngIf="selectedParty == 2">
+      <label>
+        <tui-select
+            formControlName="azhar"
+            [stringify]="azharStringify"
+            >
+            الأدارة الفرعية
+            <tui-data-list-wrapper
+            emptyContent="أختر الجهة التابعه"
+            *tuiDataList
+            [itemContent]="azharStringify | tuiStringifyContent"
+            [items] = "azharAdmins"
+        >
+        </tui-data-list-wrapper>
+        </tui-select>
+      </label>
+      <tui-error
+        formControlName="azhar"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </div>
+    <div class="tui-form__multi-field" *ngIf="selectedParty == 3">
+      <label>
+        <tui-select
+            formControlName="affiliateClubs"
+            [stringify]="affiliateClubStringify"
+            (ngModelChange)="selectAffiliateClub()"
+            >
+            نادي/مركز شباب
+            <tui-data-list-wrapper
+            emptyContent="أختر الجهة التابعه"
+            *tuiDataList
+            [itemContent]="affiliateClubStringify | tuiStringifyContent"
+            [items] = "affiliateClubs"
+        >
+        </tui-data-list-wrapper>
+        </tui-select>
+      </label>
+      <tui-error
+        formControlName="club"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </div>
 
+  </div>
+  
   <div class="tui-form__row tui-form__row_multi-fields">
+    <div class="tui-form__multi-field" *ngIf="affiliateClub === 'club' && selectedParty == 3">
+      <label>
+        <tui-select
+            formControlName="club"
+            [stringify]="clubStringify"
+            >
+            نادي
+            <tui-data-list-wrapper
+            emptyContent="جاري تحميل..."
+            *tuiDataList
+            [itemContent]="clubStringify | tuiStringifyContent"
+            [items] = "clubs"
+        >
+        </tui-data-list-wrapper>
+        </tui-select>
+      </label>
+      <tui-error
+        formControlName="district"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </div>
+    <div class="tui-form__multi-field" *ngIf="affiliateClub === 'youthCenter' && selectedParty == 3">
+      <label>
+        <tui-select
+            formControlName="youthCenters"
+            [stringify]="youthCenterStringify"
+            >
+            مركز الشباب
+            <tui-data-list-wrapper
+            emptyContent="جاري تحميل..."
+            *tuiDataList
+            [itemContent]="youthCenterStringify | tuiStringifyContent"
+            [items] = "youthCenters"
+        >
+        </tui-data-list-wrapper>
+        </tui-select>
+      </label>
+      <tui-error
+        formControlName="district"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </div>
     <div class="tui-form__multi-field">
       <tui-input-date
         formControlName="dob"

@@ -51,7 +51,7 @@ tui-radio {
     font-family: var(--main-font);
 }
 
-tui-combo-box {
+tui-combo-box, tui-select {
     text-align: right;
 }
 
