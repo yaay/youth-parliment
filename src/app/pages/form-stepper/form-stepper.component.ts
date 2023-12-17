@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { StepperStateService } from 'src/app/core/services/stepper-state.service';
 
 type stateResult = 'pass' | 'error' | 'normal';
@@ -9,7 +10,8 @@ type stateResult = 'pass' | 'error' | 'normal';
   styleUrls: ['./form-stepper.component.css']
 })
 export class FormStepperComponent {
-  constructor(private stepperStateService: StepperStateService) { }
+  constructor(private stepperStateService: StepperStateService,
+              private router: Router) { }
 
   private getStateFromService(getStateFn: () => string): stateResult {
     const result = getStateFn();
@@ -30,6 +32,10 @@ export class FormStepperComponent {
 
   getAttachmentsState(): stateResult {
     return this.getStateFromService(() => this.stepperStateService.attachmentsState());
+  }
+
+  navigator(pageName: string) {
+    this.router.navigate([`/voter-data/${pageName}`], { skipLocationChange: true })
   }
 
 }

@@ -50,11 +50,14 @@ readonly maskOptions: MaskitoOptions = {
       /\d/,
   ],
 };
+  back() {
+    this.router.navigate(['/voter-data/main-data'], { skipLocationChange: true })
+  }
 
   next() {
     if (this.contactDataForm.valid) {
       this.stepperStateService.contactState.set('pass');
-      this.router.navigate(['/voter-data/edu-qualifications'])
+      this.router.navigate(['/voter-data/edu-qualifications'], { skipLocationChange: true })
     } else {
       this.stepperStateService.contactState.set('fail');
     }
