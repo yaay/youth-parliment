@@ -53,7 +53,6 @@ readonly maskOptions: MaskitoOptions = {
 
   next() {
     if (this.contactDataForm.valid) {
-      console.log(this.contactDataForm.value)
       this.stepperStateService.contactState.set('pass');
       this.router.navigate(['/voter-data/edu-qualifications'])
     } else {
