@@ -1,28 +1,36 @@
 <form [formGroup]="contactDataForm" (ngSubmit)="next()">
   <div class="tui-form__row tui-form__row_multi-fields">
     <div class="tui-form__multi-field">
-      <tui-input
-        tuiTextfieldCustomContent=""
-        formControlName="phoneNumber"
-        class="input"
-      >
-        رقم الهاتف الأول
-        <span class="tui-required"></span>
-      </tui-input>
+  <tui-input
+  formControlName="phoneNumber"
+  [maskito]="maskOptions"
+  class="input"
+>
+رقم الهاتف الأول
+<input
+      inputmode="numeric"
+      tuiTextfield
+  />
+</tui-input>
+
       <tui-error
         formControlName="phoneNumber"
         [error]="[] | tuiFieldError | async"
       ></tui-error>
     </div>
+
     <div class="tui-form__multi-field">
-      <tui-input-number
-        tuiTextfieldCustomContent=""
-        formControlName="secondNumber"
-        class="input"
-      >
-        رقم الهاتف الثاني
-        <span class="tui-required"></span>
-      </tui-input-number>
+      <tui-input
+      formControlName="secondNumber"
+      [maskito]="maskOptions"
+      class="input"
+    >
+    رقم الهاتف الثاني
+    <input
+          inputmode="numeric"
+          tuiTextfield
+      />
+    </tui-input>
       <tui-error
         formControlName="secondNumber"
         [error]="[] | tuiFieldError | async"
@@ -58,7 +66,7 @@
     >
       السابق
     </button>
-    <button 
+    <button
     tuiButton
     [disabled]="contactDataForm.invalid"
     appearance="secondary"
