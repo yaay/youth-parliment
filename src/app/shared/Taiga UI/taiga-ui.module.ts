@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { TuiActionModule, TuiFilterByInputPipeModule, TuiRadioBlockModule, TuiTextareaModule, TuiUnmaskHandlerModule } from '@taiga-ui/kit';
+import { TuiActionModule, TuiFilterByInputPipeModule, TuiInputPhoneModule, TuiRadioBlockModule, TuiTextareaModule, TuiUnmaskHandlerModule } from '@taiga-ui/kit';
 import { TuiIslandModule } from '@taiga-ui/kit';
 import { TuiInputModule } from '@taiga-ui/kit';
 import { TuiButtonModule, TuiDialogModule, TuiGroupModule } from '@taiga-ui/core';
@@ -70,6 +70,7 @@ const TaigaUIComponents = [
     TuiRadioModule,
     TuiInputFilesModule,
     TuiScrollbarModule,
+    TuiInputPhoneModule,
     TuiUnmaskHandlerModule,
     MaskitoModule
   ]
