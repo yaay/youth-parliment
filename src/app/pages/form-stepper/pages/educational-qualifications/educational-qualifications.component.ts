@@ -140,7 +140,6 @@ export class EducationalQualificationsComponent {
           this.disbaleAddButton=true;
         },
         next:(res)=>{
-          console.log(res);
             this.eduQualsForm.patchValue(res);
       }
       });
