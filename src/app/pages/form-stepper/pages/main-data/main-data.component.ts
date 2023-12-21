@@ -23,6 +23,12 @@ import { AffiliateClub } from 'src/app/domain/affiliate-club/models/affiliate-cl
 import { YouthCenter } from 'src/app/domain/youth-center/models/youth-center';
 import { AffiliateClubRepository } from 'src/app/domain/affiliate-club/affiliate-club.repository';
 import { YouthCenterRepository } from 'src/app/domain/youth-center/youth-center.repository';
+import { RequestStatusRepository } from 'src/app/domain/request-status/request-status.repository';
+import { ageRange } from 'src/app/shared/Validators/age-range.validator';
+import {MaskitoOptions} from '@maskito/core';
+import { RequestBasicInformationRepository } from 'src/app/domain/basic-information/request-basic-information.repository';
+import { BasicInformationRepository } from 'src/app/domain/basic-information/basic-information.repository';
+
 
 @Component({
   selector: 'app-main-data',
@@ -33,7 +39,8 @@ import { YouthCenterRepository } from 'src/app/domain/youth-center/youth-center.
       provide: TUI_VALIDATION_ERRORS,
       useValue: {
         required: `هذه الخانة مطلوبه`,
-        minWords: 'يرجي أدخال الاسم رباعي'
+        minWords: 'يرجي أدخال الاسم رباعي',
+        ageRange: 'يجب أن يكون العمر 18-45',
       }
     }
   ]
@@ -52,10 +59,40 @@ export class MainDataComponent {
     private azharRepository: AzharRepository,
     private clubRepository: ClubRepository,
     private affiliateClubRepository: AffiliateClubRepository,
-    private youthCenterRepository: YouthCenterRepository
+    private youthCenterRepository: YouthCenterRepository,
+    private requestStatusRepository: RequestStatusRepository,
+    private requestBasicInformationRepository: RequestBasicInformationRepository,
+    private basicInformationRepository: BasicInformationRepository,
   ) { }
 
-  genders = [{ gender: 'male' }, { gender: 'female' }];
+  readonly maskOptions: MaskitoOptions = {
+    mask: [
+      /\d/,
+        /\d/,
+        /\d/,
+        /\d/,
+        /\d/,
+        /\d/,
+        /\d/,
+        /\d/,
+        /\d/,
+        /\d/,
+        /\d/,
+        /\d/,
+        /\d/,
+        /\d/,
+    ],
+  };
+
+  disabilities: {arabicName: string, englishName: string}[] = [
+    {arabicName: "سمعية", englishName: "HEARING"}, 
+    {arabicName: "بصرية", englishName: "VISUAL"}, 
+    {arabicName: "حركية", englishName: "MOVEMENT"}
+  ];
+  newUser: boolean = false;
+  requestId!: number;
+  formId!: number;
+  selectedDisability!: string | undefined;
   selectedParty: number = 1;
   affiliateClub: string = '';
   govs: Government[] = [];
@@ -69,21 +106,23 @@ export class MainDataComponent {
 
   basicInfoForm = new FormGroup({
     fullName: new FormControl(null, [Validators.required, minWordsValidator(4),Validators.pattern(/^[\u0621-\u064A\040]+$/)]),
-    nationalId: new FormControl(null, [Validators.required, Validators.pattern(/([2-3]{1})([0-9]{2})(0[1-9]|1[012])(0[1-9]|[1-2][0-9]|3[0-1])(0[1-4]|[1-2][1-9]|3[1-5]|88)[0-9]{3}([0-9]{1})[0-9]{1}/)]),
-    government: new FormControl(null, [Validators.required]),
+    nationalId: new FormControl(null, [Validators.required, ageRange(), Validators.pattern(/([2-3]{1})([0-9]{2})(0[1-9]|1[012])(0[1-9]|[1-2][0-9]|3[0-1])(0[1-4]|[1-2][1-9]|3[1-5]|88)[0-9]{3}([0-9]{1})[0-9]{1}/)]),
+    governorate: new FormControl(null, [Validators.required]),
     district: new FormControl(null, [Validators.required]),
     affiliateParty: new FormControl(null, [Validators.required]),
-    educationsAdministration: new FormControl(null),
-    azhar: new FormControl(null),
+    eductionAdministration: new FormControl(null),
+    alAzhar: new FormControl(null),
     club: new FormControl(null),
-    affiliateClubs: new FormControl(null),
-    youthCenters: new FormControl(null),
-    dob: new FormControl(new TuiDay(2007, 0, 1)),
-    gender: new FormControl('', [Validators.required]),
-    religion: new FormControl('muslim'),
-    disability: new FormControl('no'),
+    affiliateClub: new FormControl(null),
+    youthCentre: new FormControl(null),
+    dob: new FormControl(new TuiDay(2007, 0, 1), [Validators.required]),
+    female: new FormControl(false, [Validators.required]),
+    muslim: new FormControl(true, [Validators.required]),
+    hasDisability: new FormControl(false),
+    disabilityType: new FormControl(''),
   })
 
+  disabilitySelected: boolean | null | undefined = false;
 
   get arabicOnlyError(): TuiValidationError | null {
       return this.basicInfoForm.controls['fullName'].hasError('pattern') ? this.arabicError : null;
@@ -93,11 +132,41 @@ export class MainDataComponent {
 }
 
   ngOnInit() {
+    this.getFormDataById();
     this.getGovs();
     this.getBirthAndGenderfromId();
     this.getAffiliateParties();
   }
 
+  disabilityTypeShow() {
+    let disabilityValue = this.basicInfoForm.value.hasDisability;
+    this.disabilitySelected = disabilityValue
+  }
+
+  getFormDataById() {
+   this.requestStatusRepository.get().subscribe({
+     next: (response) => {
+       this.requestId = response.id;
+       this.getSetFormData(response.id);
+     },
+     error: () => {
+      this.newUser = true;
+     }
+   })
+  }
+
+  getSetFormData(requestId: number) {
+    this.requestBasicInformationRepository.getBasicInformation(requestId).subscribe(
+      (response) => {
+        this.basicInfoForm.patchValue(response);
+        this.formId = response.id;
+        this.setPartyDropdown();
+        this.selectAffiliateClub();
+        this.setDisabilitiesTypeName(response.disabilityType);
+        this.disabilityTypeShow();
+      }
+    )
+  }
 
   getGovs() {
     this.govermentRepository.get().subscribe(
@@ -109,8 +178,14 @@ export class MainDataComponent {
 
   getDistricts() {
     this.basicInfoForm.get('district')?.reset();
+    this.basicInfoForm.get('eductionAdministration')?.reset();
+    this.basicInfoForm.get('alAzhar')?.reset();
+    this.basicInfoForm.get('youthCentre')?.reset();
+    
+    this.resetClub()
+
     this.districts = [];
-    const govId = this.basicInfoForm.value.government?.['id'];
+    const govId = this.basicInfoForm.value.governorate?.['id'];
     this.districtRepository.getDistricts(govId).subscribe(
       (response) => {
         this.districts = response.data;
@@ -126,21 +201,21 @@ export class MainDataComponent {
   }
 
   getEduAdmin() {
-    const govId = this.basicInfoForm.value.government?.['id'];
+    const govId = this.basicInfoForm.value.governorate?.['id'];
     this.eduAdminRepository.getEducationsAdministration(govId).subscribe((response: any) => {
       this.eduAdmins = response.data;
     })
   }
 
   getAzharAdmin() {
-    const govId: number = this.basicInfoForm.value.government?.['id']!;
-    this.azharRepository.getAzhar(govId).subscribe((response: any) => {
+    const govId: number = this.basicInfoForm.value.governorate?.['id']!;
+    this.azharRepository.getAzhar(govId).subscribe((response) => {
       this.azharAdmins = response.data;
     })
   }
 
   getAffiliateClubs() {
-    this.affiliateClubRepository.get().subscribe((response: any) => {
+    this.affiliateClubRepository.get().subscribe((response) => {
       this.affiliateClubs = response.data;
     })
   }
@@ -153,7 +228,7 @@ export class MainDataComponent {
   }
 
   getClubs() {
-    const govId: number = this.basicInfoForm.value.government?.['id']!;
+    const govId: number = this.basicInfoForm.value.governorate?.['id']!;
     this.clubRepository.getClubs(govId).subscribe((response: any) => {
       this.clubs = response.data;
     })
@@ -167,7 +242,7 @@ export class MainDataComponent {
           const formatedDOB = new BirthDateFromNationalIdPipe().transform(idString)
           this.basicInfoForm.get('dob')?.patchValue(new TuiDay(formatedDOB[0], formatedDOB[1], formatedDOB[2]))
           const gender = new GenderFromNationalIdPipe().transform(idString)
-          this.basicInfoForm.get('gender')?.patchValue(gender)
+          this.basicInfoForm.get('female')?.patchValue(gender)
         }
       })
   }
@@ -178,55 +253,83 @@ export class MainDataComponent {
     if (partyId == 2) {
         this.affiliateClub = '';
         this.selectedParty = 2;
-        this.basicInfoForm.get('azhar')?.setValidators(Validators.required);
-        this.basicInfoForm.get('affiliateClubs')?.clearValidators();
-        this.basicInfoForm.get('educationsAdministration')?.clearValidators();
-        this.basicInfoForm.get('youthCenters')?.clearValidators();
+        this.basicInfoForm.get('alAzhar')?.setValidators(Validators.required);
+        this.basicInfoForm.get('affiliateClub')?.clearValidators();
+        this.basicInfoForm.get('eductionAdministration')?.clearValidators();
+        this.basicInfoForm.get('youthCentre')?.clearValidators();
         this.basicInfoForm.get('club')?.clearValidators();
-        this.basicInfoForm.get('youthCenters')?.reset();
+        this.basicInfoForm.get('youthCentre')?.reset();
         this.basicInfoForm.get('club')?.reset();
-        this.basicInfoForm.get('affiliateClubs')?.reset();
-        this.basicInfoForm.get('educationsAdministration')?.reset();
+        this.basicInfoForm.get('affiliateClub')?.reset();
+        this.basicInfoForm.get('eductionAdministration')?.reset();
         this.getAzharAdmin();
     } else if (partyId == 3) {
         this.selectedParty = 3;
-        this.basicInfoForm.get('affiliateClubs')?.setValidators(Validators.required);
-        this.basicInfoForm.get('educationsAdministration')?.clearValidators();
-        this.basicInfoForm.get('azhar')?.clearValidators();
-        this.basicInfoForm.get('educationsAdministration')?.reset();
-        this.basicInfoForm.get('azhar')?.reset();
+        this.basicInfoForm.get('affiliateClub')?.setValidators(Validators.required);
+        this.basicInfoForm.get('eductionAdministration')?.clearValidators();
+        this.basicInfoForm.get('alAzhar')?.clearValidators();
+        this.basicInfoForm.get('eductionAdministration')?.reset();
+        this.basicInfoForm.get('alAzhar')?.reset();
         this.getAffiliateClubs();
 
     } else if (partyId == 1) {
         this.affiliateClub = '';
         this.selectedParty = 1;
-        this.basicInfoForm.get('educationsAdministration')?.setValidators(Validators.required);
-        this.basicInfoForm.get('azhar')?.clearValidators();
-        this.basicInfoForm.get('affiliateClubs')?.clearValidators();
-        this.basicInfoForm.get('youthCenters')?.clearValidators();
+        this.basicInfoForm.get('eductionAdministration')?.setValidators(Validators.required);
+        this.basicInfoForm.get('alAzhar')?.clearValidators();
+        this.basicInfoForm.get('affiliateClub')?.clearValidators();
+        this.basicInfoForm.get('youthCentre')?.clearValidators();
         this.basicInfoForm.get('club')?.clearValidators();
-        this.basicInfoForm.get('youthCenters')?.reset();
+        this.basicInfoForm.get('youthCentre')?.reset();
         this.basicInfoForm.get('club')?.reset();
-        this.basicInfoForm.get('affiliateClubs')?.reset();
-        this.basicInfoForm.get('azhar')?.reset();
+        this.basicInfoForm.get('affiliateClub')?.reset();
+        this.basicInfoForm.get('alAzhar')?.reset();
         this.getEduAdmin();
     }
 
   }
 
   selectAffiliateClub() {
-    const affiliateClubId = this.basicInfoForm.value.affiliateClubs?.['id'];
+    const affiliateClubId = this.basicInfoForm.value.affiliateClub?.['id'];
     if (affiliateClubId === 1) {
       this.affiliateClub = "club"
       this.basicInfoForm.get('club')?.setValidators(Validators.required);
-      this.basicInfoForm.get('youthCenters')?.clearValidators();
-      this.basicInfoForm.get('youthCenters')?.reset();
+      this.basicInfoForm.get('youthCentre')?.clearValidators();
+      this.basicInfoForm.get('youthCentre')?.reset();
       this.getClubs();
     } else if (affiliateClubId === 2) {
       this.affiliateClub= "youthCenter"
-      this.basicInfoForm.get('youthCenters')?.setValidators(Validators.required);
+      this.basicInfoForm.get('youthCentre')?.setValidators(Validators.required);
       this.basicInfoForm.get('club')?.clearValidators();
       this.basicInfoForm.get('club')?.reset();
+      this.getYouthCenters();
+    }
+  }
+
+  setDisabilitiesTypeName(englishName: string) {
+    const disability = this.disabilities.find(
+      (disability) => disability.englishName === englishName
+      );
+      this.selectedDisability = disability?.arabicName;
+
+  }
+
+  districtSelected() {
+    this.resetYouthCenter();
+  }
+
+  resetClub() {
+    if (this.affiliateClub === 'club') {
+      this.basicInfoForm.get('club')?.reset();
+      this.clubs = [];
+      this.getClubs();
+    }
+  }
+
+  resetYouthCenter() {
+    if (this.affiliateClub === 'youthCenter') {
+      this.basicInfoForm.get('youthCentre')?.reset();
+      this.youthCenters = [];
       this.getYouthCenters();
     }
   }
@@ -255,18 +358,26 @@ export class MainDataComponent {
   youthCenterStringify = (youthCenters: { arabicName: string }): string =>
     `${youthCenters.arabicName}`;
 
+  disabilitiesStringify = (disabilities: { arabicName: string }): string =>
+    `${disabilities.arabicName}`;
+
 
   next() {
     if (this.basicInfoForm.valid) {
-      const formValue = this.basicInfoForm.value
-      formValue.government = this.basicInfoForm.value.government?.['id']
-      console.log(formValue)
+      if (this.newUser) {
+        this.requestBasicInformationRepository
+        .addBasicInformation(this.requestId, this.basicInfoForm.value)
+        .subscribe();
+
+      } else {
+        this.basicInformationRepository.update(this.formId, this.requestId, this.basicInfoForm.value)
+        .subscribe();
+      }
+
       this.stepperStateService.mainDataState.set('pass')
-      this.router.navigate(['/voter-data/contact-data'], { skipLocationChange: true })
+      // this.router.navigate(['/voter-data/contact-data'], { skipLocationChange: true })
     } else {
       this.stepperStateService.mainDataState.set('error')
     }
   }
-
-
 }
