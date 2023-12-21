@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { TuiActionModule, TuiFilterByInputPipeModule, TuiInputPhoneModule, TuiRadioBlockModule, TuiTextareaModule, TuiUnmaskHandlerModule } from '@taiga-ui/kit';
 import { TuiIslandModule } from '@taiga-ui/kit';
 import { TuiInputModule } from '@taiga-ui/kit';
-import { TuiButtonModule, TuiDialogModule, TuiGroupModule } from '@taiga-ui/core';
+import { TuiButtonModule, TuiDialogModule, TuiGroupModule, TuiTextfieldControllerModule } from '@taiga-ui/core';
 import { TuiSvgModule } from '@taiga-ui/core';
 import { TuiMarkerIconModule } from '@taiga-ui/kit';
 import { TuiStepperModule } from '@taiga-ui/kit'
@@ -72,7 +72,8 @@ const TaigaUIComponents = [
     TuiScrollbarModule,
     TuiInputPhoneModule,
     TuiUnmaskHandlerModule,
-    MaskitoModule
+    MaskitoModule,
+    TuiTextfieldControllerModule
   ]
 
 

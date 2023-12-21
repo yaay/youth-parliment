@@ -16,14 +16,14 @@
       ></tui-error>
     </div>
     <div class="tui-form__multi-field">
-      <tui-input-number
+      <tui-input
         formControlName="nationalId"
         class="input"
-        [max]=99999999999999
+        [maskito]="maskOptions"
       >
         الرقم القومي
         <span class="tui-required"></span>
-      </tui-input-number>
+      </tui-input>
       <tui-error [error]="nationalIDError"></tui-error>
       <tui-error
         formControlName="nationalId"
@@ -36,7 +36,7 @@
     <div class="tui-form__multi-field">
       <label>
         <tui-combo-box
-            formControlName="government"
+            formControlName="governorate"
             (ngModelChange)="getDistricts()"
             [stringify]="govStringify"
         >
@@ -51,7 +51,7 @@
       </tui-combo-box>
       </label>
       <tui-error
-        formControlName="government"
+        formControlName="governorate"
         [error]="[] | tuiFieldError | async"
       ></tui-error>
     </div>
@@ -59,6 +59,7 @@
       <label>
         <tui-select
             formControlName="district"
+            (ngModelChange)="districtSelected()"
             [stringify]="districtStringify"
             >
             الحي
@@ -104,7 +105,7 @@
     <div class="tui-form__multi-field" *ngIf="selectedParty == 1">
       <label>
         <tui-select
-            formControlName="educationsAdministration"
+            formControlName="eductionAdministration"
             [stringify]="eduAdminStringify"
             >
             الأدارة التعليميه
@@ -118,14 +119,14 @@
         </tui-select>
       </label>
       <tui-error
-        formControlName="educationsAdministration"
+        formControlName="eductionAdministration"
         [error]="[] | tuiFieldError | async"
       ></tui-error>
     </div>
     <div class="tui-form__multi-field" *ngIf="selectedParty == 2">
       <label>
         <tui-select
-            formControlName="azhar"
+            formControlName="alAzhar"
             [stringify]="azharStringify"
             >
             الأدارة الفرعية
@@ -139,14 +140,14 @@
         </tui-select>
       </label>
       <tui-error
-        formControlName="azhar"
+        formControlName="alAzhar"
         [error]="[] | tuiFieldError | async"
       ></tui-error>
     </div>
     <div class="tui-form__multi-field" *ngIf="selectedParty == 3">
       <label>
         <tui-select
-            formControlName="affiliateClubs"
+            formControlName="affiliateClub"
             [stringify]="affiliateClubStringify"
             (ngModelChange)="selectAffiliateClub()"
             >
@@ -161,7 +162,7 @@
         </tui-select>
       </label>
       <tui-error
-        formControlName="club"
+        formControlName="affiliateClub"
         [error]="[] | tuiFieldError | async"
       ></tui-error>
     </div>
@@ -177,7 +178,7 @@
             >
             نادي
             <tui-data-list-wrapper
-            emptyContent="جاري تحميل..."
+            emptyContent="أختر المحافظه"
             *tuiDataList
             [itemContent]="clubStringify | tuiStringifyContent"
             [items] = "clubs"
@@ -193,12 +194,12 @@
     <div class="tui-form__multi-field" *ngIf="affiliateClub === 'youthCenter' && selectedParty == 3">
       <label>
         <tui-select
-            formControlName="youthCenters"
+            formControlName="youthCentre"
             [stringify]="youthCenterStringify"
             >
             مركز الشباب
             <tui-data-list-wrapper
-            emptyContent="جاري تحميل..."
+            emptyContent="أختر الحي"
             *tuiDataList
             [itemContent]="youthCenterStringify | tuiStringifyContent"
             [items] = "youthCenters"
@@ -227,13 +228,13 @@
   <div class="tui-form__row tui-form__row_multi-fields">
 
     <div class="tui-form__multi-field">
+      <p>النوع</p>
       <div class="radioContainer">
-        <p>النوع</p>
         <div class="label-container">
           <div class="label">
             <tui-radio
-              formControlName="gender"
-              item="male"
+              formControlName="female"
+              [item]=false
               size="l"
               [readOnly]="true"
             ></tui-radio>
@@ -241,8 +242,8 @@
           </div>
           <div class="label">
             <tui-radio
-              formControlName="gender"
-              item="female"
+              formControlName="female"
+              [item]=true
               size="l"
               [readOnly]="true"
             ></tui-radio>
@@ -259,16 +260,16 @@
         <div class="label-container">
           <div class="label">
             <tui-radio
-              formControlName="religion"
-              item="muslim"
+              formControlName="muslim"
+              [item]=true
               size="l"
             ></tui-radio>
             <p>مسلم</p>
           </div>
           <div class="label">
             <tui-radio
-              formControlName="religion"
-              item="christian"
+              formControlName="muslim"
+              [item]=false
               size="l"
             ></tui-radio>
             <p>مسيحى</p>
@@ -282,23 +283,27 @@
 
   </div>
 
-  <div class="tui-form__row">
+  <div class="tui-form__row tui-form__row_multi-fields" style="align-items: flex-end;">
     <div class="tui-form__multi-field">
-      <div class="radioContainer">
+      <div 
+      class="radioContainer"
+      >
         <p>هل لديك اعاقه؟</p>
         <div class="label-container">
           <div class="label">
             <tui-radio
-              formControlName="disability"
-              item="yes"
+              formControlName="hasDisability"
+              (ngModelChange)="disabilityTypeShow()"
+              [item]=true
               size="l"
             ></tui-radio>
             <p>نعم</p>
           </div>
           <div class="label">
             <tui-radio
-              formControlName="disability"
-              item="no"
+              formControlName="hasDisability"
+              (ngModelChange)="disabilityTypeShow()"
+              item=false
               size="l"
             ></tui-radio>
             <p>لا</p>
@@ -306,6 +311,31 @@
         </div>
       </div>
 
+    </div>
+    <div class="tui-form__multi-field" *ngIf="disabilitySelected === true">
+        <tui-select
+            formControlName="disabilityType"
+            class="b-form"
+            [valueContent]="selectedDisability"
+            >
+            نوع الأعاقة
+            <ng-template tuiDataList>
+            <tui-data-list>
+                <button
+                    *ngFor="let disabilitiy of disabilities"
+                    tuiOption
+                    [value]="disabilitiy.englishName"
+                    (click)="selectedDisability=disabilitiy.arabicName"
+                >
+                    {{ disabilitiy.arabicName }}
+                </button>
+              </tui-data-list>
+            </ng-template>
+        </tui-select>
+      <tui-error
+        formControlName="disabilityType"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
     </div>
   </div>
 
