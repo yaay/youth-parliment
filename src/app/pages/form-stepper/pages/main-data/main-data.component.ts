@@ -375,7 +375,7 @@ export class MainDataComponent {
       }
 
       this.stepperStateService.mainDataState.set('pass')
-      // this.router.navigate(['/voter-data/contact-data'], { skipLocationChange: true })
+      this.router.navigate(['/voter-data/contact-data'], { skipLocationChange: true })
     } else {
       this.stepperStateService.mainDataState.set('error')
     }
