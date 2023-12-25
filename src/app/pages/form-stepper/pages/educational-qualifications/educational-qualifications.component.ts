@@ -9,6 +9,7 @@ import { LanguageRepository } from 'src/app/domain/education-language/language.r
 import { Language } from 'src/app/domain/education-language/models/language';
 import { EducationalLevelRepository } from 'src/app/domain/educational-level/educational-level.repository';
 import { EducationalLevel } from 'src/app/domain/educational-level/models/educational-level';
+import { EducationalLanguageRepository } from 'src/app/domain/educational-qualification-language/educational-language.repository';
 import { EducationalQualificationLanguageRepository } from 'src/app/domain/educational-qualification-language/educational-qualification-language.repository';
 import { EducationQualificationLanguage } from 'src/app/domain/educational-qualification-language/models/education-qualification-language';
 import { EducationalQualificationRepository } from 'src/app/domain/educational-qualification/educational-qualification.repository';
@@ -35,6 +36,8 @@ export class EducationalQualificationsComponent {
   lengthOfMin = new TuiValidationError(' يرجي ادخال ٧ حروف علي الاقل');
   languageError = new TuiValidationError(' لا يمكن تكرار اللغة');
   showErrorMsg:boolean=false;
+  lang:{}={}
+  element:{}={};
   constructor(
     private router: Router,
     private stepperStateService: StepperStateService,
@@ -44,10 +47,10 @@ export class EducationalQualificationsComponent {
     private languageLevelRepository:LanguageLevelRepository,
     private reqestRepository: RequestStatusRepository,
     private educationQualificationRepository:EducationalQualificationRepository,
-    private eduQualLanguageRepository: EducationalQualificationLanguageRepository
+    private eduQualLanguageRepository: EducationalQualificationLanguageRepository,
+    private educationalLanguageRepository:EducationalLanguageRepository
       ) { }
   languages: EducationQualificationLanguage[] = []
-
   eduQualsForm = new FormGroup({
     educationalLevel: new FormControl(null, [Validators.required]),
     academicYear: new FormControl(null, [Validators.required]),
@@ -58,7 +61,7 @@ export class EducationalQualificationsComponent {
   })
 
   addLanguage() {
-    let lang = {
+    this.lang = {
       language: this.eduQualsForm.value.language,
       languageLevel: this.eduQualsForm.value.languageLevel
     }
@@ -66,12 +69,11 @@ export class EducationalQualificationsComponent {
     this.reqestRepository.get().subscribe(result=>{
       this.educationQualificationRepository.getEduQualification(result.id).subscribe({
         next:(res)=>{
-          this.addEduLanguage=this.eduQualLanguageRepository.toServerModel(lang);
+          this.addEduLanguage=this.eduQualLanguageRepository.toServerModel(this.lang);
           this.eduQualLanguageRepository.addEduQualLanguage(res.id,this.addEduLanguage).subscribe({
             error:_=>{
             this.showErrorMsg=true;
             this.langError;
-
             },
             next:(lang)=>{
               if (lang.language && lang.languageLevel) {
@@ -81,7 +83,6 @@ export class EducationalQualificationsComponent {
                     }
                   }
                 }
-
         });
       }});
     });
@@ -111,10 +112,11 @@ get langError(): TuiValidationError | null {
     'فوق المتوسط'
   ]
 
-  handleTagDeleted(emptyTag: any, currentIndex: number): void {
+  handleTagDeleted(emptyTag: any, currentIndex: number,id:number): void {
     this.languages = this.languages
       .map((language, index) => (index === currentIndex ? emptyTag : language))
       .filter(Boolean);
+      this.educationalLanguageRepository.deleteLanguage(id).subscribe();
   }
 
   stringify = (item: { name: string; surname: string }): string =>
@@ -155,11 +157,22 @@ get langError(): TuiValidationError | null {
           this.disbaleAddButton=true;
         },
         next:(res)=>{
+          this.eduQualLanguageRepository.getEduQualLanguage(res.id).subscribe(response=>{
+            for (let index = 0; index < response.data.length; index++) {
+              const element = response.data[index];
+              this.languages.push({
+                id: element.id,
+                language: element.language,
+                languageLevel: element.languageLevel
+              });
+            }
+          });
             this.eduQualsForm.patchValue(res);
       }
       });
-    });
-  }
+      });
+    };
+
   getAllLevels() {
     this.educationalLevelRepository.getList().subscribe((result) => {
       this.educationalLevel = result.data;

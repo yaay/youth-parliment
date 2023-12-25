@@ -123,7 +123,7 @@
       ></tui-error>
     </div>
     <div class="tui-form__multi-field">
-      <button tuiButton (click)="addLanguage()" [disabled]="disbaleAddButton" >أضافة</button>
+      <button tuiButton type="button" (click)="addLanguage()" [disabled]="disbaleAddButton" >أضافة</button>
     </div>
   </div>
   <tui-tag
@@ -134,10 +134,9 @@
     *ngFor="let lang of languages; let index = index"
     [removable]="true"
     [value]="lang.language.arabicName + '  -  '+ lang.languageLevel.arabicName "
-    (edited)="handleTagDeleted($event, index)"
+    (edited)="handleTagDeleted($event, index,lang.id)"
   ></tui-tag>
-
-  <div
+<div
     class="tui-form__row"
     style="display: flex; justify-content: flex-end; gap: 0.5rem"
   >
@@ -154,6 +153,7 @@
       [disabled]="eduQualsForm.invalid"
       appearance="secondary"
       type="submit"
+      (click)="next()"
     >
       التالي
     </button>
