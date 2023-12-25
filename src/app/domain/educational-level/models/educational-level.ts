@@ -3,6 +3,6 @@ export interface EducationalLevel {
   version:number;
   arabicName:string;
   englishName:string;
-  code:String;
-  enabled:true;
+  code:string;
+  enabled:boolean;
   }

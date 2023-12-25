@@ -33,6 +33,8 @@ export class EducationalQualificationsComponent {
   disbaleAddButton!:boolean;
   requiredError = new TuiValidationError('هذه الخانة مطلوبة');
   lengthOfMin = new TuiValidationError(' يرجي ادخال ٧ حروف علي الاقل');
+  languageError = new TuiValidationError(' لا يمكن تكرار اللغة');
+  showErrorMsg:boolean=false;
   constructor(
     private router: Router,
     private stepperStateService: StepperStateService,
@@ -44,7 +46,7 @@ export class EducationalQualificationsComponent {
     private educationQualificationRepository:EducationalQualificationRepository,
     private eduQualLanguageRepository: EducationalQualificationLanguageRepository
       ) { }
-  languages: { 'language': any, 'languageLevel': any }[] = []
+  languages: { 'language': Language, 'languageLevel': LanguageLevel }[] = []
 
   eduQualsForm = new FormGroup({
     educationalLevel: new FormControl(null, [Validators.required]),
@@ -60,22 +62,34 @@ export class EducationalQualificationsComponent {
       language: this.eduQualsForm.value.language,
       languageLevel: this.eduQualsForm.value.languageLevel
     }
-    if (lang.language && lang.languageLevel) {
-      if (!this.languages.find(l => l.language === lang.language)) {
-        this.languages.push(lang)
-      }else
-      alert ('language already exists');
-    }
-    this.addEduLanguage=this.eduQualLanguageRepository.toServerModel(lang);
     this.reqestRepository.get().subscribe(result=>{
       this.educationQualificationRepository.getEduQualification(result.id).subscribe({
         next:(res)=>{
-          this.eduQualLanguageRepository.addEduQualLanguage(res.id,this.addEduLanguage).subscribe();
-        }
-      });
+          this.addEduLanguage=this.eduQualLanguageRepository.toServerModel(lang);
+          this.eduQualLanguageRepository.addEduQualLanguage(res.id,this.addEduLanguage).subscribe({
+            error:_=>{
+            this.showErrorMsg=true;
+            this.langError;
+
+            },
+            next:(lang)=>{
+              if (lang.language && lang.languageLevel) {
+                    if (!this.languages.find(l => l.language === lang.language)) {
+                      this.showErrorMsg=false;
+                      this.languages.push(lang)
+                    }
+                  }
+                }
+
+        });
+      }});
     });
   }
 
+get langError(): TuiValidationError | null {
+  return this.languageError;
+
+}
   items2 = [
     'Graham',
     'Michael',

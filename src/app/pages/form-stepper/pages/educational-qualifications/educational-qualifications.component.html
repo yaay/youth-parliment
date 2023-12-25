@@ -92,12 +92,14 @@
           [itemContent]="languageStringify | tuiStringifyContent"
           [items] = "language | tuiFilterByInputWith: languageStringify"
           ></tui-data-list-wrapper>
+
         </tui-combo-box>
       </label>
       <tui-error
         formControlName="language"
-        [error]="[] | tuiFieldError | async"
-      ></tui-error>
+        [error]="langError"
+        *ngIf="showErrorMsg"
+        ></tui-error>
     </div>
     <div class="tui-form__multi-field">
       <label>
