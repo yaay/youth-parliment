@@ -17,15 +17,9 @@ export class BasicInformationRepository extends ResourceService {
         return 'basic-information'
     }
 
-    update(id: number, requestId: number, resource: any): Observable<any> {
-        let formattedResource = this.extractIds.extractIds(resource);
-        formattedResource['birthDate'] = formattedResource.dob?.year + '-' + formattedResource.dob?.month + '-' + formattedResource.dob?.day;
-        delete formattedResource.dob;
-        formattedResource['request'] = {request: requestId};
-        formattedResource['id'] = id;
-
+    update(id: number, resource: any): Observable<any> {
         return this.http
-            .put(this.APIUrl + `/${id}`, formattedResource)
+            .put(this.APIUrl + `/${id}`, resource)
             .pipe(catchError((err) => {
                 throw new Error('Error', err.message)
             }))

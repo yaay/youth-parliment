@@ -28,6 +28,7 @@ import { ageRange } from 'src/app/shared/Validators/age-range.validator';
 import {MaskitoOptions} from '@maskito/core';
 import { RequestBasicInformationRepository } from 'src/app/domain/basic-information/request-basic-information.repository';
 import { BasicInformationRepository } from 'src/app/domain/basic-information/basic-information.repository';
+import { ExtractIdService } from 'src/app/core/services/extractIds.service';
 
 
 @Component({
@@ -63,6 +64,7 @@ export class MainDataComponent {
     private requestStatusRepository: RequestStatusRepository,
     private requestBasicInformationRepository: RequestBasicInformationRepository,
     private basicInformationRepository: BasicInformationRepository,
+    private extractIds: ExtractIdService
   ) { }
 
   readonly maskOptions: MaskitoOptions = {
@@ -138,7 +140,7 @@ export class MainDataComponent {
     this.getAffiliateParties();
   }
 
-  disabilityTypeShow() {
+  showDisabilityTypeDropdown() {
     let disabilityValue = this.basicInfoForm.value.hasDisability;
     this.disabilitySelected = disabilityValue
   }
@@ -148,23 +150,25 @@ export class MainDataComponent {
      next: (response) => {
        this.requestId = response.id;
        this.getSetFormData(response.id);
-     },
-     error: () => {
-      this.newUser = true;
      }
    })
   }
 
   getSetFormData(requestId: number) {
-    this.requestBasicInformationRepository.getBasicInformation(requestId).subscribe(
-      (response) => {
+    this.requestBasicInformationRepository.getBasicInformation(requestId).subscribe({      
+      next: (response) => {
         this.basicInfoForm.patchValue(response);
         this.formId = response.id;
         this.setPartyDropdown();
         this.selectAffiliateClub();
         this.setDisabilitiesTypeName(response.disabilityType);
-        this.disabilityTypeShow();
-      }
+        this.showDisabilityTypeDropdown();
+      },
+      
+      error: () => {
+        this.newUser = true;
+       }
+    }
     )
   }
 
@@ -363,14 +367,20 @@ export class MainDataComponent {
 
 
   next() {
+    let formattedResource = this.extractIds.extractIds(this.basicInfoForm.value);
+    formattedResource['birthDate'] = formattedResource.dob?.year + '-' + formattedResource.dob?.month + '-' + formattedResource.dob?.day;
+    delete formattedResource.dob;
+    formattedResource['request'] = {request: this.requestId};
+    
     if (this.basicInfoForm.valid) {
       if (this.newUser) {
         this.requestBasicInformationRepository
-        .addBasicInformation(this.requestId, this.basicInfoForm.value)
+        .addBasicInformation(this.requestId, formattedResource)
         .subscribe();
-
+        
       } else {
-        this.basicInformationRepository.update(this.formId, this.requestId, this.basicInfoForm.value)
+        formattedResource['id'] = this.formId;
+        this.basicInformationRepository.update(this.formId, formattedResource)
         .subscribe();
       }
 
