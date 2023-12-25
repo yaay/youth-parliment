@@ -13,7 +13,7 @@ export class AcademicYearRepository extends ResourceService {
   getResourceUrl(): string {
     return 'educational-level';
   }
-  getAcademicYear(eduLvlId: any): Observable<any> {
+  getAcademicYear(eduLvlId?: number): Observable<any> {
     return this.http
       .get(this.APIUrl +`/${eduLvlId}` + '/academic-year')
       .pipe(catchError((err) => {             throw new Error('Error', err.message)
