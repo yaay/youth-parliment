@@ -9,7 +9,6 @@ import { YouthCenter } from "../../youth-center/models/youth-center"
 
 export interface BasicInformation {
     id: number,
-    version: number,
     fullName: string,
     nationalId: string,
     birthDate: string,
