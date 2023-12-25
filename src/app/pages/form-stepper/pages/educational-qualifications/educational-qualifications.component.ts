@@ -46,7 +46,7 @@ export class EducationalQualificationsComponent {
     private educationQualificationRepository:EducationalQualificationRepository,
     private eduQualLanguageRepository: EducationalQualificationLanguageRepository
       ) { }
-  languages: { 'language': Language, 'languageLevel': LanguageLevel }[] = []
+  languages: EducationQualificationLanguage[] = []
 
   eduQualsForm = new FormGroup({
     educationalLevel: new FormControl(null, [Validators.required]),
@@ -62,6 +62,7 @@ export class EducationalQualificationsComponent {
       language: this.eduQualsForm.value.language,
       languageLevel: this.eduQualsForm.value.languageLevel
     }
+
     this.reqestRepository.get().subscribe(result=>{
       this.educationQualificationRepository.getEduQualification(result.id).subscribe({
         next:(res)=>{
