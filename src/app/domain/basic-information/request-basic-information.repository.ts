@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable, catchError } from "rxjs";
 import { ExtractIdService } from "src/app/core/services/extractIds.service";
 import { ResourceService } from "src/app/core/services/resource.service";
+import { BasicInformation } from "./models/basic-information";
 
 @Injectable({
     providedIn: 'root'
@@ -27,14 +28,9 @@ export class RequestBasicInformationRepository extends ResourceService {
             }))
     }
 
-    addBasicInformation(id: number, resource: any): Observable<any> {
-        let formattedResource = this.extractIds.extractIds(resource);
-        formattedResource['birthDate'] = formattedResource.dob?.year + '-' + formattedResource.dob?.month + '-' + formattedResource.dob?.day;
-        delete formattedResource.dob;
-        formattedResource['request'] = {request: id};
-
+    addBasicInformation(id: number, resource: BasicInformation): Observable<any> {
         return this.http
-            .post(this.APIUrl + `/${id}` + '/basic-information', formattedResource)
+            .post(this.APIUrl + `/${id}` + '/basic-information', resource)
             .pipe(catchError((err) => {
                 throw new Error('Error', err.message)
             }))

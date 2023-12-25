@@ -3,6 +3,8 @@ import { Injectable } from "@angular/core";
 import { Observable, catchError } from "rxjs";
 import { ResourceService } from "src/app/core/services/resource.service";
 import { apiConfig } from "src/apiConfig";
+import { Club } from "./models/club";
+import { Response } from "src/app/core/models/response";
 
 
 @Injectable({
@@ -18,9 +20,9 @@ export class ClubRepository extends ResourceService {
         return 'governorate'
     }
 
-    getClubs(governorateId: number): Observable<any> {
+    getClubs(governorateId: number): Observable<Response<Club>> {
         return this.http
-            .get(this.APIUrl + `/${governorateId}/club`, { params: apiConfig.queryParams })
+            .get<Response<Club>>(this.APIUrl + `/${governorateId}/club`, { params: apiConfig.queryParams })
             .pipe(catchError((err) => {
                 throw new Error('Error', err.message)
             }))
