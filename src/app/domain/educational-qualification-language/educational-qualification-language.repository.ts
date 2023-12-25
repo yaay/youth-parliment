@@ -21,6 +21,12 @@ export class EducationalQualificationLanguageRepository extends ResourceService 
         throw new Error('Error', err.message)
     }))
 }
+getEduQualLanguage(eduQualId?: number): Observable<any> {
+  return this.http
+  .get(this.APIUrl +`/${eduQualId}` + '/educational-qualification-language')
+  .pipe(catchError((err) => {             throw new Error('Error', err.message)
+}))
+}
   override toServerModel(entity:any): any {
   return {
     language: { id: entity.language.id },
