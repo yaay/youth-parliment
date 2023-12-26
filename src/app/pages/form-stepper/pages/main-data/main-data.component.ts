@@ -41,7 +41,7 @@ import { ExtractIdService } from 'src/app/core/services/extractIds.service';
       useValue: {
         required: `هذه الخانة مطلوبه`,
         minWords: 'يرجي أدخال الاسم رباعي',
-        ageRange: 'يجب أن يكون العمر 18-45',
+        ageRange: 'يجب أن يكون العمر 10-17',
       }
     }
   ]
@@ -108,7 +108,7 @@ export class MainDataComponent {
 
   basicInfoForm = new FormGroup({
     fullName: new FormControl(null, [Validators.required, minWordsValidator(4),Validators.pattern(/^[\u0621-\u064A\040]+$/)]),
-    nationalId: new FormControl(null, [Validators.required, ageRange(), Validators.pattern(/([2-3]{1})([0-9]{2})(0[1-9]|1[012])(0[1-9]|[1-2][0-9]|3[0-1])(0[1-4]|[1-2][1-9]|3[1-5]|88)[0-9]{3}([0-9]{1})[0-9]{1}/)]),
+    nationalId: new FormControl(null, [Validators.required, ageRange(), Validators.pattern(/([3]{1})([0-9]{2})(0[1-9]|1[012])(0[1-9]|[1-2][0-9]|3[0-1])(0[1-4]|[1-2][1-9]|3[1-5]|88)[0-9]{3}([0-9]{1})[0-9]{1}/)]),
     governorate: new FormControl(null, [Validators.required]),
     district: new FormControl(null, [Validators.required]),
     affiliateParty: new FormControl(null, [Validators.required]),
@@ -117,7 +117,7 @@ export class MainDataComponent {
     club: new FormControl(null),
     affiliateClub: new FormControl(null),
     youthCentre: new FormControl(null),
-    dob: new FormControl(new TuiDay(2007, 0, 1), [Validators.required]),
+    dob: new FormControl(),
     female: new FormControl(false, [Validators.required]),
     muslim: new FormControl(true, [Validators.required]),
     hasDisability: new FormControl(false),
@@ -244,13 +244,13 @@ export class MainDataComponent {
         const idString = id.toString();
         if (idString.length == 14) {
           const formatedDOB = new BirthDateFromNationalIdPipe().transform(idString)
-          this.basicInfoForm.get('dob')?.patchValue(new TuiDay(formatedDOB[0], formatedDOB[1], formatedDOB[2]))
+          this.basicInfoForm.get('dob')?.setValue(new TuiDay(formatedDOB[0], formatedDOB[1], formatedDOB[2]))
+          this.basicInfoForm.get('dob')?.setValidators(Validators.required)
           const gender = new GenderFromNationalIdPipe().transform(idString)
           this.basicInfoForm.get('female')?.patchValue(gender)
         }
       })
   }
-
   setPartyDropdown() {
     const partyId = this.basicInfoForm.value.affiliateParty?.['id'];
 
