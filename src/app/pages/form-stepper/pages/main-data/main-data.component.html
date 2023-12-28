@@ -303,7 +303,7 @@
             <tui-radio
               formControlName="hasDisability"
               (ngModelChange)="showDisabilityTypeDropdown()"
-              item=false
+              [item]=false
               size="l"
             ></tui-radio>
             <p>لا</p>
@@ -343,7 +343,7 @@
     <button
     type="submit"
     tuiButton
-    [disabled]="basicInfoForm.invalid"
+    [disabled]="isFormValid()"
     appearance="secondary">التالي</button>
   </div>
 </form>
