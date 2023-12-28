@@ -18,6 +18,7 @@ import { EducationalQualificationRepository } from 'src/app/domain/educational-q
 import { EducationQualification } from 'src/app/domain/educational-qualification/models/education-qualification';
 import { LanguageLevelRepository } from 'src/app/domain/language-level/language-level.repository';
 import { LanguageLevel } from 'src/app/domain/language-level/models/language-level';
+import { RequestStatusRepository } from 'src/app/domain/request-status/request-status.repository';
 
 @Component({
   selector: 'app-educational-qualifications',
@@ -30,6 +31,7 @@ export class EducationalQualificationsComponent {
   addLang:Language[]=[];
   academicYear:AcademicYear[]=[];
   languageLvl:LanguageLevel[]=[];
+  addEduLanguage:EducationQualificationLanguage[]=[];
   educationalQualification:EducationQualification[]=[];
   disbaleAddButton!:boolean;
   requiredError = new TuiValidationError('هذه الخانة مطلوبة');
@@ -65,6 +67,7 @@ export class EducationalQualificationsComponent {
   getRequestId() {
     this.requestId = this.requestService.requestId();
   }
+
 
 
   addLanguage() {
