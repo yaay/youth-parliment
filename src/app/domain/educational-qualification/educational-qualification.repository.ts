@@ -15,7 +15,7 @@ export class EducationalQualificationRepository extends ResourceService {
   }
   addEduQualification(eduQualId: any,resource:any): Observable<any> {
     return this.http
-      .post(this.APIUrl +`/${eduQualId}` + '/educational-qualification',resource)
+      .post(this.APIUrl +`/${eduQualId}` + '/educational-qualification',this.toServerModel(resource))
       .pipe(catchError((err) => {
         throw new Error('Error', err.message)
     }))
