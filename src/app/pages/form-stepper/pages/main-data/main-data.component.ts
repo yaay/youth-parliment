@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TUI_VALIDATION_ERRORS } from '@taiga-ui/kit';
 import { GovernmentRepository } from 'src/app/domain/government/government.repository';
@@ -64,7 +64,8 @@ export class MainDataComponent {
     private requestStatusRepository: RequestStatusRepository,
     private requestBasicInformationRepository: RequestBasicInformationRepository,
     private basicInformationRepository: BasicInformationRepository,
-    private extractIds: ExtractIdService
+    private extractIds: ExtractIdService,
+    private cd: ChangeDetectorRef
   ) { }
 
   readonly maskOptions: MaskitoOptions = {
@@ -291,6 +292,8 @@ export class MainDataComponent {
         this.getEduAdmin();
     }
 
+    this.cd.detectChanges()
+
   }
 
   selectAffiliateClub() {
@@ -308,6 +311,8 @@ export class MainDataComponent {
       this.basicInfoForm.get('club')?.reset();
       this.getYouthCenters();
     }
+
+    this.cd.detectChanges();
   }
 
   setDisabilitiesTypeName(englishName: string) {
@@ -336,6 +341,11 @@ export class MainDataComponent {
       this.youthCenters = [];
       this.getYouthCenters();
     }
+  }
+
+  isFormValid() {
+    // console.log('cdr')
+    return this.basicInfoForm.invalid
   }
 
   govStringify = (gov: { arabicName: string }): string =>

@@ -10,7 +10,16 @@ export class BirthDateFromNationalIdPipe implements PipeTransform {
       return [];
     }
 
-    const year = `20${value[1]}${value[2]}`;
+    const yearId = parseInt(value[0]);
+    let yearPrefix = 19
+    
+    if (yearId > 2) {
+      yearPrefix = (yearPrefix + yearId) - 2
+    } else if (yearId == 0) {
+      yearPrefix = yearPrefix - 1
+    }
+
+    const year = `${yearPrefix}${value[1]}${value[2]}`;
     const month = value[3] === '0' ? value[4] : `${value[3]}${value[4]}`;
     const day = value[5] === '0' ? value[6] : `${value[5]}${value[6]}`;
 
