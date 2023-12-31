@@ -35,12 +35,12 @@ export abstract class ResourceService {
 
   }
 
-  update(id: number, resource: Contact): Observable<any> {
+  update(id: number, resource: any): Observable<any> {
     return this.http
-      .put(this.APIUrl + `/${id}`, resource)
-      .pipe(catchError((err) => {
-        throw new Error('Error', err.message)
-      }))
-  }
+        .put(this.APIUrl + `/${id}`, resource)
+        .pipe(catchError((err) => {
+            throw new Error('Error', err.message)
+        }))
+}
 
 }

@@ -9,21 +9,11 @@ import { ResourceService } from "src/app/core/services/resource.service";
 })
 
 export class BasicInformationRepository extends ResourceService {
-    constructor(http: HttpClient, private extractIds: ExtractIdService) {
+    constructor(http: HttpClient) {
         super(http)
     }
 
     getResourceUrl(): string {
         return 'basic-information'
     }
-
-    update(id: number, resource: any): Observable<any> {
-        return this.http
-            .put(this.APIUrl + `/${id}`, resource)
-            .pipe(catchError((err) => {
-                throw new Error('Error', err.message)
-            }))
-    }
-
-
 }

@@ -3,7 +3,6 @@ import { User } from "./user";
 
 export interface request {
     id: number,
-    version: number,
     requestStatus: RequestStatus | null,
     user: User | null
 }
