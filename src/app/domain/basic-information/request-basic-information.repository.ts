@@ -10,7 +10,7 @@ import { BasicInformation } from "./models/basic-information";
 })
 
 export class RequestBasicInformationRepository extends ResourceService {
-    constructor(http: HttpClient, private extractIds: ExtractIdService) {
+    constructor(http: HttpClient) {
         super(http)
     }
 

@@ -194,6 +194,7 @@ export class MainDataComponent {
     this.districtRepository.getDistricts(govId).subscribe(
       (response) => {
         this.districts = response.data;
+        this.setPartyDropdown();
       }
     );
   }
@@ -344,7 +345,6 @@ export class MainDataComponent {
   }
 
   isFormValid() {
-    // console.log('cdr')
     return this.basicInfoForm.invalid
   }
 
