@@ -1,9 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, catchError } from "rxjs";
-import { ExtractIdService } from "src/app/core/services/extractIds.service";
 import { ResourceService } from "src/app/core/services/resource.service";
 import { BasicInformation } from "./models/basic-information";
+import { Response } from "src/app/core/models/response";
 
 @Injectable({
     providedIn: 'root'
@@ -20,9 +20,9 @@ export class RequestBasicInformationRepository extends ResourceService {
         return 'request'
     }
 
-    getBasicInformation(id: number): Observable<any> {
+    getBasicInformation(id: number): Observable<BasicInformation> {
         return this.http
-            .get(this.APIUrl + `/${id}` + '/basic-information')
+            .get<BasicInformation>(this.APIUrl + `/${id}` + '/basic-information')
             .pipe(catchError((err) => {
                 throw new Error('Error', err.message)
             }))
