@@ -25,6 +25,7 @@
         </div>
         <input
           type="file"
+          formControlName="personalImg"
           #personalImgFileInput
           style="display: none"
           (change)="onFileSelected($event, 'personalImg')"
@@ -112,6 +113,7 @@
       [disabled]="attachmentsForm.invalid"
       appearance="secondary"
       type="submit"
+      (click)="next()"
     >
       التالي
     </button>
