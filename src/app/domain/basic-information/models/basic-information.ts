@@ -15,7 +15,7 @@ export interface BasicInformation {
     female: boolean,
     muslim: boolean,
     hasDisability: boolean,
-    disabilityType: string | null,
+    disabilityType: string,
     anotherClub: string | null,
     affiliateParty: AffiliateParty,
     affiliateClub: AffiliateClub | null,

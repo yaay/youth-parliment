@@ -29,6 +29,7 @@ import {MaskitoOptions} from '@maskito/core';
 import { RequestBasicInformationRepository } from 'src/app/domain/basic-information/request-basic-information.repository';
 import { BasicInformationRepository } from 'src/app/domain/basic-information/basic-information.repository';
 import { ExtractIdService } from 'src/app/core/services/extractIds.service';
+import { BasicInformation } from 'src/app/domain/basic-information/models/basic-information';
 
 
 @Component({
@@ -108,16 +109,16 @@ export class MainDataComponent {
   youthCenters: YouthCenter[] = [];
 
   basicInfoForm = new FormGroup({
-    fullName: new FormControl(null, [Validators.required, minWordsValidator(4),Validators.pattern(/^[\u0621-\u064A\040]+$/)]),
-    nationalId: new FormControl(null, [Validators.required, ageRange(), Validators.pattern(/([3]{1})([0-9]{2})(0[1-9]|1[012])(0[1-9]|[1-2][0-9]|3[0-1])(0[1-4]|[1-2][1-9]|3[1-5]|88)[0-9]{3}([0-9]{1})[0-9]{1}/)]),
-    governorate: new FormControl(null, [Validators.required]),
-    district: new FormControl(null, [Validators.required]),
-    affiliateParty: new FormControl(null, [Validators.required]),
-    eductionAdministration: new FormControl(null),
-    alAzhar: new FormControl(null),
-    club: new FormControl(null),
-    affiliateClub: new FormControl(null),
-    youthCentre: new FormControl(null),
+    fullName: new FormControl('', [Validators.required, minWordsValidator(4),Validators.pattern(/^[\u0621-\u064A\040]+$/)]),
+    nationalId: new FormControl('', [Validators.required, ageRange(), Validators.pattern(/([3]{1})([0-9]{2})(0[1-9]|1[012])(0[1-9]|[1-2][0-9]|3[0-1])(0[1-4]|[1-2][1-9]|3[1-5]|88)[0-9]{3}([0-9]{1})[0-9]{1}/)]),
+    governorate: new FormControl<Government | null>(null, [Validators.required]),
+    district: new FormControl<District | null>(null, [Validators.required]),
+    affiliateParty: new FormControl<AffiliateParty | null>(null, [Validators.required]),
+    eductionAdministration: new FormControl<EducationAdministration | null>(null),
+    alAzhar: new FormControl<Azhar | null>(null),
+    club: new FormControl<Club | null>(null),
+    affiliateClub: new FormControl<AffiliateClub | null>(null),
+    youthCentre: new FormControl<YouthCenter | null>(null),
     dob: new FormControl(),
     female: new FormControl(false, [Validators.required]),
     muslim: new FormControl(true, [Validators.required]),
@@ -157,7 +158,7 @@ export class MainDataComponent {
 
   getSetFormData(requestId: number) {
     this.requestBasicInformationRepository.getBasicInformation(requestId).subscribe({      
-      next: (response) => {
+      next: (response: BasicInformation) => {
         this.basicInfoForm.patchValue(response);
         this.formId = response.id;
         this.setPartyDropdown();
