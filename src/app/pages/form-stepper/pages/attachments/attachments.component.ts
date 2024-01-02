@@ -1,11 +1,9 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { TuiFileLike } from '@taiga-ui/kit';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router} from '@angular/router';
 import { StepperStateService } from 'src/app/core/services/stepper-state.service';
 import { RequestService } from 'src/app/core/services/request.service';
 import { AttachmentRepository } from 'src/app/domain/attachment/attachment.repository';
-import { AttachmentDeleteRepository } from 'src/app/domain/attachment/attachment-delete.repository';
 
 @Component({
   selector: 'app-attachments',
@@ -30,9 +28,8 @@ export class AttachmentsComponent {
     private router: Router,
     private stepperStateService: StepperStateService,
     private requestService: RequestService,
-    private attachmentRepository:AttachmentRepository,
-    private attachmentDeleteRepository: AttachmentDeleteRepository,
-  ) { }
+    private attachmentRepository:AttachmentRepository
+      ) { }
 
   attachmentsForm = new FormGroup({
     personalImg: new FormControl(''),
@@ -134,13 +131,13 @@ export class AttachmentsComponent {
     if (index !== -1) {
       this.images.splice(index, 1);
       if(value=="personalImg"){
-        this.attachmentDeleteRepository.delete(this.personalId).subscribe();
+        this.attachmentRepository.delete(this.personalId).subscribe();
       }
       else if(value=="idCardImg"){
-        this.attachmentDeleteRepository.delete(this.nationalFileId).subscribe();
+        this.attachmentRepository.delete(this.nationalFileId).subscribe();
       }
       else if (value == "studyProofImg"){
-        this.attachmentDeleteRepository.delete(this.studyId).subscribe();
+        this.attachmentRepository.delete(this.studyId).subscribe();
       }
     }
   }
