@@ -17,13 +17,4 @@ export class ContactRepository extends ResourceService {
         return 'contact'
     }
 
-    update(id: number, resource: Contact): Observable<any> {
-        return this.http
-            .put(this.APIUrl + `/${id}`, resource)
-            .pipe(catchError((err) => {
-                throw new Error('Error', err.message)
-            }))
-    }
-
-
 }
