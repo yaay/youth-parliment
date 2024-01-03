@@ -21,4 +21,17 @@ export class AttachmentRepository extends ResourceService {
         throw new Error('Error', err.message)
     }))
   }
+  getAttachment(requestId: any):Observable<any>{
+    return this.http
+    .get(this.Url+ `/${requestId}` +this.getResourceUrl()).pipe(catchError((err) => {
+      throw new Error('Error', err.message)
+    }))
+  }
+  updateAttachment(id: number,resource:any): Observable<any> {
+    return this.http.put(`${this.APIUrl}/${id}`, this.toServerModel(resource)).pipe(
+      catchError((err) => {
+        throw new Error(err.message);
+      })
+      );
+    }
 }

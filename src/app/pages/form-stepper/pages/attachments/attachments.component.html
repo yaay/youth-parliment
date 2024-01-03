@@ -23,6 +23,7 @@
         <div *ngIf="hasImage('personalImg')">
           <img [src]="returnImage('personalImg')" alt="صورة شخصية" />
         </div>
+
         <input
           type="file"
           formControlName="personalImg"
@@ -56,6 +57,7 @@
         </div>
         <input
           type="file"
+          formControlName="idFile"
           #idFileInput
           style="display: none"
           (change)="onFileSelected($event, 'idCardImg')"
@@ -89,6 +91,7 @@
         </div>
         <input
           type="file"
+          formControlName="studyProofFile"
           #studyProofFileInput
           style="display: none"
           (change)="onFileSelected($event, 'studyProofImg')"

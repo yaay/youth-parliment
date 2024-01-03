@@ -23,7 +23,6 @@ export class AttachmentsComponent {
   studyId!:number;
   requestId!: number;
   images: { value: string, name: string, base64: string | ArrayBuffer | null }[] = [];
-
   constructor(
     private router: Router,
     private stepperStateService: StepperStateService,
@@ -39,6 +38,7 @@ export class AttachmentsComponent {
 
   ngOnInit() {
     this.getRequestId();
+    this.patchImages();
   }
 
   getRequestId() {
@@ -111,8 +111,8 @@ export class AttachmentsComponent {
         }
 
       } else {
-        const index = this.images.findIndex(img => img.value === value);
-        this.images[index] = imageFile;
+          const index = this.images.findIndex(img => img.value === value);
+          this.images[index] = imageFile;
       }
     }
     fileReader.readAsDataURL(selectedFile);
@@ -152,5 +152,42 @@ export class AttachmentsComponent {
     } else {
       this.stepperStateService.attachmentsState.set('fail')
     }
+  }
+  patchImages(){
+    this.attachmentRepository.getAttachment(this.requestId).subscribe(res=>{
+        for (let index = 0; index < res.data.length; index++) {
+          const element = res.data[index];
+          if(element.requestAttachmentType.code=="PersonalPhoto"){
+            this.personalId=element.id;
+            let data = "data:image/jpeg;base64,";
+            let image = data + element.content;
+            this.images.push({
+              base64:image,
+              name:"",
+              value:"personalImg"
+            })
+          }
+          else if(element.requestAttachmentType.code=="IdentityCard"){
+            this.nationalFileId=element.id;
+            let data = "data:image/jpeg;base64,";
+            let image = data + element.content;
+            this.images.push({
+              base64:image,
+              name:"",
+              value:"idCardImg"
+            })
+          }
+          else if(element.requestAttachmentType.code=="AcademicCard"){
+            this.studyId=element.id;
+            let data = "data:image/jpeg;base64,";
+            let image = data + element.content;
+            this.images.push({
+              base64:image,
+              name:"",
+              value:"studyProofImg"
+            })
+          }
+        }
+    })
   }
 }
