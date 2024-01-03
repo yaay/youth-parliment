@@ -54,6 +54,17 @@ export class AttachmentsComponent {
     }
     this.currentInput.nativeElement.click();
   }
+  setAttachment(image:any ,requestId:number){
+    this.attachment = {
+      content:image.base64.replace(/^[^,]+, */, ''),
+      request:{
+        id:this.requestId
+      },
+      requestAttachmentType:{
+        id:requestId
+      }
+    }
+  }
 
   onFileSelected(event: any, value: string) {
     const selectedFile = event.target.files[0];
@@ -67,44 +78,20 @@ export class AttachmentsComponent {
       if (!this.hasImage(value)) {
         this.images.push(imageFile);
       if( imageFile.value == "personalImg"){
-        this.attachment = {
-          content:imageFile.base64.replace(/^[^,]+, */, ''),
-          request:{
-            id:this.requestId
-          },
-          requestAttachmentType:{
-            id:1
-          }
-        }
+        this.setAttachment(imageFile,1);
           this.attachmentRepository.addAttachment(this.requestId,this.attachment).subscribe(res=>{
             this.personalId=res.id;
           });
         }
         else if(imageFile.value == "idCardImg"){
-          this.attachment = {
-            content:imageFile.base64.replace(/^[^,]+, */, ''),
-            request:{
-              id:this.requestId
-            },
-            requestAttachmentType:{
-              id:2
-            }
-          }
+          this.setAttachment(imageFile,2);
             this.attachmentRepository.addAttachment(this.requestId,this.attachment).subscribe(res=>{
             this.nationalFileId=res.id;
             });
             }
 
         else if(imageFile.value == "studyProofImg"){
-          this.attachment = {
-            content:imageFile.base64.replace(/^[^,]+, */, ''),
-            request:{
-              id:this.requestId
-            },
-            requestAttachmentType:{
-              id:4
-            }
-          }
+          this.setAttachment(imageFile,4);
             this.attachmentRepository.addAttachment(this.requestId,this.attachment).subscribe(res=>{
               this.studyId=res.id;
             });
@@ -153,39 +140,32 @@ export class AttachmentsComponent {
       this.stepperStateService.attachmentsState.set('fail')
     }
   }
+  setImages(image:any,value:string){
+    this.images.push({
+      base64:image,
+      name:"",
+      value:value
+    })
+  }
   patchImages(){
     this.attachmentRepository.getAttachment(this.requestId).subscribe(res=>{
+      let data = "data:image/jpeg;base64,";
         for (let index = 0; index < res.data.length; index++) {
           const element = res.data[index];
           if(element.requestAttachmentType.code=="PersonalPhoto"){
             this.personalId=element.id;
-            let data = "data:image/jpeg;base64,";
             let image = data + element.content;
-            this.images.push({
-              base64:image,
-              name:"",
-              value:"personalImg"
-            })
+            this.setImages(image,"personalImg");
           }
           else if(element.requestAttachmentType.code=="IdentityCard"){
             this.nationalFileId=element.id;
-            let data = "data:image/jpeg;base64,";
             let image = data + element.content;
-            this.images.push({
-              base64:image,
-              name:"",
-              value:"idCardImg"
-            })
+            this.setImages(image,"idCardImg");
           }
           else if(element.requestAttachmentType.code=="AcademicCard"){
             this.studyId=element.id;
-            let data = "data:image/jpeg;base64,";
             let image = data + element.content;
-            this.images.push({
-              base64:image,
-              name:"",
-              value:"studyProofImg"
-            })
+            this.setImages(image,"studyProofImg");
           }
         }
     })
