@@ -38,26 +38,14 @@ export class ContactDataComponent {
   contactDataForm = new FormGroup({
     firstMobileNumber: new FormControl(NaN, [Validators.required, Validators.pattern(/^(010|011|012|015)\d{8}$/), Validators.minLength(11), Validators.maxLength(11)]),
     secondMobileNumber: new FormControl(NaN, [Validators.pattern(/^(010|011|012|015)\d{8}$/), Validators.minLength(11), Validators.maxLength(11)]),
-    address: new FormControl('null', [Validators.required, Validators.minLength(15)])
+    address: new FormControl('', [Validators.required, Validators.minLength(15)])
   })
 
   requestId!: number;
   newUser: boolean = false;
   formId!: number;
   readonly maskOptions: MaskitoOptions = {
-    mask: [
-      /\d/,
-      /\d/,
-      /\d/,
-      /\d/,
-      /\d/,
-      /\d/,
-      /\d/,
-      /\d/,
-      /\d/,
-      /\d/,
-      /\d/,
-    ],
+    mask: Array(11).fill(/\d/)
   };
 
   arabicOnly: MaskitoOptions = {
@@ -66,7 +54,9 @@ export class ContactDataComponent {
 
   ngOnInit() {
     this.getRequestId();
-    this.getSetFormData();
+    if (this.contactDataForm.value.address === ''){
+      this.getSetFormData();
+    }
   }
 
   getRequestId() {
@@ -93,15 +83,13 @@ export class ContactDataComponent {
   }
 
   next() {
-    let formattedResource: any = { ...this.contactDataForm.value };
-    formattedResource['request'] = { request: this.requestId };
-
     if (this.contactDataForm.valid) {
       if (this.newUser) {
         this.requestContact
-          .addContact(this.requestId, formattedResource)
+          .addContact(this.requestId, this.contactDataForm.value)
           .subscribe();
       } else {
+        let formattedResource: any = { ...this.contactDataForm.value };
         formattedResource['id'] = this.formId;
         this.contactRepository
           .update(this.formId, formattedResource)
