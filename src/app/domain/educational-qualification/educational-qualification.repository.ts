@@ -2,40 +2,44 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { catchError, Observable } from "rxjs";
 import { ResourceService } from "src/app/core/services/resource.service";
+import { environment } from "src/environments/environment";
+import { EducationQualification } from "./models/education-qualification";
 
 @Injectable({
   providedIn: 'root',
 })
 export class EducationalQualificationRepository extends ResourceService {
+  Url = environment.apiUrl + '/request';
+
   constructor(http: HttpClient) {
     super(http);
   }
   getResourceUrl(): string {
-    return '/request';
+    return '/educational-qualification';
   }
-  addEduQualification(eduQualId: any,resource:any): Observable<any> {
+  addEduQualification(eduQualId: number,resource:EducationQualification): Observable<EducationQualification> {
     return this.http
-      .post(this.APIUrl +`/${eduQualId}` + '/educational-qualification',this.toServerModel(resource))
+      .post<EducationQualification>(this.Url +`/${eduQualId}` + this.getResourceUrl(),this.toServerModel(resource))
       .pipe(catchError((err) => {
         throw new Error('Error', err.message)
     }))
-}
-getEduQualification(eduQualId: any): Observable<any> {
-  return this.http
-    .get(this.APIUrl +`/${eduQualId}` + '/educational-qualification')
-    .pipe(catchError((err) => {
-      throw new Error('Error', err.message)
-  }))
-}
-  override toServerModel(entity: any): any {
+  }
+  getEduQualification(eduQualId: number): Observable<EducationQualification> {
+    return this.http
+      .get<EducationQualification>(this.Url +`/${eduQualId}` + this.getResourceUrl())
+      .pipe(catchError((err) => {
+        throw new Error('Error', err.message)
+    }))
+  }
+
+  override toServerModel(entity: EducationQualification): any {
   return {
-    educationalLevel: { id: entity.value.educationalLevel.id },
+    educationalLevel: { id: entity.educationalLevel.id },
     academicYear: {
-      id: entity.value.academicYear.id
+      id: entity.academicYear.id
     },
-    schoolName:entity.value.schoolName,
-    coursesName:entity.value.coursesName,
+    schoolName:entity.schoolName,
+    coursesName:entity.coursesName,
   };
 }
-
 }
