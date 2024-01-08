@@ -3,7 +3,6 @@ import { environment } from 'src/environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators'
-import { Response } from './../models/response';
 
 @Injectable({
   providedIn: 'root'
@@ -52,7 +51,6 @@ export abstract class ResourceService {
       })
     );
   }
-
   delete(id:number): Observable<any>{
     return this.http.delete(`${this.APIUrl}/${id}`).pipe(
       catchError((err) => {
