@@ -2,7 +2,7 @@
   <div class="tui-form__row tui-form__row_multi-fields">
     <div class="tui-form__multi-field">
   <tui-input
-  formControlName="phoneNumber"
+  formControlName="firstMobileNumber"
   [maskito]="maskOptions"
   class="input"
 >
@@ -14,14 +14,14 @@
 </tui-input>
 
       <tui-error
-        formControlName="phoneNumber"
+        formControlName="firstMobileNumber"
         [error]="[] | tuiFieldError | async"
       ></tui-error>
     </div>
 
     <div class="tui-form__multi-field">
       <tui-input
-      formControlName="secondNumber"
+      formControlName="secondMobileNumber"
       [maskito]="maskOptions"
       class="input"
     >
@@ -32,21 +32,22 @@
       />
     </tui-input>
       <tui-error
-        formControlName="secondNumber"
+        formControlName="secondMobileNumber"
         [error]="[] | tuiFieldError | async"
       ></tui-error>
     </div>
   </div>
   <div class="tui-form__row">
     <tui-textarea
-      tuiHintContent="معلومات شخصيه"
-      tuiHintDirection="bottom-right"
       class="input"
       formControlName="address"
       [maxLength]="100"
     >
       عنوان السكن بالتفصيل (مدينة - شارع - رقم منزل)
-      <textarea tuiTextfield></textarea>
+      <textarea
+        [maskito]="arabicOnly"
+        tuiTextfield
+      ></textarea>
     </tui-textarea>
     <tui-error
       formControlName="address"

@@ -3,6 +3,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators'
+import { Contact } from 'src/app/domain/contact/models/contact';
 
 @Injectable({
   providedIn: 'root'
