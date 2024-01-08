@@ -2,7 +2,10 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TuiValidationError } from '@taiga-ui/cdk';
+<<<<<<< HEAD
 import { RequestService } from 'src/app/core/services/request.service';
+=======
+>>>>>>> c228b65 (educational qualification form)
 import { StepperStateService } from 'src/app/core/services/stepper-state.service';
 import { AcademicYearRepository } from 'src/app/domain/academic-year/academic-year.repository';
 import { AcademicYear } from 'src/app/domain/academic-year/models/academic-year';
@@ -10,14 +13,23 @@ import { LanguageRepository } from 'src/app/domain/education-language/language.r
 import { Language } from 'src/app/domain/education-language/models/language';
 import { EducationalLevelRepository } from 'src/app/domain/educational-level/educational-level.repository';
 import { EducationalLevel } from 'src/app/domain/educational-level/models/educational-level';
+<<<<<<< HEAD
 import { EducationalLanguageRepository } from 'src/app/domain/educational-qualification-language/educational-language.repository';
 import { EducationalQualificationLanguageRepository } from 'src/app/domain/educational-qualification-language/educational-qualification-language.repository';
 import { EducationQualificationLanguage } from 'src/app/domain/educational-qualification-language/models/education-qualification-language';
 import { EducationalQualificationUpdateRepository } from 'src/app/domain/educational-qualification/educational-qualification-update.repository';
+=======
+import { EducationalQualificationLanguageRepository } from 'src/app/domain/educational-qualification-language/educational-qualification-language.repository';
+import { EducationQualificationLanguage } from 'src/app/domain/educational-qualification-language/models/education-qualification-language';
+>>>>>>> c228b65 (educational qualification form)
 import { EducationalQualificationRepository } from 'src/app/domain/educational-qualification/educational-qualification.repository';
 import { EducationQualification } from 'src/app/domain/educational-qualification/models/education-qualification';
 import { LanguageLevelRepository } from 'src/app/domain/language-level/language-level.repository';
 import { LanguageLevel } from 'src/app/domain/language-level/models/language-level';
+<<<<<<< HEAD
+=======
+import { RequestStatusRepository } from 'src/app/domain/request-status/request-status.repository';
+>>>>>>> c228b65 (educational qualification form)
 
 @Component({
   selector: 'app-educational-qualifications',
@@ -30,6 +42,7 @@ export class EducationalQualificationsComponent {
   addLang:Language[]=[];
   academicYear:AcademicYear[]=[];
   languageLvl:LanguageLevel[]=[];
+  addEduLanguage:EducationQualificationLanguage[]=[];
   educationalQualification:EducationQualification[]=[];
   disbaleAddButton!:boolean;
   requiredError = new TuiValidationError('هذه الخانة مطلوبة');
