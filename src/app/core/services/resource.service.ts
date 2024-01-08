@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators'
-import { Contact } from 'src/app/domain/contact/models/contact';
+import { catchError, map } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
@@ -43,4 +42,23 @@ export abstract class ResourceService {
         }))
 }
 
+  getList(p: {} = {}): Observable<any> {
+    const params = new HttpParams({ fromObject: p });
+    return this.http.get(`${this.APIUrl}?${params.toString()}`).pipe(
+      map((list) => list),
+      catchError((err) => {
+        throw new Error(err.message);
+      })
+    );
+  }
+  delete(id:number): Observable<any>{
+    return this.http.delete(`${this.APIUrl}/${id}`).pipe(
+      catchError((err) => {
+        throw new Error(err.message);
+      })
+    );
+  }
+  toServerModel(entity: any): any {
+    return entity;
+  }
 }
