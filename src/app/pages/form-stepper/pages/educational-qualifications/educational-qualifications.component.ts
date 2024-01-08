@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TuiValidationError } from '@taiga-ui/cdk';
+import { RequestService } from 'src/app/core/services/request.service';
 import { StepperStateService } from 'src/app/core/services/stepper-state.service';
 import { AcademicYearRepository } from 'src/app/domain/academic-year/academic-year.repository';
 import { AcademicYear } from 'src/app/domain/academic-year/models/academic-year';
@@ -12,11 +13,11 @@ import { EducationalLevel } from 'src/app/domain/educational-level/models/educat
 import { EducationalLanguageRepository } from 'src/app/domain/educational-qualification-language/educational-language.repository';
 import { EducationalQualificationLanguageRepository } from 'src/app/domain/educational-qualification-language/educational-qualification-language.repository';
 import { EducationQualificationLanguage } from 'src/app/domain/educational-qualification-language/models/education-qualification-language';
+import { EducationalQualificationUpdateRepository } from 'src/app/domain/educational-qualification/educational-qualification-update.repository';
 import { EducationalQualificationRepository } from 'src/app/domain/educational-qualification/educational-qualification.repository';
 import { EducationQualification } from 'src/app/domain/educational-qualification/models/education-qualification';
 import { LanguageLevelRepository } from 'src/app/domain/language-level/language-level.repository';
 import { LanguageLevel } from 'src/app/domain/language-level/models/language-level';
-import { RequestStatusRepository } from 'src/app/domain/request-status/request-status.repository';
 
 @Component({
   selector: 'app-educational-qualifications',
@@ -29,15 +30,15 @@ export class EducationalQualificationsComponent {
   addLang:Language[]=[];
   academicYear:AcademicYear[]=[];
   languageLvl:LanguageLevel[]=[];
-  addEduLanguage:EducationQualificationLanguage[]=[];
   educationalQualification:EducationQualification[]=[];
   disbaleAddButton!:boolean;
   requiredError = new TuiValidationError('هذه الخانة مطلوبة');
   lengthOfMin = new TuiValidationError(' يرجي ادخال ٧ حروف علي الاقل');
   languageError = new TuiValidationError(' لا يمكن تكرار اللغة');
   showErrorMsg:boolean=false;
-  lang:{}={}
-  element:{}={};
+  lang!:{};
+  educationalForm!:{};
+  requestId!:number;
   constructor(
     private router: Router,
     private stepperStateService: StepperStateService,
@@ -45,10 +46,11 @@ export class EducationalQualificationsComponent {
     private languageRepository:LanguageRepository,
     private academicYearRepository:AcademicYearRepository,
     private languageLevelRepository:LanguageLevelRepository,
-    private reqestRepository: RequestStatusRepository,
     private educationQualificationRepository:EducationalQualificationRepository,
     private eduQualLanguageRepository: EducationalQualificationLanguageRepository,
-    private educationalLanguageRepository:EducationalLanguageRepository
+    private educationalLanguageRepository:EducationalLanguageRepository,
+    private educationalQualificationUpdateRepository:EducationalQualificationUpdateRepository,
+    private requestService:RequestService
       ) { }
   languages: EducationQualificationLanguage[] = []
   eduQualsForm = new FormGroup({
@@ -60,18 +62,22 @@ export class EducationalQualificationsComponent {
     languageLevel: new FormControl(null),
   })
 
-  addLanguage() {
-    this.lang = {
-      language: this.eduQualsForm.value.language,
-      languageLevel: this.eduQualsForm.value.languageLevel
-    }
+  getRequestId() {
+    this.requestId = this.requestService.requestId();
+  }
 
-    this.reqestRepository.get().subscribe(result=>{
-      this.educationQualificationRepository.getEduQualification(result.id).subscribe({
+
+  addLanguage() {
+      this.educationQualificationRepository.getEduQualification(this.requestId).subscribe({
         next:(res)=>{
-          this.addEduLanguage=this.eduQualLanguageRepository.toServerModel(this.lang);
-          this.eduQualLanguageRepository.addEduQualLanguage(res.id,this.addEduLanguage).subscribe({
+          this.lang = {
+            language: this.eduQualsForm.value.language,
+            languageLevel: this.eduQualsForm.value.languageLevel
+          }
+          this.eduQualLanguageRepository.addEduQualLanguage(res.id,this.lang).subscribe({
             error:_=>{
+            this.eduQualsForm.controls.language.reset();
+            this.eduQualsForm.controls.languageLevel.reset();
             this.showErrorMsg=true;
             this.langError;
             },
@@ -79,38 +85,20 @@ export class EducationalQualificationsComponent {
               if (lang.language && lang.languageLevel) {
                     if (!this.languages.find(l => l.language === lang.language)) {
                       this.showErrorMsg=false;
-                      this.languages.push(lang)
+                      this.languages.push(lang);
+                      this.eduQualsForm.controls.language.reset();
+                      this.eduQualsForm.controls.languageLevel.reset();
                     }
                   }
                 }
         });
       }});
-    });
+
   }
 
 get langError(): TuiValidationError | null {
   return this.languageError;
-
 }
-  items2 = [
-    'Graham',
-    'Michael',
-    'Terry',
-  ]
-
-  langs = [
-    'ألانجلبزية',
-    'الفرنسية',
-    'الألمانية',
-  ]
-
-  langsLevel = [
-    'متوسط',
-    'مبتدئ',
-    'ماقبل المتوسط',
-    'متقدم',
-    'فوق المتوسط'
-  ]
 
   handleTagDeleted(emptyTag: any, currentIndex: number,id:number): void {
     this.languages = this.languages
@@ -128,15 +116,24 @@ get langError(): TuiValidationError | null {
 
   next() {
     if (this.eduQualsForm.valid) {
-      this.educationalQualification=this.educationQualificationRepository.toServerModel(this.eduQualsForm);
-      this.reqestRepository.get().subscribe(result=>{
-        this.educationQualificationRepository.getEduQualification(result.id).subscribe({
+        this.educationQualificationRepository.getEduQualification(this.requestId).subscribe({
+          next:(res)=>{
+              this.educationalForm = {
+                id:res.id,
+                request:res.request.id,
+                academicYear:this.eduQualsForm.value.academicYear,
+                educationalLevel:this.eduQualsForm.value.educationalLevel,
+                schoolName:this.eduQualsForm.value.schoolName,
+                coursesName:this.eduQualsForm.value.coursesName
+            }
+            this.educationalQualificationUpdateRepository.update(res.id,this.educationalForm).subscribe();
+        },
           error: _=>
           {
-            this.educationQualificationRepository.addEduQualification(result.id,this.educationalQualification).subscribe();
+            this.educationQualificationRepository.addEduQualification(this.requestId,this.eduQualsForm).subscribe();
           }
       }) ;
-    });
+
       this.stepperStateService.eduQualState.set('pass')
       this.router.navigate(['voter-data/attachments'], { skipLocationChange: true })
     } else {
@@ -144,15 +141,16 @@ get langError(): TuiValidationError | null {
     }
   }
   ngOnInit(){
+    this. getRequestId();
     this.getAllLevels();
     this.getLanguages();
     this.getLanguageLevel();
     this.patchForm();
 
+
   }
   patchForm(){
-    this.reqestRepository.get().subscribe(result =>{
-      this.educationQualificationRepository.getEduQualification(result.id).subscribe({
+      this.educationQualificationRepository.getEduQualification(this.requestId).subscribe({
         error:()=>{
           this.disbaleAddButton=true;
         },
@@ -169,7 +167,6 @@ get langError(): TuiValidationError | null {
           });
             this.eduQualsForm.patchValue(res);
       }
-      });
       });
     };
 

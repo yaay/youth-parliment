@@ -3,7 +3,6 @@ import { environment } from 'src/environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators'
-import { Response } from './../models/response';
 
 @Injectable({
   providedIn: 'root'
@@ -43,9 +42,9 @@ export abstract class ResourceService {
       }))
   }
 
-  getList(p: {} = {}): Observable<Response> {
+  getList(p: {} = {}): Observable<any> {
     const params = new HttpParams({ fromObject: p });
-    return this.http.get<Response>(`${this.APIUrl}?${params.toString()}`).pipe(
+    return this.http.get(`${this.APIUrl}?${params.toString()}`).pipe(
       map((list) => list),
       catchError((err) => {
         throw new Error(err.message);
