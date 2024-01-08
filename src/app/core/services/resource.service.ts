@@ -52,13 +52,7 @@ export abstract class ResourceService {
       })
     );
   }
-  update(id:number,resource:any){
-    return this.http.put(`${this.APIUrl}/${id}`, resource).pipe(
-      catchError((err) => {
-        throw new Error(err.message);
-      })
-      );
-  }
+
   delete(id:number): Observable<any>{
     return this.http.delete(`${this.APIUrl}/${id}`).pipe(
       catchError((err) => {
