@@ -30,6 +30,7 @@ import { RequestBasicInformationRepository } from 'src/app/domain/basic-informat
 import { BasicInformationRepository } from 'src/app/domain/basic-information/basic-information.repository';
 import { ExtractIdService } from 'src/app/core/services/extractIds.service';
 import { BasicInformation } from 'src/app/domain/basic-information/models/basic-information';
+import { MessageService } from 'src/app/shared/services/message.service';
 
 
 @Component({
@@ -66,7 +67,8 @@ export class MainDataComponent {
     private requestBasicInformationRepository: RequestBasicInformationRepository,
     private basicInformationRepository: BasicInformationRepository,
     private extractIds: ExtractIdService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private messageService:MessageService
   ) { }
 
   readonly maskOptions: MaskitoOptions = {
@@ -89,8 +91,8 @@ export class MainDataComponent {
   };
 
   disabilities: {arabicName: string, englishName: string}[] = [
-    {arabicName: "سمعية", englishName: "HEARING"}, 
-    {arabicName: "بصرية", englishName: "VISUAL"}, 
+    {arabicName: "سمعية", englishName: "HEARING"},
+    {arabicName: "بصرية", englishName: "VISUAL"},
     {arabicName: "حركية", englishName: "MOVEMENT"}
   ];
   newUser: boolean = false;
@@ -148,16 +150,16 @@ export class MainDataComponent {
   }
 
   getFormDataById() {
-   this.requestStatusRepository.get().subscribe({
-     next: (response) => {
-       this.requestId = response.id;
-       this.getSetFormData(response.id);
-     }
-   })
+  this.requestStatusRepository.get().subscribe({
+    next: (response) => {
+      this.requestId = response.id;
+      this.getSetFormData(response.id);
+    }
+  })
   }
 
   getSetFormData(requestId: number) {
-    this.requestBasicInformationRepository.getBasicInformation(requestId).subscribe({      
+    this.requestBasicInformationRepository.getBasicInformation(requestId).subscribe({
       next: (response: BasicInformation) => {
         this.basicInfoForm.patchValue(response);
         this.formId = response.id;
@@ -166,7 +168,7 @@ export class MainDataComponent {
         this.setDisabilitiesTypeName(response.disabilityType);
         this.showDisabilityTypeDropdown();
       },
-      
+
       error: () => {
         this.newUser = true;
        }
@@ -187,7 +189,7 @@ export class MainDataComponent {
     this.basicInfoForm.get('eductionAdministration')?.reset();
     this.basicInfoForm.get('alAzhar')?.reset();
     this.basicInfoForm.get('youthCentre')?.reset();
-    
+
     this.resetClub()
 
     this.districts = [];
@@ -382,17 +384,28 @@ export class MainDataComponent {
     formattedResource['birthDate'] = formattedResource.dob?.year + '-' + formattedResource.dob?.month + '-' + formattedResource.dob?.day;
     delete formattedResource.dob;
     formattedResource['request'] = {request: this.requestId};
-    
+
     if (this.basicInfoForm.valid) {
       if (this.newUser) {
         this.requestBasicInformationRepository
         .addBasicInformation(this.requestId, formattedResource)
-        .subscribe();
-        
+        .subscribe({
+          next:()=>{
+            this.messageService.confirmMessage();
+          },
+          error:()=>{
+            this.messageService.errorMessage();
+          }
+        });
+
       } else {
         formattedResource['id'] = this.formId;
         this.basicInformationRepository.update(this.formId, formattedResource)
-        .subscribe();
+        .subscribe({
+          next:()=>{
+            this.messageService.confirmMessage();
+          }
+        });
       }
 
       this.stepperStateService.mainDataState.set('pass')
