@@ -25,7 +25,7 @@ import { AffiliateClubRepository } from 'src/app/domain/affiliate-club/affiliate
 import { YouthCenterRepository } from 'src/app/domain/youth-center/youth-center.repository';
 import { RequestStatusRepository } from 'src/app/domain/request-status/request-status.repository';
 import { ageRange } from 'src/app/shared/Validators/age-range.validator';
-import {MaskitoOptions} from '@maskito/core';
+import { MaskitoOptions } from '@maskito/core';
 import { RequestBasicInformationRepository } from 'src/app/domain/basic-information/request-basic-information.repository';
 import { BasicInformationRepository } from 'src/app/domain/basic-information/basic-information.repository';
 import { ExtractIdService } from 'src/app/core/services/extractIds.service';
@@ -72,26 +72,26 @@ export class MainDataComponent {
   readonly maskOptions: MaskitoOptions = {
     mask: [
       /\d/,
-        /\d/,
-        /\d/,
-        /\d/,
-        /\d/,
-        /\d/,
-        /\d/,
-        /\d/,
-        /\d/,
-        /\d/,
-        /\d/,
-        /\d/,
-        /\d/,
-        /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
     ],
   };
 
-  disabilities: {arabicName: string, englishName: string}[] = [
-    {arabicName: "سمعية", englishName: "HEARING"}, 
-    {arabicName: "بصرية", englishName: "VISUAL"}, 
-    {arabicName: "حركية", englishName: "MOVEMENT"}
+  disabilities: { arabicName: string, englishName: string }[] = [
+    { arabicName: "سمعية", englishName: "HEARING" },
+    { arabicName: "بصرية", englishName: "VISUAL" },
+    { arabicName: "حركية", englishName: "MOVEMENT" }
   ];
   newUser: boolean = false;
   requestId!: number;
@@ -109,7 +109,7 @@ export class MainDataComponent {
   youthCenters: YouthCenter[] = [];
 
   basicInfoForm = new FormGroup({
-    fullName: new FormControl('', [Validators.required, minWordsValidator(4),Validators.pattern(/^[\u0621-\u064A\040]+$/)]),
+    fullName: new FormControl('', [Validators.required, minWordsValidator(4), Validators.pattern(/^[\u0621-\u064A\040]+$/)]),
     nationalId: new FormControl('', [Validators.required, ageRange(), Validators.pattern(/([3]{1})([0-9]{2})(0[1-9]|1[012])(0[1-9]|[1-2][0-9]|3[0-1])(0[1-4]|[1-2][1-9]|3[1-5]|88)[0-9]{3}([0-9]{1})[0-9]{1}/)]),
     governorate: new FormControl<Government | null>(null, [Validators.required]),
     district: new FormControl<District | null>(null, [Validators.required]),
@@ -129,11 +129,11 @@ export class MainDataComponent {
   disabilitySelected: boolean | null | undefined = false;
 
   get arabicOnlyError(): TuiValidationError | null {
-      return this.basicInfoForm.controls['fullName'].hasError('pattern') ? this.arabicError : null;
+    return this.basicInfoForm.controls['fullName'].hasError('pattern') ? this.arabicError : null;
   }
-  get nationalIDError() : TuiValidationError | null {
+  get nationalIDError(): TuiValidationError | null {
     return this.basicInfoForm.controls['nationalId'].hasError('pattern') ? this.nationalIdError : null;
-}
+  }
 
   ngOnInit() {
     this.getFormDataById();
@@ -148,16 +148,16 @@ export class MainDataComponent {
   }
 
   getFormDataById() {
-   this.requestStatusRepository.get().subscribe({
-     next: (response) => {
-       this.requestId = response.id;
-       this.getSetFormData(response.id);
-     }
-   })
+    this.requestStatusRepository.get().subscribe({
+      next: (response) => {
+        this.requestId = response.id;
+        this.getSetFormData(response.id);
+      }
+    })
   }
 
   getSetFormData(requestId: number) {
-    this.requestBasicInformationRepository.getBasicInformation(requestId).subscribe({      
+    this.requestBasicInformationRepository.getBasicInformation(requestId).subscribe({
       next: (response: BasicInformation) => {
         this.basicInfoForm.patchValue(response);
         this.formId = response.id;
@@ -166,10 +166,10 @@ export class MainDataComponent {
         this.setDisabilitiesTypeName(response.disabilityType);
         this.showDisabilityTypeDropdown();
       },
-      
+
       error: () => {
         this.newUser = true;
-       }
+      }
     }
     )
   }
@@ -187,10 +187,12 @@ export class MainDataComponent {
     this.basicInfoForm.get('eductionAdministration')?.reset();
     this.basicInfoForm.get('alAzhar')?.reset();
     this.basicInfoForm.get('youthCentre')?.reset();
-    
+
     this.resetClub()
 
     this.districts = [];
+    this.eduAdmins = [];
+
     const govId = this.basicInfoForm.value.governorate?.['id'];
     this.districtRepository.getDistricts(govId).subscribe(
       (response) => {
@@ -258,40 +260,40 @@ export class MainDataComponent {
     const partyId = this.basicInfoForm.value.affiliateParty?.['id'];
 
     if (partyId == 2) {
-        this.affiliateClub = '';
-        this.selectedParty = 2;
-        this.basicInfoForm.get('alAzhar')?.setValidators(Validators.required);
-        this.basicInfoForm.get('affiliateClub')?.clearValidators();
-        this.basicInfoForm.get('eductionAdministration')?.clearValidators();
-        this.basicInfoForm.get('youthCentre')?.clearValidators();
-        this.basicInfoForm.get('club')?.clearValidators();
-        this.basicInfoForm.get('youthCentre')?.reset();
-        this.basicInfoForm.get('club')?.reset();
-        this.basicInfoForm.get('affiliateClub')?.reset();
-        this.basicInfoForm.get('eductionAdministration')?.reset();
-        this.getAzharAdmin();
+      this.affiliateClub = '';
+      this.selectedParty = 2;
+      this.basicInfoForm.get('alAzhar')?.setValidators(Validators.required);
+      this.basicInfoForm.get('affiliateClub')?.clearValidators();
+      this.basicInfoForm.get('eductionAdministration')?.clearValidators();
+      this.basicInfoForm.get('youthCentre')?.clearValidators();
+      this.basicInfoForm.get('club')?.clearValidators();
+      this.basicInfoForm.get('youthCentre')?.reset();
+      this.basicInfoForm.get('club')?.reset();
+      this.basicInfoForm.get('affiliateClub')?.reset();
+      this.basicInfoForm.get('eductionAdministration')?.reset();
+      this.getAzharAdmin();
     } else if (partyId == 3) {
-        this.selectedParty = 3;
-        this.basicInfoForm.get('affiliateClub')?.setValidators(Validators.required);
-        this.basicInfoForm.get('eductionAdministration')?.clearValidators();
-        this.basicInfoForm.get('alAzhar')?.clearValidators();
-        this.basicInfoForm.get('eductionAdministration')?.reset();
-        this.basicInfoForm.get('alAzhar')?.reset();
-        this.getAffiliateClubs();
+      this.selectedParty = 3;
+      this.basicInfoForm.get('affiliateClub')?.setValidators(Validators.required);
+      this.basicInfoForm.get('eductionAdministration')?.clearValidators();
+      this.basicInfoForm.get('alAzhar')?.clearValidators();
+      this.basicInfoForm.get('eductionAdministration')?.reset();
+      this.basicInfoForm.get('alAzhar')?.reset();
+      this.getAffiliateClubs();
 
     } else if (partyId == 1) {
-        this.affiliateClub = '';
-        this.selectedParty = 1;
-        this.basicInfoForm.get('eductionAdministration')?.setValidators(Validators.required);
-        this.basicInfoForm.get('alAzhar')?.clearValidators();
-        this.basicInfoForm.get('affiliateClub')?.clearValidators();
-        this.basicInfoForm.get('youthCentre')?.clearValidators();
-        this.basicInfoForm.get('club')?.clearValidators();
-        this.basicInfoForm.get('youthCentre')?.reset();
-        this.basicInfoForm.get('club')?.reset();
-        this.basicInfoForm.get('affiliateClub')?.reset();
-        this.basicInfoForm.get('alAzhar')?.reset();
-        this.getEduAdmin();
+      this.affiliateClub = '';
+      this.selectedParty = 1;
+      this.basicInfoForm.get('eductionAdministration')?.setValidators(Validators.required);
+      this.basicInfoForm.get('alAzhar')?.clearValidators();
+      this.basicInfoForm.get('affiliateClub')?.clearValidators();
+      this.basicInfoForm.get('youthCentre')?.clearValidators();
+      this.basicInfoForm.get('club')?.clearValidators();
+      this.basicInfoForm.get('youthCentre')?.reset();
+      this.basicInfoForm.get('club')?.reset();
+      this.basicInfoForm.get('affiliateClub')?.reset();
+      this.basicInfoForm.get('alAzhar')?.reset();
+      this.getEduAdmin();
     }
 
     this.cd.detectChanges()
@@ -307,7 +309,7 @@ export class MainDataComponent {
       this.basicInfoForm.get('youthCentre')?.reset();
       this.getClubs();
     } else if (affiliateClubId === 2) {
-      this.affiliateClub= "youthCenter"
+      this.affiliateClub = "youthCenter"
       this.basicInfoForm.get('youthCentre')?.setValidators(Validators.required);
       this.basicInfoForm.get('club')?.clearValidators();
       this.basicInfoForm.get('club')?.reset();
@@ -320,8 +322,8 @@ export class MainDataComponent {
   setDisabilitiesTypeName(englishName: string) {
     const disability = this.disabilities.find(
       (disability) => disability.englishName === englishName
-      );
-      this.selectedDisability = disability?.arabicName;
+    );
+    this.selectedDisability = disability?.arabicName;
 
   }
 
@@ -348,6 +350,18 @@ export class MainDataComponent {
   isFormValid() {
     return this.basicInfoForm.invalid
   }
+
+  showLoader(primaryDataArray: any[], dependentKeys: string[] = []): boolean {
+    const hasFilledDependentKeys = dependentKeys.every(
+      (dependentKey) => {
+        const dependentKeyValue = this.basicInfoForm.get(dependentKey)?.value;
+        return dependentKeyValue !== null;
+      }
+    );
+
+    return primaryDataArray.length !== 0 || !hasFilledDependentKeys;
+  }
+
 
   govStringify = (gov: { arabicName: string }): string =>
     `${gov.arabicName}`;
@@ -381,18 +395,18 @@ export class MainDataComponent {
     let formattedResource = this.extractIds.extractIds(this.basicInfoForm.value);
     formattedResource['birthDate'] = formattedResource.dob?.year + '-' + formattedResource.dob?.month + '-' + formattedResource.dob?.day;
     delete formattedResource.dob;
-    formattedResource['request'] = {request: this.requestId};
-    
+    formattedResource['request'] = { request: this.requestId };
+
     if (this.basicInfoForm.valid) {
       if (this.newUser) {
         this.requestBasicInformationRepository
-        .addBasicInformation(this.requestId, formattedResource)
-        .subscribe();
-        
+          .addBasicInformation(this.requestId, formattedResource)
+          .subscribe();
+
       } else {
         formattedResource['id'] = this.formId;
         this.basicInformationRepository.update(this.formId, formattedResource)
-        .subscribe();
+          .subscribe();
       }
 
       this.stepperStateService.mainDataState.set('pass')
