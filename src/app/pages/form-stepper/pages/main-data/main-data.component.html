@@ -36,19 +36,24 @@
     <div class="tui-form__multi-field">
       <label>
         <tui-combo-box
-            formControlName="governorate"
-            (ngModelChange)="getDistricts()"
-            [stringify]="govStringify"
+          formControlName="governorate"
+          (ngModelChange)="getDistricts()"
+          [stringify]="govStringify"
         >
-        المحافظه
-        <tui-data-list-wrapper
-            *tuiDataList
-            emptyContent="جاري تحميل المحافظات"
-            [itemContent]="govStringify | tuiStringifyContent"
-            [items] = "govs | tuiFilterByInputWith: govStringify"
-        >
-        </tui-data-list-wrapper>
-      </tui-combo-box>
+          المحافظه
+          <ng-template tuiDataList>
+            <tui-data-list-wrapper
+              *ngIf="showLoader(govs); else loading"
+              emptyContent="جاري تحميل المحافظات"
+              [itemContent]="govStringify | tuiStringifyContent"
+              [items]="govs | tuiFilterByInputWith : govStringify"
+            >
+            </tui-data-list-wrapper>
+          </ng-template>
+          <ng-template #loading>
+            <tui-loader class="tui-space_vertical-3 loader"></tui-loader>
+          </ng-template>
+        </tui-combo-box>
       </label>
       <tui-error
         formControlName="governorate"
@@ -58,18 +63,20 @@
     <div class="tui-form__multi-field">
       <label>
         <tui-select
-            formControlName="district"
-            (ngModelChange)="districtSelected()"
-            [stringify]="districtStringify"
-            >
-            الحي
-            <tui-data-list-wrapper
-            emptyContent="أختر المحافظه"
-            *tuiDataList
-            [itemContent]="districtStringify | tuiStringifyContent"
-            [items] = "districts"
+          formControlName="district"
+          (ngModelChange)="districtSelected()"
+          [stringify]="districtStringify"
         >
-        </tui-data-list-wrapper>
+          الحي
+          <ng-template tuiDataList>
+            <tui-data-list-wrapper
+              *ngIf="showLoader(districts, ['governorate']); else loading"
+              emptyContent="أختر المحافظه"
+              [itemContent]="districtStringify | tuiStringifyContent"
+              [items]="districts"
+            >
+            </tui-data-list-wrapper>
+          </ng-template>
         </tui-select>
       </label>
       <tui-error
@@ -83,18 +90,19 @@
     <div class="tui-form__multi-field">
       <label>
         <tui-select
-            formControlName="affiliateParty"
-            (ngModelChange)="setPartyDropdown()"
-            [stringify]="affiliatePartyStringify"
-            >
-            الجهة التابعه
-            <tui-data-list-wrapper
-            emptyContent="أختر المحافظه"
-            *tuiDataList
-            [itemContent]="affiliatePartyStringify | tuiStringifyContent"
-            [items] = "affiliateParties"
+          formControlName="affiliateParty"
+          (ngModelChange)="setPartyDropdown()"
+          [stringify]="affiliatePartyStringify"
         >
-        </tui-data-list-wrapper>
+          الجهة التابعه
+          <ng-template tuiDataList>
+            <tui-data-list-wrapper
+              *ngIf="showLoader(affiliateParties); else loading"
+              [itemContent]="affiliatePartyStringify | tuiStringifyContent"
+              [items]="affiliateParties"
+            >
+            </tui-data-list-wrapper>
+          </ng-template>
         </tui-select>
       </label>
       <tui-error
@@ -105,17 +113,19 @@
     <div class="tui-form__multi-field" *ngIf="selectedParty == 1">
       <label>
         <tui-select
-            formControlName="eductionAdministration"
-            [stringify]="eduAdminStringify"
-            >
-            الأدارة التعليميه
-            <tui-data-list-wrapper
-            emptyContent="أختر الجهة التابعه"
-            *tuiDataList
-            [itemContent]="eduAdminStringify | tuiStringifyContent"
-            [items] = "eduAdmins"
+          formControlName="eductionAdministration"
+          [stringify]="eduAdminStringify"
         >
-        </tui-data-list-wrapper>
+          الأدارة التعليميه
+          <ng-template tuiDataList>
+            <tui-data-list-wrapper
+              *ngIf="showLoader(eduAdmins, ['governorate', 'affiliateParty']); else loading"
+              emptyContent="أختر المحافظه و الجهة التابعه"
+              [itemContent]="eduAdminStringify | tuiStringifyContent"
+              [items]="eduAdmins"
+            >
+            </tui-data-list-wrapper>
+          </ng-template>
         </tui-select>
       </label>
       <tui-error
@@ -125,18 +135,17 @@
     </div>
     <div class="tui-form__multi-field" *ngIf="selectedParty == 2">
       <label>
-        <tui-select
-            formControlName="alAzhar"
-            [stringify]="azharStringify"
-            >
-            الأدارة الفرعية
+        <tui-select formControlName="alAzhar" [stringify]="azharStringify">
+          الأدارة الفرعية
+          <ng-template tuiDataList>
             <tui-data-list-wrapper
-            emptyContent="أختر الجهة التابعه"
-            *tuiDataList
-            [itemContent]="azharStringify | tuiStringifyContent"
-            [items] = "azharAdmins"
-        >
-        </tui-data-list-wrapper>
+              *ngIf="showLoader(azharAdmins, ['governorate', 'affiliateParty']); else loading"
+              emptyContent="أختر المحافظه و الجهة التابعه"
+              [itemContent]="azharStringify | tuiStringifyContent"
+              [items]="azharAdmins"
+            >
+            </tui-data-list-wrapper>
+          </ng-template>
         </tui-select>
       </label>
       <tui-error
@@ -147,18 +156,20 @@
     <div class="tui-form__multi-field" *ngIf="selectedParty == 3">
       <label>
         <tui-select
-            formControlName="affiliateClub"
-            [stringify]="affiliateClubStringify"
-            (ngModelChange)="selectAffiliateClub()"
-            >
-            نادي/مركز شباب
-            <tui-data-list-wrapper
-            emptyContent="أختر الجهة التابعه"
-            *tuiDataList
-            [itemContent]="affiliateClubStringify | tuiStringifyContent"
-            [items] = "affiliateClubs"
+          formControlName="affiliateClub"
+          [stringify]="affiliateClubStringify"
+          (ngModelChange)="selectAffiliateClub()"
         >
-        </tui-data-list-wrapper>
+          نادي/مركز شباب
+            <ng-template tuiDataList>
+              <tui-data-list-wrapper
+                *ngIf="showLoader(affiliateClubs); else loading"
+                emptyContent="أختر الجهة التابعه"
+                [itemContent]="affiliateClubStringify | tuiStringifyContent"
+                [items]="affiliateClubs"
+              >
+              </tui-data-list-wrapper>
+            </ng-template>
         </tui-select>
       </label>
       <tui-error
@@ -166,24 +177,25 @@
         [error]="[] | tuiFieldError | async"
       ></tui-error>
     </div>
-
   </div>
-  
+
   <div class="tui-form__row tui-form__row_multi-fields">
-    <div class="tui-form__multi-field" *ngIf="affiliateClub === 'club' && selectedParty == 3">
+    <div
+      class="tui-form__multi-field"
+      *ngIf="affiliateClub === 'club' && selectedParty == 3"
+    >
       <label>
-        <tui-select
-            formControlName="club"
-            [stringify]="clubStringify"
-            >
-            نادي
+        <tui-select formControlName="club" [stringify]="clubStringify">
+          نادي
+          <ng-template tuiDataList>
             <tui-data-list-wrapper
-            emptyContent="أختر المحافظه"
-            *tuiDataList
-            [itemContent]="clubStringify | tuiStringifyContent"
-            [items] = "clubs"
-        >
-        </tui-data-list-wrapper>
+              *ngIf="showLoader(clubs, ['governorate', 'affiliateClubs']); else loading"
+              emptyContent="أختر المحافظه"
+              [itemContent]="clubStringify | tuiStringifyContent"
+              [items]="clubs"
+            >
+            </tui-data-list-wrapper>
+          </ng-template>
         </tui-select>
       </label>
       <tui-error
@@ -191,20 +203,25 @@
         [error]="[] | tuiFieldError | async"
       ></tui-error>
     </div>
-    <div class="tui-form__multi-field" *ngIf="affiliateClub === 'youthCenter' && selectedParty == 3">
+    <div
+      class="tui-form__multi-field"
+      *ngIf="affiliateClub === 'youthCenter' && selectedParty == 3"
+    >
       <label>
         <tui-select
-            formControlName="youthCentre"
-            [stringify]="youthCenterStringify"
-            >
-            مركز الشباب
-            <tui-data-list-wrapper
-            emptyContent="أختر الحي"
-            *tuiDataList
-            [itemContent]="youthCenterStringify | tuiStringifyContent"
-            [items] = "youthCenters"
+          formControlName="youthCentre"
+          [stringify]="youthCenterStringify"
         >
-        </tui-data-list-wrapper>
+          مركز الشباب
+          <ng-template tuiDataList>
+            <tui-data-list-wrapper
+              *ngIf="showLoader(youthCenters, ['district', 'affiliateClubs']); else loading"
+              emptyContent="أختر الحي"
+              [itemContent]="youthCenterStringify | tuiStringifyContent"
+              [items]="youthCenters"
+            >
+            </tui-data-list-wrapper>
+          </ng-template>
         </tui-select>
       </label>
       <tui-error
@@ -226,7 +243,6 @@
   </div>
 
   <div class="tui-form__row tui-form__row_multi-fields">
-
     <div class="tui-form__multi-field">
       <p>النوع</p>
       <div class="radioContainer">
@@ -234,7 +250,7 @@
           <div class="label">
             <tui-radio
               formControlName="female"
-              [item]=false
+              [item]="false"
               size="l"
               [readOnly]="true"
             ></tui-radio>
@@ -243,7 +259,7 @@
           <div class="label">
             <tui-radio
               formControlName="female"
-              [item]=true
+              [item]="true"
               size="l"
               [readOnly]="true"
             ></tui-radio>
@@ -251,7 +267,6 @@
           </div>
         </div>
       </div>
-
     </div>
 
     <div class="tui-form__multi-field">
@@ -261,7 +276,7 @@
           <div class="label">
             <tui-radio
               formControlName="muslim"
-              [item]=true
+              [item]="true"
               size="l"
             ></tui-radio>
             <p>مسلم</p>
@@ -269,32 +284,29 @@
           <div class="label">
             <tui-radio
               formControlName="muslim"
-              [item]=false
+              [item]="false"
               size="l"
             ></tui-radio>
             <p>مسيحى</p>
           </div>
         </div>
       </div>
-
     </div>
-
-
-
   </div>
 
-  <div class="tui-form__row tui-form__row_multi-fields" style="align-items: flex-end;">
+  <div
+    class="tui-form__row tui-form__row_multi-fields"
+    style="align-items: flex-end"
+  >
     <div class="tui-form__multi-field">
-      <div 
-      class="radioContainer"
-      >
+      <div class="radioContainer">
         <p>هل لديك اعاقه؟</p>
         <div class="label-container">
           <div class="label">
             <tui-radio
               formControlName="hasDisability"
               (ngModelChange)="showDisabilityTypeDropdown()"
-              [item]=true
+              [item]="true"
               size="l"
             ></tui-radio>
             <p>نعم</p>
@@ -303,35 +315,34 @@
             <tui-radio
               formControlName="hasDisability"
               (ngModelChange)="showDisabilityTypeDropdown()"
-              [item]=false
+              [item]="false"
               size="l"
             ></tui-radio>
             <p>لا</p>
           </div>
         </div>
       </div>
-
     </div>
     <div class="tui-form__multi-field" *ngIf="disabilitySelected === true">
-        <tui-select
-            formControlName="disabilityType"
-            class="b-form"
-            [valueContent]="selectedDisability"
+      <tui-select
+        formControlName="disabilityType"
+        class="b-form"
+        [valueContent]="selectedDisability"
+      >
+        نوع الأعاقة
+        <ng-template tuiDataList>
+          <tui-data-list>
+            <button
+              *ngFor="let disabilitiy of disabilities"
+              tuiOption
+              [value]="disabilitiy.englishName"
+              (click)="selectedDisability = disabilitiy.arabicName"
             >
-            نوع الأعاقة
-            <ng-template tuiDataList>
-            <tui-data-list>
-                <button
-                    *ngFor="let disabilitiy of disabilities"
-                    tuiOption
-                    [value]="disabilitiy.englishName"
-                    (click)="selectedDisability=disabilitiy.arabicName"
-                >
-                    {{ disabilitiy.arabicName }}
-                </button>
-              </tui-data-list>
-            </ng-template>
-        </tui-select>
+              {{ disabilitiy.arabicName }}
+            </button>
+          </tui-data-list>
+        </ng-template>
+      </tui-select>
       <tui-error
         formControlName="disabilityType"
         [error]="[] | tuiFieldError | async"
@@ -341,10 +352,12 @@
 
   <div class="tui-form__row" style="justify-content: flex-end">
     <button
-    type="submit"
-    tuiButton
-    [disabled]="isFormValid()"
-    appearance="secondary">التالي</button>
+      type="submit"
+      tuiButton
+      [disabled]="isFormValid()"
+      appearance="secondary"
+    >
+      التالي
+    </button>
   </div>
 </form>
-
