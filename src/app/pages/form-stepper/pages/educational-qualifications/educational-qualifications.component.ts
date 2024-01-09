@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TuiValidationError } from '@taiga-ui/cdk';
+import { TuiAlertService } from '@taiga-ui/core';
 import { RequestService } from 'src/app/core/services/request.service';
 import { StepperStateService } from 'src/app/core/services/stepper-state.service';
 import { AcademicYearRepository } from 'src/app/domain/academic-year/academic-year.repository';
@@ -16,6 +17,7 @@ import { EducationalQualificationRepository } from 'src/app/domain/educational-q
 import { EducationQualification } from 'src/app/domain/educational-qualification/models/education-qualification';
 import { LanguageLevelRepository } from 'src/app/domain/language-level/language-level.repository';
 import { LanguageLevel } from 'src/app/domain/language-level/models/language-level';
+import { MessageService } from 'src/app/shared/services/message.service';
 
 @Component({
   selector: 'app-educational-qualifications',
@@ -41,7 +43,6 @@ export class EducationalQualificationsComponent implements OnInit{
   qualificationId!:number;
   eduQualsForm!:FormGroup;
   languages: EducationQualificationLanguage[] = []
-
   constructor(
     private router: Router,
     private stepperStateService: StepperStateService,
@@ -51,7 +52,8 @@ export class EducationalQualificationsComponent implements OnInit{
     private languageLevelRepository:LanguageLevelRepository,
     private educationQualificationRepository:EducationalQualificationRepository,
     private eduQualLanguageRepository: EducationalQualificationLanguageRepository,
-    private requestService:RequestService
+    private requestService:RequestService,
+    private messageService:MessageService
       ) { }
 
   initializeForm(){
@@ -65,7 +67,11 @@ export class EducationalQualificationsComponent implements OnInit{
   })
   }
   getRequestId() {
-    this.requestId = this.requestService.requestId();
+    if(this.requestService.requestId()){
+      this.requestId = this.requestService.requestId();
+    }else{
+    this.messageService.errorMessage();
+    }
   }
   ngOnInit(){
     this.initializeForm();
@@ -114,7 +120,6 @@ get langError(): TuiValidationError | null {
     back() {
       this.router.navigate(['voter-data/contact-data'], { skipLocationChange: true })
     }
-
   next() {
     if (this.eduQualsForm.valid) {
           if(this.qualificationId){
@@ -125,11 +130,20 @@ get langError(): TuiValidationError | null {
                 schoolName:this.eduQualsForm.value.schoolName,
                 coursesName:this.eduQualsForm.value.coursesName
             }
-            this.educationQualificationRepository.update(this.qualificationId,this.educationalForm).subscribe();
+            this.educationQualificationRepository.update(this.qualificationId,this.educationalForm).subscribe(_=>{
+              this.messageService.confirmMessage();
+                    });
         }
         else
           {
-            this.educationQualificationRepository.addEduQualification(this.requestId,this.eduQualsForm.value).subscribe();
+            this.educationQualificationRepository.addEduQualification(this.requestId,this.eduQualsForm.value).subscribe({
+              next:()=>{
+                this.messageService.confirmMessage();
+              },
+              error:()=>{
+                this.messageService.errorMessage();
+              }
+            });
           }
       this.stepperStateService.eduQualState.set('pass')
       this.router.navigate(['voter-data/attachments'], { skipLocationChange: true })

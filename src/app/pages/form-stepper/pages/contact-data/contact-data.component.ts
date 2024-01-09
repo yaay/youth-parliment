@@ -8,6 +8,7 @@ import { MaskitoOptions } from '@maskito/core';
 import { RequestService } from 'src/app/core/services/request.service';
 import { RequestContactRepository } from 'src/app/domain/contact/request-contact.repository';
 import { ContactRepository } from 'src/app/domain/contact/contact.repository';
+import { MessageService } from 'src/app/shared/services/message.service';
 
 @Component({
   selector: 'app-contact-data',
@@ -32,7 +33,8 @@ export class ContactDataComponent {
     private stepperStateService: StepperStateService,
     private requestService: RequestService,
     private requestContact: RequestContactRepository,
-    private contactRepository: ContactRepository
+    private contactRepository: ContactRepository,
+    private messageService:MessageService
   ) { }
 
   contactDataForm = new FormGroup({
@@ -60,7 +62,11 @@ export class ContactDataComponent {
   }
 
   getRequestId() {
+    if(this.requestService.requestId()){
     this.requestId = this.requestService.requestId();
+    }else{
+      this.messageService.errorMessage();
+    }
   }
 
   getSetFormData() {
@@ -87,13 +93,22 @@ export class ContactDataComponent {
       if (this.newUser) {
         this.requestContact
           .addContact(this.requestId, this.contactDataForm.value)
-          .subscribe();
+          .subscribe({
+            next:()=>{
+              this.messageService.confirmMessage();
+            },
+            error:()=>{
+              this.messageService.errorMessage();
+            }
+        });
       } else {
         let formattedResource: any = { ...this.contactDataForm.value };
         formattedResource['id'] = this.formId;
         this.contactRepository
           .update(this.formId, formattedResource)
-          .subscribe();
+          .subscribe(_=>{
+            this.messageService.confirmMessage();
+          });
       }
       this.stepperStateService.contactState.set('pass');
       this.router.navigate(['/voter-data/edu-qualifications'], { skipLocationChange: true })
