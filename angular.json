@@ -99,10 +99,7 @@
               "zone.js",
               "zone.js/testing"
             ],
-            "tsConfig": "tsconfig.spec.json",
-            "include": [
-              "**/*.spec.ts"
-            ]
+            "tsConfig": "tsconfig.spec.json"
           }
         }
       }
