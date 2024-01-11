@@ -23,6 +23,7 @@ export class AttachmentsComponent {
   studyId!:number;
   requestId!: number;
   images: { value: string, name: string, base64: string | ArrayBuffer | null }[] = [];
+  attachmentsForm!:FormGroup;
   constructor(
     private router: Router,
     private stepperStateService: StepperStateService,
@@ -30,13 +31,15 @@ export class AttachmentsComponent {
     private attachmentRepository:AttachmentRepository
       ) { }
 
-  attachmentsForm = new FormGroup({
+  initializeAttachmentForm(){
+    this.attachmentsForm = new FormGroup({
     personalImg: new FormControl(''),
     idFile: new FormControl(''),
     studyProofFile: new FormControl('')
   })
-
+      }
   ngOnInit() {
+    this.initializeAttachmentForm();
     this.getRequestId();
     this.patchImages();
   }
@@ -46,7 +49,6 @@ export class AttachmentsComponent {
   }
 
   openFileInput(elmRef: string) {
-
     switch (elmRef) {
       case 'personalImgFileInput': this.currentInput = this.fileInput; break;
       case 'idFileInput': this.currentInput = this.idFileInput; break;

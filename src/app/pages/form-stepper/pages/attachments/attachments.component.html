@@ -4,7 +4,7 @@
   </h3>
   <div class="tui-form__row tui-form__row_multi-fields">
     <div class="tui-form__multi-field">
-      <div class="upload-box" (click)="openFileInput('personalImgFileInput')">
+      <div class="upload-box" >
         <button
           *ngIf="hasImage('personalImg')"
           (click)="deleteImage($event, 'personalImg')"
@@ -13,7 +13,7 @@
           <tui-svg src="tuiIconCloseLarge"></tui-svg>
         </button>
         <p *ngIf="hasImage('personalImg')" class="img-caption">صورة شخصية</p>
-        <div *ngIf="!hasImage('personalImg')">
+        <div class="image" *ngIf="!hasImage('personalImg')" (click)="openFileInput('personalImgFileInput')">
           <tui-marker-icon
             mode="link"
             src="tuiIconUploadCloudLarge"
@@ -34,7 +34,7 @@
       </div>
     </div>
     <div class="tui-form__multi-field">
-      <div class="upload-box" (click)="openFileInput('idFileInput')">
+      <div class="upload-box" >
         <button
           *ngIf="hasImage('idCardImg')"
           (click)="deleteImage($event, 'idCardImg')"
@@ -45,7 +45,7 @@
         <p *ngIf="hasImage('idCardImg')" class="img-caption">
           صورة البطاقة او شهادة الميلاد
         </p>
-        <div *ngIf="!hasImage('idCardImg')">
+        <div class="image" *ngIf="!hasImage('idCardImg')" (click)="openFileInput('idFileInput')">
           <tui-marker-icon
             mode="link"
             src="tuiIconUploadCloudLarge"
@@ -68,7 +68,7 @@
   <h3 class="tui-form__header">المرفقات الاختيارية في المرحلة الحالية</h3>
   <div class="tui-form__row">
     <div class="tui-form__multi-field">
-      <div class="upload-box" (click)="openFileInput('studyProofFileInput')">
+      <div class="upload-box">
         <button
           *ngIf="hasImage('studyProofImg')"
           (click)="deleteImage($event, 'studyProofImg')"
@@ -79,7 +79,7 @@
         <p *ngIf="hasImage('studyProofImg')" class="img-caption">
           أثبات قيد أو كارنية دراسي
         </p>
-        <div *ngIf="!hasImage('studyProofImg')">
+        <div class="image" *ngIf="!hasImage('studyProofImg')"  (click)="openFileInput('studyProofFileInput')">
           <tui-marker-icon
             mode="link"
             src="tuiIconUploadCloudLarge"
