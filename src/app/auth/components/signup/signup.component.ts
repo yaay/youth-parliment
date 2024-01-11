@@ -4,7 +4,6 @@ import { matchpassword } from 'src/app/shared/Validators/matchpassword.directive
 import { TUI_VALIDATION_ERRORS } from '@taiga-ui/kit';
 import { of } from 'rxjs'
 import { SignupRepository } from 'src/app/domain/signup/signup.repository'
-import { User } from 'src/app/domain/login/models/user';
 import { TuiAlertService } from '@taiga-ui/core';
 import { Router } from '@angular/router';
 
@@ -20,7 +19,6 @@ import { Router } from '@angular/router';
         email: 'أدخل بريد الكتروني صحيح',
         minlength: ({ requiredLength }: { requiredLength: string }) =>
         of(`يجب أن تحتوي كلمه المرور علي ${requiredLength} أحرف أو أكثر`),
-        // minLength: ({requiredLength}: {requiredLength: string}) => `كلمه المرور يجب أن تحتوي علي ${requiredLength} أحرف او أكثر`,
         pattern: 'كلمه المرور يجب أن تحتوي علي رقم واحد وحرف واحد علي الأقل',
         matchpassword: 'كلمه المرور غير مطابقه',
       }
@@ -54,8 +52,6 @@ export class SignupComponent {
 
 
   signup() {
-    console.log(this.signupForm)
-
     if(this.signupForm.status==='VALID') {
           let user = {
             email: this.signupForm.value.email,

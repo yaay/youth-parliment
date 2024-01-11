@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { LoginRepository } from 'src/app/domain/login/login.repository';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { TuiAlertService } from '@taiga-ui/core';
-import { UserInfoRepository } from 'src/app/domain/user-info/user-infp.repository';
 
 @Component({
   selector: 'app-login',
@@ -16,8 +14,6 @@ export class LoginComponent {
 
   constructor(
     private loginRepository: LoginRepository,
-    private userInfoRepository: UserInfoRepository,
-    private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
     private alerts: TuiAlertService,
